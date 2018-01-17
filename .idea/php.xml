@@ -73,6 +73,8 @@
       <path value="$PROJECT_DIR$/server/vendor/sebastian/version" />
       <path value="$PROJECT_DIR$/server/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/server/vendor/hamcrest/hamcrest-php" />
+      <path value="$PROJECT_DIR$/server/vendor/barryvdh/laravel-cors" />
+      <path value="$PROJECT_DIR$/server/vendor/asm89/stack-cors" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7" />
