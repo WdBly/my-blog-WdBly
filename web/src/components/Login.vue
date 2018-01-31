@@ -20,8 +20,8 @@
                     </div>
                     <p style="margin-bottom: 15px">管理员可通过密码登陆</p>
                     <el-form ref="form" status-icon :rules="rules" :model="form">
-                        <el-form-item prop="userName" auto-complete="off">
-                            <el-input v-model="form.userName" placeholder="邮箱/手机号"
+                        <el-form-item prop="username" auto-complete="off">
+                            <el-input v-model="form.username" placeholder="邮箱/手机号"
                                       @keyup.enter.native="onSubmit('form')">
                             </el-input>
                         </el-form-item>
@@ -56,11 +56,11 @@
                 pwOrQRCode:'PW',
                 loginButtonDisabled:false,
                 form:{
-                    userName:"",
+                    username:"",
                     password:""
                 },
                 rules: {
-                    userName: [
+                    username: [
                         { required: true, message: '请输入登录名', trigger: 'blur' },
                         { min: 3, max: 6, message: '长度在 3 到 6 个字符', trigger: 'blur' }
                     ],
@@ -76,10 +76,14 @@
                 this.$refs[formName].validate((valid) => {
                     if(valid){
                         this.loginButtonDisabled = true;
-                        this.$http.post("api/user/login",this.form).then((res)=>{
+                        this.$http.post("/user/login",this.form).then((res)=>{
                             this.loginButtonDisabled = false;
                             if(res.data.code===200){
                                 this.$router.push("/home");
+                                sessionStorage.setItem('token', res.data.data.token);
+                                sessionStorage.setItem('user_id', res.data.data.user_id);
+                                sessionStorage.setItem('username',res.data.data.username);
+                                sessionStorage.setItem('mobile',res.data.data.mobile);
                                 this.$message.success(res.data.message);
                             }else{
                                 this.$message.error(res.data.message);

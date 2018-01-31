@@ -3,8 +3,9 @@
 namespace App\Http\Model;
 
 use Illuminate\Database\Eloquent\Model;
-
-class User extends Model
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\User as AuthUser;
+class User extends AuthUser
 {
     protected $table = 'users';
 
@@ -24,7 +25,8 @@ class User extends Model
     }
     public function login($data)
     {
-        $data = $this->where([['username','=',$data['username']],['password','=',$data['password']]])->value("id");
+        $data = $this->where([['username','=',$data['username']],['password','=',$data['password']]])->select("id","username",'mobile')->first();
+        Auth::guard('web')->loginUsingId($data->id);
         return $data;
     }
     public function deleteUser($data)

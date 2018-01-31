@@ -13,11 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['namespace'=>'v1'],function (){
-    Route::group(['prefix'=>'user'],function (){
-        Route::post('/register',"LoginController@register");
-        Route::post('/login',"LoginController@login");
-        Route::post('/update',"LoginController@update");
-        Route::post('/delete',"LoginController@delete");
-    });
-});
+

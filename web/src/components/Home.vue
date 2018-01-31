@@ -5,16 +5,27 @@
                 <h3>{{ item }}</h3>
             </el-carousel-item>
         </el-carousel>
-        <div class="homeContent" :style="{height:(aScreenArticle.length+1)*200+'px'}">
-            <el-steps direction="vertical" :active="1" class="timeLine">
+        <div class="topSearch">
+            <el-input placeholder="搜索文章" class="input-with-select">
+                <el-select v-model="select" slot="prepend" placeholder="请选择">
+                    <el-option label="餐厅名" value="1"></el-option>
+                    <el-option label="订单号" value="2"></el-option>
+                    <el-option label="用户电话" value="3"></el-option>
+                </el-select>
+            </el-input>
+        </div>
+        <div class="homeContent">
+            <el-steps direction="vertical"
+                      :active="0"
+                      class="timeLine"
+                      :space="260">
                 <el-step v-for="(item,index) in aScreenArticle"
                          :title="item.time"
                 :key="index"></el-step>
             </el-steps>
             <div class="contentPopover">
-                <el-card class="elCardClass"
+                <div class="elCardClass"
                          v-for="(item,index) in aScreenArticle"
-                         :style="{marginTop:index==0?'0px':elCarouselHeight=='120px'?'20px':'114px'}"
                          :key="index">
                     <header class="articleTitleText">这是文章标题</header>
                     <div class="bottomContent">
@@ -24,7 +35,7 @@
                             <el-button type="success" class="readAllArticleButton">阅读全文>></el-button>
                         </div>
                     </div>
-                </el-card>
+                </div>
             </div>
         </div>
     </el-card>
@@ -43,7 +54,8 @@
                     time:"2018/06/30"
                 },{
                     time:"2018/06/30"
-                }]
+                }],
+                select:''
             }
         },
         computed:{
@@ -68,6 +80,10 @@
     .el-carousel__item:nth-child(2n+1) {
         background: url("../../static/images/loginBg.jpg");
     }
+    .topSearch{
+        margin: 5px 0;
+        width: 40%;
+    }
     .homeContent{
         position: relative;
         margin-top: 10px;
@@ -77,7 +93,12 @@
             left: 150px;
             top:0;
             .elCardClass {
-                background-color: red;
+                &:first-child{
+                    margin-top: 0;
+                }
+                margin-top: 60px;
+                padding: 15px;
+                background-color: #4998D3;
                 .articleTitleText{
                     font-size: 20px;
                     font-weight: bold;
@@ -93,7 +114,7 @@
                     }
                     .bottomContentRight{
                         display: flex;
-                        width: calc(100% - 200px);
+                        width: calc(100% - 230px);
                         margin-left: 20px;
                         justify-content: space-between;
                         flex-direction: column;
@@ -115,62 +136,16 @@
             }
         }
     }
-    @media screen and (max-width: 1200px){
-        .homeContent{
-            position: relative;
-            margin-top: 10px;
-            .contentPopover{
-                width: calc(100% - 150px);
-                position: absolute;
-                left: 150px;
-                top:0;
-                .elCardClass {
-                    background-color: red;
-                    .articleTitleText{
-                        font-size: 20px;
-                        font-weight: bold;
-                        color: white;
-                        margin-bottom: 5px;
-                    }
-                    .bottomContent{
-                        display: flex;
-                        justify-content: start;
-                        .everArticleImg{
-                            width: 200px;
-                            height:140px;
-                        }
-                        .bottomContentRight{
-                            display: flex;
-                            width: calc(100% - 200px);
-                            margin-left: 20px;
-                            justify-content: space-between;
-                            flex-direction: column;
-                            .articleIntroduction{
-                                word-wrap: break-word;
-                                height: 90px;
-                                text-overflow:ellipsis;
-                                overflow:hidden;
-                                font-size: 18px;
-                                color: white;
-                            }
-                            .readAllArticleButton{
-                                width: 100px;
-                                text-indent:-5px;
-                                margin-left: calc(100% - 100px);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
     @media screen and (max-width: 700px){
+        .topSearch{
+            width: 100%;
+        }
         .homeContent{
             .contentPopover{
                 width:100%;
                 left: 0;
                 .elCardClass {
-                    height:170px;
+                    margin-top: 20px;
                     .bottomContent{
                         .everArticleImg{
                             width: 30%;
@@ -187,7 +162,6 @@
                             .readAllArticleButton{
                                 width: 100px;
                                 text-indent:-5px;
-                                margin-left: 0px;
                             }
                         }
                     }
@@ -195,7 +169,8 @@
             }
         }
         .timeLine{
-            display: none;
+            width: 0;
+            opacity: 0;
         }
     }
 </style>

@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\UserLoginCheck;
 
-class LoginController extends Controller
+class LoginController extends BasicController
 {
     public $right_user = '';
 
@@ -25,13 +25,14 @@ class LoginController extends Controller
     //登陆逻辑
     public function login(UserLoginCheck $request)
     {
+
         $data = $request->all();
         $user = new User();
         $res = $user->login($data);
         if ($res)
         {
-            $token = $this->getToken($res);
-            $all = ['user_id' => $res, 'token' => $token];
+            $token = $this->getToken($res->id);
+            $all = ['user_id' => $res->id, 'token' => $token, 'username' => $res->username, 'mobile' => $res->mobile];
             return renderJson('登录成功', $all, 200);
         } else
         {

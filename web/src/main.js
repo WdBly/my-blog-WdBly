@@ -12,31 +12,24 @@ Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
 
-ElementUI.Message.success = (options)=>{
-    if (typeof options === 'string') {
-        options = {
-            showClose: true,
-            message: options
-        };
-    }
-    options.type = 'success';
-    return ElementUI.Message(options);
-};
-ElementUI.Message.error = (options)=>{
-    if (typeof options === 'string') {
-        options = {
-            showClose: true,
-            message: options
-        };
-    }
-    options.type = 'error';
-    return ElementUI.Message(options);
-};
+['success','error','info','warning'].forEach((item)=>{
+    ElementUI.Message[item] = (options)=>{
+        if (typeof options === 'string') {
+            options = {
+                showClose: true,
+                message: options
+            };
+        }
+        options.type = item;
+        return ElementUI.Message(options);
+    };
+});
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.baseURL = 'http://127.0.0.1';
 Vue.prototype.$http = axios;
+Vue.prototype.BASEURL = 'http://127.0.0.1';
 
 /* eslint-disable no-new */
 new Vue({

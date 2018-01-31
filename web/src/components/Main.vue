@@ -3,14 +3,17 @@
         <div class="responseHead">
             <div style="display: flex;justify-content: space-between;align-items: center;">
                 <p class="topTextP">WdBly&#8226博客</p>
-                <el-button type="primary">管理员登陆</el-button>
+                <el-button type="primary" @click="routerJump">
+                    管理员登陆
+                </el-button>
             </div>
             <div class="eachItem">
                 <router-link to="home" class="item" >首页</router-link>
                 <router-link to="aboutMe" class="item" >关于我</router-link>
-                <router-link to="home" class="item" >成长</router-link>
-                <router-link to="aboutMe" class="item" >分享</router-link>
-                <router-link to="home" class="item">留言</router-link>
+                <router-link to="personalGrowth" class="item" >成长</router-link>
+                <router-link to="shareContent" class="item" >分享</router-link>
+                <router-link to="feedBack" class="item">留言</router-link>
+                <router-link to="publishArticles" class="item">发表文章</router-link>
             </div>
             <el-card class="box-card elCard">
                 <router-view/>
@@ -20,20 +23,21 @@
             <div class="head">
                 <span>
                     WdBly&#8226博客
-                    <el-button type="success" size="mini" style="margin: 0 0 0 5px">
-                        <router-link to="/login">管理员登陆</router-link>
+                    <el-button type="success" @click="routerJump" size="mini" style="margin: 0 0 0 5px">
+                        管理员登陆
                     </el-button>
                 </span>
                 <el-dropdown trigger="click" @command="handleCommand">
                     <el-button type="primary">
                         {{routerText}}<i class="el-icon-arrow-down el-icon--right"></i>
                     </el-button>
-                    <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-menu slot="dropdown" class="dropDownClass">
                         <el-dropdown-item command="home-首页">首页</el-dropdown-item>
                         <el-dropdown-item command="aboutMe-关于我">关于我</el-dropdown-item>
                         <el-dropdown-item command="home-成长">成长</el-dropdown-item>
                         <el-dropdown-item command="aboutMe-分享">分享</el-dropdown-item>
                         <el-dropdown-item command="home-留言">留言</el-dropdown-item>
+                        <router-link to="publishArticles" class="item">发表文章</router-link>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
@@ -54,6 +58,9 @@
             handleCommand(key){
                 this.$router.push({path:(key.split('-'))[0]});
                 this.routerText = (key.split('-'))[1]
+            },
+            routerJump(){
+                this.$router.push("/login")
             }
         }
     }
@@ -93,12 +100,15 @@
     }
     .elCard {
         width: 100%;
-        margin: 10px auto
+        margin: 10px auto;
     }
     .responseHead{
         display: block;
     }
     .responseHeadMobile{
+        display: none;
+    }
+    .dropDownClass {
         display: none;
     }
     .router-link-active {
@@ -130,6 +140,9 @@
                     line-height: 50px;
                 }
             }
+        }
+        .dropDownClass{
+            display: block;
         }
     }
 </style>
