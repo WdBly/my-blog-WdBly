@@ -21,6 +21,7 @@ class Article extends Migration
             $table->string('img')->comment('文章头图');
             $table->integer('u_id')->comment('用户');
             $table->integer('ca_id')->comment('分类id');
+            $table->tinyInteger('whetherPublic')->comment('是否公开');
             $table->timestamps();
         });
     }

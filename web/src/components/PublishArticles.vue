@@ -1,9 +1,33 @@
 <template>
     <div id="editor">
+        <div style="padding: 0 0 15px 0;display: flex">
+            <div>
+                <span>文章分类:</span>
+                <el-select v-model="value" size="mini" placeholder="请选择">
+                    <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+            </div>
+            <div class="publicYn">
+                <el-switch
+                        v-model="whetherPublic"
+                        active-text="公开"
+                        inactive-text="不公开">
+                </el-switch>
+            </div>
+        </div>
         <mavon-editor @save="savePosts"
                       ref=md
+                      style="min-height: 460px"
                       @imgAdd="$imgAdd" @imgDel="$imgDel">
         </mavon-editor>
+        <div style="display: flex;justify-content: flex-end;margin-top: 5px">
+            <el-button type="primary">发布<i class="el-icon-upload el-icon--right"></i></el-button>
+        </div>
     </div>
 </template>
 
@@ -14,6 +38,24 @@
         data(){
             return{
                 article:null,
+                whetherPublic: true,
+                options: [{
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }],
+                value: ''
             }
         },
         name: "publish-articles",
@@ -54,12 +96,13 @@
                     description:description[1],
                     img:img || "",
                     ca_id:1,
+                    whetherPublic:this.whetherPublic?1:0,
                 };
                 this.$http.post('/article/article',this.article).then((res)=>{
                     if (res.data.code === 200) {
-
+                        this.$message.success(res.data.message)
                     }else{
-
+                        this.$message.error(res.data.message)
                     }
                 }).catch((err)=>{
                     console.log(err);
@@ -70,5 +113,11 @@
 </script>
 
 <style scoped>
-
+    .publicYn{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width:200px;
+        margin-left:20px;
+    }
 </style>

@@ -21,5 +21,6 @@ Route::group(['namespace'=>'v1'],function (){
     Route::group(['prefix'=>'article'],function (){
         Route::post('/imgUpload',"UploadController@upload");
         Route::post('/article',"ArticleController@article");
+        Route::post('/getArticleList',"ArticleController@getArticleList");
     });
 });

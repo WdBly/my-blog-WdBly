@@ -22,4 +22,18 @@ class ArticleController extends BasicController
             return renderJson('文章发表失败', null, 400);
         }
     }
+
+    public function getArticleList(Request $request)
+    {
+        $data = $this->validate($request,['pageSize'=>'required|integer','pageNum'=>'required|integer','search'=>'present']);
+        $user = new Article();
+        $res = $user->getArticleList($data);
+        if (!empty($res))
+        {
+            return renderJson('获取文章列表成功', $res, 200);
+        } else
+        {
+            return renderJson('获取文章列表失败', null, 400);
+        }
+    }
 }

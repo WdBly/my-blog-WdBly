@@ -20,18 +20,18 @@
                       class="timeLine"
                       :space="260">
                 <el-step v-for="(item,index) in aScreenArticle"
-                         :title="item.time"
+                         :title="item.created_at"
                 :key="index"></el-step>
             </el-steps>
             <div class="contentPopover">
                 <div class="elCardClass"
                          v-for="(item,index) in aScreenArticle"
                          :key="index">
-                    <header class="articleTitleText">这是文章标题</header>
+                    <header class="articleTitleText">{{item.title}}</header>
                     <div class="bottomContent">
-                        <img class="everArticleImg" src="../../static/images/loginBg.jpg"/>
+                        <img class="everArticleImg" :src="item.img"/>
                         <div class="bottomContentRight">
-                            <div class="articleIntroduction">qweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqwe</div>
+                            <div class="articleIntroduction">{{item.description}}</div>
                             <el-button type="success" class="readAllArticleButton">阅读全文>></el-button>
                         </div>
                     </div>
@@ -46,15 +46,7 @@
         name: "home",
         data(){
             return {
-                aScreenArticle:[{
-                    time:"2018/06/30"
-                },{
-                    time:"2018/06/30"
-                },{
-                    time:"2018/06/30"
-                },{
-                    time:"2018/06/30"
-                }],
+                aScreenArticle:[],
                 select:''
             }
         },
@@ -62,6 +54,19 @@
             elCarouselHeight(){
                 return document.documentElement.clientWidth<700?'120px':"200px"
             }
+        },
+        mounted(){
+            this.$http.post("/article/getArticleList",{
+                pageNum:1,
+                pageSize:10,
+                search:""
+            }).then((res)=>{
+                if(res.data.code===200){
+                    this.aScreenArticle = res.data.data.list;
+                }
+            }).catch((err)=>{
+                console.log(err);
+            })
         }
     }
 </script>
