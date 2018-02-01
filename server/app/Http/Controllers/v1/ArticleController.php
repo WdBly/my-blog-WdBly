@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Model\Article;
+use App\Http\Model\ArticleClassification;
 use App\Http\Requests\ArticleImgCheck;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,14 +27,41 @@ class ArticleController extends BasicController
     public function getArticleList(Request $request)
     {
         $data = $this->validate($request,['pageSize'=>'required|integer','pageNum'=>'required|integer','search'=>'present']);
-        $user = new Article();
-        $res = $user->getArticleList($data);
+        $article = new Article();
+        $res = $article->getArticleList($data);
         if (!empty($res))
         {
             return renderJson('获取文章列表成功', $res, 200);
         } else
         {
             return renderJson('获取文章列表失败', null, 400);
+        }
+    }
+
+    public function addArticleClass(Request $request)
+    {
+        $data = $this->validate($request,['name'=>'required|string|unique:articleClassification']);
+        $addArticleClass = new ArticleClassification();
+        $res = $addArticleClass->addArticleClass($data);
+        if (!empty($res))
+        {
+            return renderJson('添加文章分类成功', $res, 200);
+        } else
+        {
+            return renderJson('添加文章分类失败', null, 400);
+        }
+    }
+
+    public function getArticleClass()
+    {
+        $addArticleClass = new ArticleClassification();
+        $res = $addArticleClass->getArticleClass();
+        if (!empty($res))
+        {
+            return renderJson('获取文章分类成功', $res, 200);
+        } else
+        {
+            return renderJson('获取文章分类失败', null, 400);
         }
     }
 }

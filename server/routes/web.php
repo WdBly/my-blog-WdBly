@@ -22,5 +22,7 @@ Route::group(['namespace'=>'v1'],function (){
         Route::post('/imgUpload',"UploadController@upload");
         Route::post('/article',"ArticleController@article");
         Route::post('/getArticleList',"ArticleController@getArticleList");
+        Route::post('/getArticleClass',"ArticleController@getArticleClass");
+        Route::post('/addArticleClass',"ArticleController@addArticleClass");
     });
 });

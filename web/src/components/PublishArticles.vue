@@ -19,6 +19,10 @@
                         inactive-text="不公开">
                 </el-switch>
             </div>
+            <div style="display: flex">
+                <el-input v-model="addClass" size="mini" placeholder="请输入新增的分类名"></el-input>
+                <el-button @click="addArticleClass" size="mini" type="primary" style="margin-left: 20px">添加分类</el-button>
+            </div>
         </div>
         <mavon-editor @save="savePosts"
                       ref=md
@@ -39,22 +43,8 @@
             return{
                 article:null,
                 whetherPublic: true,
-                options: [{
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                }],
+                addClass: '',
+                options: [],
                 value: ''
             }
         },
@@ -62,7 +52,36 @@
         components: {
             'mavon-editor': mavonEditor.mavonEditor
         },
+        mounted(){
+            this.getArticleClass()
+        },
         methods:{
+            addArticleClass(){
+                this.$http.post("/article/addArticleClass",{
+                    name:this.addClass
+                }).then((res)=>{
+                    if(res.data.code === 200){
+                        this.$message.success(res.data.message)
+                    }else{
+                        this.$message.error(res.data.message)
+                    }
+                }).catch((err)=>{
+                    console.log(err);
+                })
+            },
+            getArticleClass(){
+                this.$http.post("/article/getArticleClass",{
+                    name:this.addClass
+                }).then((res)=>{
+                    if(res.data.code === 200){
+                        this.options = res.data.data;
+                    }else{
+                        this.$message.error(res.data.message)
+                    }
+                }).catch((err)=>{
+                    console.log(err);
+                })
+            },
             $imgAdd(pos, $file){
                 // 第一步.将图片上传到服务器.
                 var formdata = new FormData();

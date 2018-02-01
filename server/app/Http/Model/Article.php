@@ -52,4 +52,10 @@ class Article extends Model
         $list = $all->skip(($data['pageNum'] - 1) * $data['pageSize'])->take($data['pageSize'])->get();
         return !$list->isEmpty()?['total'=>$total,'list'=>$list->toArray()]:[];
     }
+
+    public function getArticleClass()
+    {
+
+        //return $re?true:false;
+    }
 }

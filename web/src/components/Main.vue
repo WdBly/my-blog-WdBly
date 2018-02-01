@@ -15,9 +15,7 @@
                 <router-link to="feedBack" class="item">留言</router-link>
                 <router-link to="publishArticles" class="item">发表文章</router-link>
             </div>
-            <el-card class="box-card elCard">
-                <router-view/>
-            </el-card>
+
         </div>
         <div class="responseHeadMobile">
             <div class="head">
@@ -41,8 +39,10 @@
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
-            <router-view/>
         </div>
+        <el-card class="box-card elCard">
+            <router-view/>
+        </el-card>
     </div>
 </template>
 

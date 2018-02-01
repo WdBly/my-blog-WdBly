@@ -63,6 +63,8 @@
             }).then((res)=>{
                 if(res.data.code===200){
                     this.aScreenArticle = res.data.data.list;
+                }else{
+                    this.$message.error(res.data.message)
                 }
             }).catch((err)=>{
                 console.log(err);
