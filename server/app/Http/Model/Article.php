@@ -18,9 +18,8 @@ class Article extends Model
     {
         if(!$data['img']){
             $data['img'] = "http://127.0.0.1/image/article/acb1c4189f5727fff608a11543663b69.jpg";
-        }else{
-            $this->img = $data['img'];
         }
+        $this->img = $data['img'];
         $this->title = $data['title'];
         $this->content = $data['content'];
         $this->value = $data['value'];
