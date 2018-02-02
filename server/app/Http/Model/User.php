@@ -34,4 +34,45 @@ class User extends AuthUser
         $re = $this->where(['username','=',$data['username']])->delete();
         return $re?true:false;
     }
+
+    public function userList($data)
+    {
+        $id = Auth::id();
+        $parameter = $data['search'];
+        if($id==1){
+            $all = $this->orderBy('created_at', 'desc')
+                ->where(function ($query) use ($parameter) {
+                    $query->where('username', 'like', '%' . $parameter . '%')->orWhere(function ($query) use ($parameter) {
+                        $query->where('mobile', 'like', '%' . $parameter . '%')->orWhere(function ($query) use ($parameter){
+                            $query->where('email', 'like', '%' . $parameter . '%');
+                        });
+                    });
+                })
+                ->select('*');
+
+            $total = $all->count();
+            $list = $all->skip(($data['pageNum'] - 1) * $data['pageSize'])->take($data['pageSize'])->get();
+            return !$list->isEmpty()?['total'=>$total,'list'=>$list->toArray()]:[];
+        }else{
+            return false;
+        }
+    }
+
+    public function addUser($data)
+    {
+        $re = $this->insert($data);
+        return $re?true:false;
+    }
+
+    public function editUser($data)
+    {
+        $re = $this->where('id',$data['id'])->update($data);
+        return $re?true:false;
+    }
+
+    public function delUser($data)
+    {
+        $re = $this->where('id','=',$data['id'])->delete();
+        return $re?true:false;
+    }
 }

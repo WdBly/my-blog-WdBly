@@ -27,7 +27,7 @@
                       class="timeLine"
                       :space="260">
                 <el-step v-for="(item,index) in aScreenArticle"
-                         :title="item.created_at"
+                         :title="item.created_at.substr(0,10)"
                 :key="index"></el-step>
             </el-steps>
             <div class="contentPopover">

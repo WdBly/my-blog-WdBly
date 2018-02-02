@@ -4,19 +4,32 @@
                   border
                   v-loading="loadingHomeContent"
                   style="width:100%;">
+            <el-table-column type="expand">
+                <template slot-scope="props">
+                    <el-form label-position="left" inline  class="demo-table-expand">
+                        <el-form-item label="文章标题:">
+                            <span>{{ props.row.title }}</span>
+                        </el-form-item>
+                        <el-form-item label="文章描述:">
+                            <span>{{ props.row.description }}</span>
+                        </el-form-item>
+                        <el-form-item label="创建时间:">
+                            <span>{{ props.row.created_at }}</span>
+                        </el-form-item>
+                        <el-form-item label="更新时间:">
+                            <span>{{ props.row.updated_at }}</span>
+                        </el-form-item>
+                    </el-form>
+                </template>
+            </el-table-column>
             <el-table-column label="ID" width="50">
                 <template slot-scope="scope">
                     <span style="margin-left: 10px">{{ scope.row.id }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="文章标题" width="80" show-overflow-tooltip>
+            <el-table-column label="文章标题"  show-overflow-tooltip>
                 <template slot-scope="scope">
                     <span style="margin-left: 10px">{{ scope.row.title }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column label="文章描述" show-overflow-tooltip>
-                <template slot-scope="scope">
-                    <span style="margin-left: 10px">{{ scope.row.description }}</span>
                 </template>
             </el-table-column>
             <el-table-column label="首图" width="50">
@@ -24,23 +37,12 @@
                     <img :src="scope.row.img" style="width: 25px;height: 25px"/>
                 </template>
             </el-table-column>
-            <el-table-column label="作者" width="50">
-                <template slot-scope="scope">
-                    <i class="el-icon-phone"></i>
-                    <span style="margin-left: 10px">{{ scope.row.user }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column label="发布时间" width="120">
+            <el-table-column label="作者" width="150">
                 <template slot-scope="scope">
                     <span style="margin-left: 10px">{{ scope.row.username }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="更新时间" width="120">
-                <template slot-scope="scope">
-                    <span style="margin-left: 10px">{{ scope.row.username }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column label="操作" width="200">
+            <el-table-column label="操作" width="160">
                 <template slot-scope="scope">
                     <el-button size="small" type="success" icon="el-icon-edit-outline"
                                title="修改文章"></el-button>
@@ -112,6 +114,17 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+    .demo-table-expand {
+        font-size: 0;
+    }
+    .demo-table-expand label {
+        width: 90px;
+        color: #99a9bf;
+    }
+    .demo-table-expand .el-form-item {
+        margin-right: 0;
+        margin-bottom: 0;
+        width: 50%;
+    }
 </style>

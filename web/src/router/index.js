@@ -8,11 +8,12 @@ function routerProduce() {
     const Login = ()=> import('@/components/Login.vue');
     const AboutMe = ()=> import('@/components/AboutMe.vue');
     const Register = ()=> import('@/components/Register.vue');
-    const PersonalGrowth = ()=> import('@/components/personalGrowth.vue');
-    const ShareContent = ()=> import('@/components/shareContent.vue');
-    const FeedBack = ()=> import('@/components/feedBack.vue');
-    const PublishArticles = ()=> import('@/components/publishArticles.vue');
+    const PersonalGrowth = ()=> import('@/components/PersonalGrowth.vue');
+    const ShareContent = ()=> import('@/components/ShareContent.vue');
+    const FeedBack = ()=> import('@/components/FeedBack.vue');
+    const PublishArticles = ()=> import('@/components/PublishArticles.vue');
     const ArticleManagement = ()=> import('@/components/ArticleManagement.vue');
+    const UserManagement = ()=> import('@/components/UserManagement.vue');
 
 
     const DisplayArticle = ()=> import('@/components/DisplayArticle.vue');
@@ -48,6 +49,9 @@ function routerProduce() {
                 },{
                     path: 'articleManagement',
                     component: ArticleManagement
+                },{
+                    path: 'userManagement',
+                    component: UserManagement
                 }]
             },
             {

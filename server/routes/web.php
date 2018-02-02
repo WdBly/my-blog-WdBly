@@ -17,7 +17,14 @@ Route::group(['namespace'=>'v1'],function (){
         Route::post('/login',"LoginController@login");
         Route::post('/update',"LoginController@update");
         Route::post('/delete',"LoginController@delete");
+        Route::post('/list',"UserController@list");
+        Route::post('/addUser',"UserController@addUser");
+        Route::post('/editUser',"UserController@editUser");
+        Route::post('/delUser',"UserController@delUser");
     });
+/*    Route::group(['prefix'=>'userManagement'],function (){
+        Route::post('/list',"UserController@list");
+    });*/
     Route::group(['prefix'=>'article'],function (){
         Route::post('/imgUpload',"UploadController@upload");
         Route::post('/addArticle',"ArticleController@addArticle");

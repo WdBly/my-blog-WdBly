@@ -4,15 +4,16 @@ namespace App\Http\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Article extends Model
 {
     protected $table = 'articles';
 
-    public function getCreatedAtAttribute($value)
+/*    public function getCreatedAtAttribute($value)
     {
         return mb_substr($value,0,10);
-    }
+    }*/
     public function addArticle($data)
     {
         if(!$data['img']){
@@ -60,10 +61,13 @@ class Article extends Model
                     $query->where('description', 'like', '%' . $parameter . '%');
                 });
             })
-            ->select(["id","title",'description','img','created_at']);
-
+            ->select(["id","title",'description','img','created_at','updated_at','u_id']);
         $total = $all->count();
-        $list = $all->skip(($data['pageNum'] - 1) * $data['pageSize'])->take($data['pageSize'])->get();
-        return !$list->isEmpty()?['total'=>$total,'list'=>$list->toArray()]:[];
+        $list = $all->skip(($data['pageNum'] - 1) * $data['pageSize'])->take($data['pageSize'])->get()->toArray();
+        for($i = 0;$i < count($list); $i++){
+            $d = DB::table('users')->where('id','=',$list[$i]['u_id'])->value('username');
+            $list[$i]['username'] = $d;
+        }
+        return $list?['total'=>$total,'list'=>$list]:[];
     }
 }

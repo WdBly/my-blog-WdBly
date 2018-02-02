@@ -19,6 +19,7 @@
                         <router-link to="feedBack" class="item">留言</router-link>
                         <router-link to="publishArticles" class="item">发表文章</router-link>
                         <router-link to="articleManagement" class="item">文章管理</router-link>
+                        <router-link to="userManagement" class="item">用户管理</router-link>
                     </div>
                     <span :class="showHeader?'el-icon-caret-top':'el-icon-caret-bottom'" @click="showHeader =!showHeader"></span>
                 </div>
@@ -43,7 +44,9 @@
                         <el-dropdown-item command="home-成长">成长</el-dropdown-item>
                         <el-dropdown-item command="aboutMe-分享">分享</el-dropdown-item>
                         <el-dropdown-item command="home-留言">留言</el-dropdown-item>
-                        <router-link to="publishArticles" class="item">发表文章</router-link>
+                        <el-dropdown-item command="publishArticles-发表文章">发表文章</el-dropdown-item>
+                        <el-dropdown-item command="articleManagement-文章管理">文章管理</el-dropdown-item>
+                        <el-dropdown-item command="userManagement-用户管理">用户管理</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
