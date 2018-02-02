@@ -15,6 +15,12 @@ class ArticleClassification extends Model
         return $re?true:false;
     }
 
+    public function delArticleClass($data)
+    {
+        $re = $this->where([['name','=',$data['name']]])->delete();
+        return $re?true:false;
+    }
+
     public function getArticleClass()
     {
         $da = $this->select('id','name')->get()->toArray();

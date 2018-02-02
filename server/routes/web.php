@@ -24,5 +24,7 @@ Route::group(['namespace'=>'v1'],function (){
         Route::post('/getArticleList',"ArticleController@getArticleList");
         Route::post('/getArticleClass',"ArticleController@getArticleClass");
         Route::post('/addArticleClass',"ArticleController@addArticleClass");
+        Route::post('/delArticleClass',"ArticleController@delArticleClass");
+        Route::post('/getArticleContent',"ArticleController@getArticleContent");
     });
 });

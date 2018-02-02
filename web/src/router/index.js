@@ -12,6 +12,7 @@ function routerProduce() {
     const ShareContent = ()=> import('@/components/shareContent.vue');
     const FeedBack = ()=> import('@/components/feedBack.vue');
     const PublishArticles = ()=> import('@/components/publishArticles.vue');
+    const DisplayArticle = ()=> import('@/components/DisplayArticle.vue');
 
     Vue.use(Router);
 
@@ -41,6 +42,11 @@ function routerProduce() {
                     path: 'publishArticles',
                     component: PublishArticles
                 }]
+            },
+            {
+                path: '/displayArticle/:id',
+                component: DisplayArticle,
+                props: true
             },
             {
                 path: '/login',

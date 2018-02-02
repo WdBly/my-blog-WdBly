@@ -105,6 +105,7 @@
         display: flex;
         justify-content: center;
         flex-direction: column;
+        background: url("/../../static/images/e48e1d0cbffed09322e60ec6a930eaf3.jpg") fixed left top no-repeat;
         .describeText {
             color: white;
             animation:opacityChange 2s;

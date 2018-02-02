@@ -1,8 +1,8 @@
 <template>
-    <div id="editor">
-        <div style="padding: 0 0 15px 0;display: flex">
-            <div>
-                <span>文章分类:</span>
+    <div id="editor" style="background-color: white">
+        <div style="padding: 10px 0 15px 0;display: flex">
+            <div style="margin-left: 20px;display: flex;flex-wrap: nowrap;align-items: center">
+                <span style="white-space:nowrap">文章分类:</span>
                 <el-select v-model="value" size="mini" placeholder="请选择">
                     <el-option
                             v-for="item in options"
@@ -22,6 +22,7 @@
             <div style="display: flex">
                 <el-input v-model="addClass" size="mini" placeholder="请输入新增的分类名"></el-input>
                 <el-button @click="addArticleClass" size="mini" type="primary" style="margin-left: 20px">添加分类</el-button>
+                <el-button @click="delArticleClass" size="mini" type="primary" style="margin-left: 20px">删除分类</el-button>
             </div>
         </div>
         <mavon-editor @save="savePosts"
@@ -29,9 +30,6 @@
                       style="min-height: 460px"
                       @imgAdd="$imgAdd" @imgDel="$imgDel">
         </mavon-editor>
-        <div style="display: flex;justify-content: flex-end;margin-top: 5px">
-            <el-button type="primary">发布<i class="el-icon-upload el-icon--right"></i></el-button>
-        </div>
     </div>
 </template>
 
@@ -61,9 +59,24 @@
                     name:this.addClass
                 }).then((res)=>{
                     if(res.data.code === 200){
-                        this.$message.success(res.data.message)
+                        this.$message.success(res.data.message);
+                        this.getArticleClass();
                     }else{
-                        this.$message.error(res.data.message)
+                        this.$message.error(res.error)
+                    }
+                }).catch((err)=>{
+                    console.log(err);
+                })
+            },
+            delArticleClass(){
+                this.$http.post("/article/delArticleClass",{
+                    name:this.addClass
+                }).then((res)=>{
+                    if(res.data.code === 200){
+                        this.$message.success(res.data.message);
+                        this.getArticleClass();
+                    }else{
+                        this.$message.error(res.error)
                     }
                 }).catch((err)=>{
                     console.log(err);
@@ -74,6 +87,7 @@
                     name:this.addClass
                 }).then((res)=>{
                     if(res.data.code === 200){
+                        this.value = '';
                         this.options = res.data.data;
                     }else{
                         this.$message.error(res.data.message)
@@ -105,8 +119,8 @@
                 let img = [].map.call(frag.querySelectorAll('img'), function(img){ return img.src })[0];
                 let title = render.match(/<h1>(.+)<\/h1>/);
                 let description = render.match(/<h2>(.+)<\/h2>/);
-                if(!title ||!description){
-                    this.$message.warning("必须要有文章标题,描述");
+                if(!title ||!description ||!this.value){
+                    this.$message.warning("必须要有文章标题,描述,分类");
                     return
                 }
                 this.article = {
@@ -114,7 +128,7 @@
                     title:title[1],
                     description:description[1],
                     img:img || "",
-                    ca_id:1,
+                    ca_id:this.value,
                     whetherPublic:this.whetherPublic?1:0,
                 };
                 this.$http.post('/article/article',this.article).then((res)=>{

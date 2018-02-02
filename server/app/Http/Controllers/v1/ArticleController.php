@@ -24,6 +24,20 @@ class ArticleController extends BasicController
         }
     }
 
+    public function getArticleContent(Request $request)
+    {
+        $data = $this->validate($request,['id'=>'required|integer']);
+        $user = new Article();
+        $res = $user->getArticleContent($data);
+        if ($res)
+        {
+            return renderJson('文章获取成功', $res, 200);
+        } else
+        {
+            return renderJson('文章获取失败', null, 400);
+        }
+    }
+
     public function getArticleList(Request $request)
     {
         $data = $this->validate($request,['pageSize'=>'required|integer','pageNum'=>'required|integer','search'=>'present']);
@@ -52,6 +66,20 @@ class ArticleController extends BasicController
         }
     }
 
+    public function delArticleClass(Request $request)
+    {
+        $data = $this->validate($request,['name'=>'required|string']);
+        $delArticleClass = new ArticleClassification();
+        $res = $delArticleClass->delArticleClass($data);
+        if ($res)
+        {
+            return renderJson('删除文章分类成功', null, 200);
+        } else
+        {
+            return renderJson('删除文章分类失败', null, 400);
+        }
+    }
+
     public function getArticleClass()
     {
         $addArticleClass = new ArticleClassification();
@@ -61,7 +89,7 @@ class ArticleController extends BasicController
             return renderJson('获取文章分类成功', $res, 200);
         } else
         {
-            return renderJson('获取文章分类失败', null, 400);
+            return renderJson('暂无文章分类', null, 400);
         }
     }
 }

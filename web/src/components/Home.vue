@@ -1,18 +1,25 @@
 <template>
-    <el-card class="box-card" style="width: 100%;">
-        <el-carousel :interval="6000" trigger="click" type="card" :height="elCarouselHeight">
+    <el-card  v-loading="loadingHomeContent" class="box-card" style="width: 100%;">
+<!--        <el-carousel :interval="6000" trigger="click" type="card" :height="elCarouselHeight">
             <el-carousel-item v-for="item in 6" :key="item">
                 <h3>{{ item }}</h3>
             </el-carousel-item>
-        </el-carousel>
+        </el-carousel>-->
         <div class="topSearch">
-            <el-input placeholder="搜索文章" class="input-with-select">
-                <el-select v-model="select" slot="prepend" placeholder="请选择">
-                    <el-option label="餐厅名" value="1"></el-option>
-                    <el-option label="订单号" value="2"></el-option>
-                    <el-option label="用户电话" value="3"></el-option>
+            <div>
+                <span>文章分类:</span>
+                <el-select v-model="value" size="mini" placeholder="请选择">
+                    <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
                 </el-select>
-            </el-input>
+            </div>
+            <div style="display: flex;">
+                <el-input  prefix-icon="el-icon-search" v-model="addClass" @change="searchArticleList" size="mini" placeholder="请输入关键字"></el-input>
+            </div>
         </div>
         <div class="homeContent">
             <el-steps direction="vertical"
@@ -32,7 +39,7 @@
                         <img class="everArticleImg" :src="item.img"/>
                         <div class="bottomContentRight">
                             <div class="articleIntroduction">{{item.description}}</div>
-                            <el-button type="success" class="readAllArticleButton">阅读全文>></el-button>
+                            <el-button @click="readFullArticle(item.id)" type="success" class="readAllArticleButton">阅读全文>></el-button>
                         </div>
                     </div>
                 </div>
@@ -47,7 +54,11 @@
         data(){
             return {
                 aScreenArticle:[],
-                select:''
+                select:'',
+                options: [],
+                value: '',
+                addClass: '',
+                loadingHomeContent: true
             }
         },
         computed:{
@@ -55,20 +66,49 @@
                 return document.documentElement.clientWidth<700?'120px':"200px"
             }
         },
+        methods:{
+            readFullArticle(id){
+                this.$router.push({ path: `/displayArticle/${id}` })
+            },
+            searchArticleList(){
+                this.getArticleList()
+            },
+            getArticleClass(){
+                this.$http.post("/article/getArticleClass",{
+                    name:this.addClass
+                }).then((res)=>{
+                    if(res.data.code === 200){
+                        this.value = '';
+                        this.options = res.data.data;
+                    }else{
+                        this.$message.error(res.data.message)
+                    }
+                }).catch((err)=>{
+                    console.log(err);
+                })
+            },
+            getArticleList(){
+                this.loadingHomeContent = true;
+                this.$http.post("/article/getArticleList",{
+                    pageNum:1,
+                    pageSize:10,
+                    search:this.addClass
+                }).then((res)=>{
+                    this.loadingHomeContent = false;
+                    if(res.data.code===200){
+                        this.aScreenArticle = res.data.data.list;
+                    }else{
+                        this.$message.error(res.data.message)
+                    }
+                }).catch((err)=>{
+                    this.loadingHomeContent = false;
+                    console.log(err);
+                })
+            }
+        },
         mounted(){
-            this.$http.post("/article/getArticleList",{
-                pageNum:1,
-                pageSize:10,
-                search:""
-            }).then((res)=>{
-                if(res.data.code===200){
-                    this.aScreenArticle = res.data.data.list;
-                }else{
-                    this.$message.error(res.data.message)
-                }
-            }).catch((err)=>{
-                console.log(err);
-            })
+            this.getArticleClass();
+            this.getArticleList();
         }
     }
 </script>
@@ -88,29 +128,33 @@
         background: url("../../static/images/loginBg.jpg");
     }
     .topSearch{
-        margin: 5px 0;
-        width: 40%;
+        padding: 10px 0 15px 0;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap:wrap
     }
     .homeContent{
         position: relative;
         margin-top: 10px;
+
         .contentPopover{
             width: calc(100% - 150px);
             position: absolute;
             left: 150px;
             top:0;
             .elCardClass {
+                box-shadow: 0 2px 12px 0 rgba(0,0,0,.3);
                 &:first-child{
                     margin-top: 0;
                 }
-                margin-top: 60px;
+                margin-top: 50px;
                 padding: 15px;
-                background-color: #4998D3;
+                background-color: #fff;
                 .articleTitleText{
                     font-size: 20px;
                     font-weight: bold;
-                    color: white;
-                    margin-bottom: 5px;
+                    color: black;
+                    margin-bottom: 15px;
                 }
                 .bottomContent{
                     display: flex;
@@ -131,7 +175,7 @@
                             text-overflow:ellipsis;
                             overflow:hidden;
                             font-size: 18px;
-                            color: white;
+                            color: black;
                         }
                         .readAllArticleButton{
                             width: 100px;

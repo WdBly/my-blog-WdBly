@@ -16,17 +16,25 @@ class Article extends Model
     public function article($data)
     {
         if(!$data['img']){
-            $data['img'] = "";
+            $data['img'] = "http://127.0.0.1/image/article/acb1c4189f5727fff608a11543663b69.jpg";
+        }else{
+            $this->img = $data['img'];
         }
         $this->title = $data['title'];
         $this->content = $data['content'];
-        $this->img = $data['img'];
+
         $this->description = $data['description'];
         $this->ca_id = $data['ca_id'];
         $this->whetherPublic = $data['whetherPublic'];
         $this->u_id = Auth::id();
         $re = $this->save();
         return $re?true:false;
+    }
+
+    public function getArticleContent($data)
+    {
+        $data = $this->where([['id','=',$data['id']]])->select("content")->first();
+        return $data;
     }
 
     public function getArticleList($data)

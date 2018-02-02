@@ -1,22 +1,29 @@
 <template>
     <div id="mainContent">
-        <div class="responseHead">
-            <div style="display: flex;justify-content: space-between;align-items: center;">
-                <p class="topTextP">WdBly&#8226博客</p>
-                <el-button type="primary" @click="routerJump">
-                    管理员登陆
-                </el-button>
-            </div>
-            <div class="eachItem">
-                <router-link to="home" class="item" >首页</router-link>
-                <router-link to="aboutMe" class="item" >关于我</router-link>
-                <router-link to="personalGrowth" class="item" >成长</router-link>
-                <router-link to="shareContent" class="item" >分享</router-link>
-                <router-link to="feedBack" class="item">留言</router-link>
-                <router-link to="publishArticles" class="item">发表文章</router-link>
+
+            <div class="responseHead">
+                <transition enter-active-class="animated zoomInLeft" leave-active-class="animated zoomOutUp">
+                    <div  v-show="showHeader" style="display: flex;justify-content: space-between;align-items: center;">
+                        <p class="topTextP">WdBly&#8226博客</p>
+                        <el-button type="primary" @click="routerJump">
+                            管理员登陆
+                        </el-button>
+                    </div>
+                </transition>
+                <div class="eachItem">
+                    <div>
+                        <router-link to="home" class="item" >首页</router-link>
+                        <router-link to="aboutMe" class="item" >关于我</router-link>
+                        <router-link to="personalGrowth" class="item" >成长</router-link>
+                        <router-link to="shareContent" class="item" >分享</router-link>
+                        <router-link to="feedBack" class="item">留言</router-link>
+                        <router-link to="publishArticles" class="item">发表文章</router-link>
+                    </div>
+                    <span :class="showHeader?'el-icon-caret-top':'el-icon-caret-bottom'" @click="showHeader =!showHeader"></span>
+                </div>
             </div>
 
-        </div>
+
         <div class="responseHeadMobile">
             <div class="head">
                 <span>
@@ -40,9 +47,7 @@
                 </el-dropdown>
             </div>
         </div>
-        <el-card class="box-card elCard">
-            <router-view/>
-        </el-card>
+        <router-view/>
     </div>
 </template>
 
@@ -52,6 +57,7 @@
         data(){
             return{
                 routerText:"首页",
+                showHeader:true,
             }
         },
         methods:{
@@ -78,14 +84,26 @@
             line-height: 100px;
         }
     }
-    .eachItem {
+    .eachItem{
         width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .eachItem>div{
         height: 50px;
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
         border-bottom: 2px solid #E4EDE7;
     }
+    .eachItem>span{
+        font-size: 22px;
+        color: white;
+        cursor: pointer;
+    }
+
     .item {
         width: 100px;
         height: 50px;
