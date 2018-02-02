@@ -13,7 +13,7 @@ class Article extends Model
     {
         return mb_substr($value,0,10);
     }
-    public function article($data)
+    public function addArticle($data)
     {
         if(!$data['img']){
             $data['img'] = "http://127.0.0.1/image/article/acb1c4189f5727fff608a11543663b69.jpg";
@@ -22,12 +22,18 @@ class Article extends Model
         }
         $this->title = $data['title'];
         $this->content = $data['content'];
-
+        $this->value = $data['value'];
         $this->description = $data['description'];
         $this->ca_id = $data['ca_id'];
         $this->whetherPublic = $data['whetherPublic'];
         $this->u_id = Auth::id();
         $re = $this->save();
+        return $re?true:false;
+    }
+
+    public function delArticle($data)
+    {
+        $re = $this->where([['id','=',$data['id']]])->delete();
         return $re?true:false;
     }
 
@@ -59,11 +65,5 @@ class Article extends Model
         $total = $all->count();
         $list = $all->skip(($data['pageNum'] - 1) * $data['pageSize'])->take($data['pageSize'])->get();
         return !$list->isEmpty()?['total'=>$total,'list'=>$list->toArray()]:[];
-    }
-
-    public function getArticleClass()
-    {
-
-        //return $re?true:false;
     }
 }

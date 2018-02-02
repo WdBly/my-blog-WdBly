@@ -1,7 +1,7 @@
 <template>
-    <div id="editor" style="background-color: white">
-        <div style="padding: 10px 0 15px 0;display: flex">
-            <div style="margin-left: 20px;display: flex;flex-wrap: nowrap;align-items: center">
+    <div id="editor">
+        <div style="padding: 10px 0 15px 0;display: flex;background-color: white;margin-top: 10px">
+            <div style="margin-left: 20px;display: flex;flex-wrap: nowrap;align-items: center;">
                 <span style="white-space:nowrap">文章分类:</span>
                 <el-select v-model="value" size="mini" placeholder="请选择">
                     <el-option
@@ -20,15 +20,16 @@
                 </el-switch>
             </div>
             <div style="display: flex">
-                <el-input v-model="addClass" size="mini" placeholder="请输入新增的分类名"></el-input>
+                <el-input v-model="addClass" size="mini" placeholder="请输入新增或删除的分类名"></el-input>
                 <el-button @click="addArticleClass" size="mini" type="primary" style="margin-left: 20px">添加分类</el-button>
                 <el-button @click="delArticleClass" size="mini" type="primary" style="margin-left: 20px">删除分类</el-button>
             </div>
         </div>
         <mavon-editor @save="savePosts"
                       ref=md
+                      :value="mavonValue"
                       style="min-height: 460px"
-                      @imgAdd="$imgAdd" @imgDel="$imgDel">
+                      @imgAdd="$imgAdd" >
         </mavon-editor>
     </div>
 </template>
@@ -43,7 +44,8 @@
                 whetherPublic: true,
                 addClass: '',
                 options: [],
-                value: ''
+                value: '',
+                mavonValue: ''
             }
         },
         name: "publish-articles",
@@ -114,32 +116,41 @@
                 console.log(filename);
             },
             savePosts(value,render){
-                let frag = document.createElement('div');
-                frag.innerHTML = render;
-                let img = [].map.call(frag.querySelectorAll('img'), function(img){ return img.src })[0];
-                let title = render.match(/<h1>(.+)<\/h1>/);
-                let description = render.match(/<h2>(.+)<\/h2>/);
-                if(!title ||!description ||!this.value){
-                    this.$message.warning("必须要有文章标题,描述,分类");
-                    return
-                }
-                this.article = {
-                    content:render,
-                    title:title[1],
-                    description:description[1],
-                    img:img || "",
-                    ca_id:this.value,
-                    whetherPublic:this.whetherPublic?1:0,
-                };
-                this.$http.post('/article/article',this.article).then((res)=>{
-                    if (res.data.code === 200) {
-                        this.$message.success(res.data.message)
-                    }else{
-                        this.$message.error(res.data.message)
+                this.$confirm('是否确定上传博客?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let frag = document.createElement('div');
+                    frag.innerHTML = render;
+                    let img = [].map.call(frag.querySelectorAll('img'), function(img){ return img.src })[0];
+                    let title = render.match(/<h1>(.+)<\/h1>/);
+                    let description = render.match(/<h2>(.+)<\/h2>/);
+                    if(!title ||!description ||!this.value){
+                        this.$message.warning("必须要有文章标题,描述,分类");
+                        return
                     }
-                }).catch((err)=>{
-                    console.log(err);
-                })
+                    this.article = {
+                        content:render,
+                        title:title[1],
+                        description:description[1],
+                        value:value,
+                        img:img || "",
+                        ca_id:this.value,
+                        whetherPublic:this.whetherPublic?1:0,
+                    };
+                    this.$http.post('/article/addArticle',this.article).then((res)=>{
+                        if (res.data.code === 200) {
+                            this.$message.success(res.data.message)
+                        }else{
+                            this.$message.error(res.data.message)
+                        }
+                    }).catch((err)=>{
+                        console.log(err);
+                    })
+                }).catch(() => {
+                    return;
+                });
             }
         }
     }

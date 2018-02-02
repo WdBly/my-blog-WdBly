@@ -18,6 +18,7 @@
                         <router-link to="shareContent" class="item" >分享</router-link>
                         <router-link to="feedBack" class="item">留言</router-link>
                         <router-link to="publishArticles" class="item">发表文章</router-link>
+                        <router-link to="articleManagement" class="item">文章管理</router-link>
                     </div>
                     <span :class="showHeader?'el-icon-caret-top':'el-icon-caret-bottom'" @click="showHeader =!showHeader"></span>
                 </div>
@@ -90,13 +91,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        border-bottom: 2px solid #E4EDE7;
     }
     .eachItem>div{
         height: 50px;
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
-        border-bottom: 2px solid #E4EDE7;
     }
     .eachItem>span{
         font-size: 22px;

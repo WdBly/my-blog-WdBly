@@ -1,5 +1,5 @@
 <template>
-    <el-card  v-loading="loadingHomeContent" class="box-card" style="width: 100%;">
+    <el-card  v-loading="loadingHomeContent" class="box-card" style="width: 100%;margin-top: 10px">
 <!--        <el-carousel :interval="6000" trigger="click" type="card" :height="elCarouselHeight">
             <el-carousel-item v-for="item in 6" :key="item">
                 <h3>{{ item }}</h3>
