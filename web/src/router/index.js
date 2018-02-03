@@ -44,8 +44,9 @@ function routerProduce() {
                     path: 'feedBack',
                     component: FeedBack
                 },{
-                    path: 'publishArticles',
-                    component: PublishArticles
+                    path: 'publishArticles/:id',
+                    component: PublishArticles,
+                    props: true
                 },{
                     path: 'articleManagement',
                     component: ArticleManagement

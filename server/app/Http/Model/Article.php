@@ -39,8 +39,17 @@ class Article extends Model
 
     public function getArticleContent($data)
     {
-        $data = $this->where([['id','=',$data['id']]])->select("content")->first();
+        $data = $this->where([['id','=',$data['id']]])->select("content",'value')->first();
         return $data;
+    }
+
+    public function editArticle($data)
+    {
+        if(!$data['img']){
+            $data['img'] = "http://127.0.0.1/image/article/acb1c4189f5727fff608a11543663b69.jpg";
+        }
+        $re = $this->where('id',$data['id'])->update($data);
+        return $re?true:false;
     }
 
     public function getArticleList($data)
@@ -60,7 +69,7 @@ class Article extends Model
                     $query->where('description', 'like', '%' . $parameter . '%');
                 });
             })
-            ->select(["id","title",'description','img','created_at','updated_at','u_id']);
+            ->select("*");
         $total = $all->count();
         $list = $all->skip(($data['pageNum'] - 1) * $data['pageSize'])->take($data['pageSize'])->get()->toArray();
         for($i = 0;$i < count($list); $i++){

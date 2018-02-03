@@ -29,6 +29,7 @@ Route::group(['namespace'=>'v1'],function (){
         Route::post('/imgUpload',"UploadController@upload");
         Route::post('/addArticle',"ArticleController@addArticle");
         Route::post('/delArticle',"ArticleController@delArticle");
+        Route::post('/editArticle',"ArticleController@editArticle");
         Route::post('/getArticleList',"ArticleController@getArticleList");
         Route::post('/getArticleClass',"ArticleController@getArticleClass");
         Route::post('/addArticleClass',"ArticleController@addArticleClass");

@@ -12,14 +12,14 @@
                 </transition>
                 <div class="eachItem">
                     <div>
-                        <router-link to="home" class="item" >首页</router-link>
-                        <router-link to="aboutMe" class="item" >关于我</router-link>
-                        <router-link to="personalGrowth" class="item" >成长</router-link>
-                        <router-link to="shareContent" class="item" >分享</router-link>
-                        <router-link to="feedBack" class="item">留言</router-link>
-                        <router-link to="publishArticles" class="item">发表文章</router-link>
-                        <router-link to="articleManagement" class="item">文章管理</router-link>
-                        <router-link to="userManagement" class="item">用户管理</router-link>
+                        <router-link to="/main/home" class="item" >首页</router-link>
+                        <router-link to="/main/aboutMe" class="item" >关于我</router-link>
+                        <router-link to="/main/personalGrowth" class="item" >成长</router-link>
+                        <router-link to="/main/shareContent" class="item" >分享</router-link>
+                        <router-link to="/main/feedBack" class="item">留言</router-link>
+                        <router-link to="/main/publishArticles/0" class="item">发表文章</router-link>
+                        <router-link to="/main/articleManagement" class="item">文章管理</router-link>
+                        <router-link to="/main/userManagement" class="item">用户管理</router-link>
                     </div>
                     <span :class="showHeader?'el-icon-caret-top':'el-icon-caret-bottom'" @click="showHeader =!showHeader"></span>
                 </div>
@@ -35,18 +35,18 @@
                     </el-button>
                 </span>
                 <el-dropdown trigger="click" @command="handleCommand">
-                    <el-button type="primary">
+                    <el-button type="primary" size="mini">
                         {{routerText}}<i class="el-icon-arrow-down el-icon--right"></i>
                     </el-button>
                     <el-dropdown-menu slot="dropdown" class="dropDownClass">
-                        <el-dropdown-item command="home-首页">首页</el-dropdown-item>
-                        <el-dropdown-item command="aboutMe-关于我">关于我</el-dropdown-item>
-                        <el-dropdown-item command="home-成长">成长</el-dropdown-item>
-                        <el-dropdown-item command="aboutMe-分享">分享</el-dropdown-item>
-                        <el-dropdown-item command="home-留言">留言</el-dropdown-item>
-                        <el-dropdown-item command="publishArticles-发表文章">发表文章</el-dropdown-item>
-                        <el-dropdown-item command="articleManagement-文章管理">文章管理</el-dropdown-item>
-                        <el-dropdown-item command="userManagement-用户管理">用户管理</el-dropdown-item>
+                        <el-dropdown-item command="/main/home-首页">首页</el-dropdown-item>
+                        <el-dropdown-item command="/main/aboutMe-关于我">关于我</el-dropdown-item>
+                        <el-dropdown-item command="/main/home-成长">成长</el-dropdown-item>
+                        <el-dropdown-item command="/main/aboutMe-分享">分享</el-dropdown-item>
+                        <el-dropdown-item command="/main/home-留言">留言</el-dropdown-item>
+                        <el-dropdown-item command="/main/publishArticles/0-发表文章">发表文章</el-dropdown-item>
+                        <el-dropdown-item command="/main/articleManagement-文章管理">文章管理</el-dropdown-item>
+                        <el-dropdown-item command="/main/userManagement-用户管理">用户管理</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>

@@ -38,6 +38,7 @@
     var mavonEditor = require('mavon-editor');
     import 'mavon-editor/dist/css/index.css'
     export default {
+        props:["id"],
         data(){
             return{
                 article:null,
@@ -53,6 +54,9 @@
             'mavon-editor': mavonEditor.mavonEditor
         },
         mounted(){
+            if(this.id != 0){
+                this.getArticleContent();
+            }
             this.getArticleClass()
         },
         methods:{
@@ -126,6 +130,7 @@
                     let img = [].map.call(frag.querySelectorAll('img'), function(img){ return img.src })[0];
                     let title = render.match(/<h1>(.+)<\/h1>/);
                     let description = render.match(/<h2>(.+)<\/h2>/);
+                    let url = '/article/addArticle';
                     if(!title ||!description ||!this.value){
                         this.$message.warning("必须要有文章标题,描述,分类");
                         return
@@ -139,7 +144,11 @@
                         ca_id:this.value,
                         whetherPublic:this.whetherPublic?1:0,
                     };
-                    this.$http.post('/article/addArticle',this.article).then((res)=>{
+                    if(this.id!=0){
+                        url = '/article/editArticle';
+                        this.article.id = this.id;
+                    }
+                    this.$http.post(url,this.article).then((res)=>{
                         if (res.data.code === 200) {
                             this.$message.success(res.data.message)
                         }else{
@@ -151,6 +160,19 @@
                 }).catch(() => {
                     return;
                 });
+            },
+            getArticleContent(){
+                this.$http.post("/article/getArticleContent",{
+                    id:this.id
+                }).then((res)=>{
+                    if(res.data.code===200){
+                        this.mavonValue = res.data.data.value;
+                    }else{
+                        this.$message.error(res.data.message)
+                    }
+                }).catch((err)=>{
+                    console.log(err);
+                })
             }
         }
     }

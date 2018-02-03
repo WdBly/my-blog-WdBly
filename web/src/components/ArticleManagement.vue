@@ -1,5 +1,5 @@
 <template>
-    <div style="padding: 10px 0">
+    <div style="padding: 10px 0;">
         <el-form :inline="true" size="small" class="demo-form-inline" style="height: 30px;margin-bottom: 10px">
             <el-input size="small" placeholder="搜索文章" prefix-icon="el-icon-search" v-model="topSearchContent"
                       @change="onSubmit"
@@ -10,7 +10,6 @@
         </el-form>
         <el-table :data="tableData" size="mini" v-scroll="loadMore"
                   border
-                  height="500"
                   v-loading="loadingHomeContent"
                   style="width:100%;">
             <el-table-column type="expand">
@@ -54,6 +53,7 @@
             <el-table-column label="操作" width="160">
                 <template slot-scope="scope">
                     <el-button size="small" type="success" icon="el-icon-edit-outline"
+                               @click="editArticle(scope.row.id)"
                                title="修改文章"></el-button>
                     <el-button type="danger" size="small" icon="el-icon-delete"
                                @click="delArticle(scope.row.id)"
@@ -61,6 +61,11 @@
                 </template>
             </el-table-column>
         </el-table>
+        <div style="height: 50px;background-color: #C0C4CC;text-align: center;line-height: 50px;position: relative">
+           <!-- <i class="el-icon-loading" v-show="!loadingAndDownUpShow"></i>-->
+            <span>{{promptInfo}}</span>
+            <i class="el-icon-d-arrow-left downUpAnimate" v-show="loadingAndDownUpShow"></i>
+        </div>
     </div>
 </template>
 
@@ -73,28 +78,44 @@
                 loadingHomeContent:true,
                 pageNum:1,
                 pageSize:20,
-                topSearchContent:''
+                topSearchContent:'',
+                scrollDisable:true,
+                loadingAndDownUpShow:true,
+                promptInfo:"向下加载更多"
             }
         },
         directives: {
             scroll: {
                 bind(el,binding){
-                    console.log(binding);
-                    el.addEventListener('scroll', (e)=> {
-                        console.log(e);
+                    window.addEventListener('scroll', (e)=> {
+                        if(document.documentElement.scrollTop + document.body.scrollTop + window.innerHeight >= document.body.scrollHeight){
+                            let fnc = binding.value;
+                            fnc();
+                        }
                     })
                 }
             }
         },
         methods:{
             loadMore() {
-                console.log(12312)
+                if(this.scrollDisable === true){
+                    if(this.pageNum<Math.ceil(this.total/this.pageSize)){
+                        this.pageNum++;
+                        this.getArticleList();
+                    }else{
+                        this.loadingAndDownUpShow =false;
+                        this.promptInfo = '没有更多数据了'
+                    }
+                }
             },
             onSubmit(){
                 this.getArticleList();
             },
             newArticle(){
-                this.$router.push("publishArticles")
+                this.$router.push("publishArticles/0")
+            },
+            editArticle(id){
+                this.$router.push("publishArticles/"+id)
             },
             delArticle(id){
                 this.$confirm('此操作将永久删除该博客, 是否继续?', '提示', {
@@ -106,8 +127,10 @@
                         id:id
                     }).then((res)=>{
                         if(res.data.code === 200){
+                            document.documentElement.scrollTop = 0;
+                            this.pageNum = 1;
                             this.$message.success(res.data.message);
-                            this.getArticleList();
+                            this.getArticleList("delete");
                         }else{
                             this.$message.error(res.data.message)
                         }
@@ -118,7 +141,7 @@
 
                 });
             },
-            getArticleList(){
+            getArticleList(ope){
                 this.loadingHomeContent = true;
                 this.$http.post("/article/getArticleList",{
                     pageNum:this.pageNum,
@@ -127,11 +150,19 @@
                 }).then((res)=>{
                     this.loadingHomeContent = false;
                     if(res.data.code===200){
-                        this.tableData = res.data.data.list;
+                        this.total = res.data.data.total;
+                        if(ope==="delete"){
+                            this.tableData=res.data.data.list;
+                        }else{
+                            this.tableData.push(...res.data.data.list);
+                        }
+                        this.scrollDisable = true;
                     }else{
+                        this.tableData =[];
                         this.$message.error(res.data.message)
                     }
                 }).catch((err)=>{
+                    this.scrollDisable = true;
                     this.loadingHomeContent = false;
                     console.log(err);
                 })
@@ -155,5 +186,21 @@
         margin-right: 0;
         margin-bottom: 0;
         width: 50%;
+    }
+    .downUpAnimate{
+        position: absolute;
+        font-size: 30px;
+        color: white;
+        transform:rotate(270deg);
+        left: calc((100% - 30px) / 2);
+        animation:downUp 1.5s  infinite linear;
+    }
+    @keyframes downUp
+    {
+        from {
+            top: 0;
+            opacity: 1;
+        }
+        to {top: 30px;opacity: 0.5;}
     }
 </style>

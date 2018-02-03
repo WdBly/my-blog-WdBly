@@ -38,6 +38,20 @@ class ArticleController extends BasicController
         }
     }
 
+    public function editArticle(Request $request)
+    {
+        $data = $request->all();
+        $user = new Article();
+        $res = $user->editArticle($data);
+        if ($res)
+        {
+            return renderJson('文章编辑成功', null, 200);
+        } else
+        {
+            return renderJson('文章编辑失败', null, 400);
+        }
+    }
+
     public function getArticleContent(Request $request)
     {
         $data = $this->validate($request,['id'=>'required|integer']);
