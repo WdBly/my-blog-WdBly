@@ -13,10 +13,10 @@
                 <div class="eachItem">
                     <div>
                         <router-link to="/main/home" class="item" >首页</router-link>
-                        <router-link to="/main/aboutMe" class="item" >关于我</router-link>
-                        <router-link to="/main/personalGrowth" class="item" >成长</router-link>
-                        <router-link to="/main/shareContent" class="item" >分享</router-link>
-                        <router-link to="/main/feedBack" class="item">留言</router-link>
+                        <router-link to="/main/aboutMe" class="item" v-show="false">关于我</router-link>
+                        <router-link to="/main/personalGrowth" class="item" v-show="false" >成长</router-link>
+                        <router-link to="/main/shareContent" class="item" v-show="false">分享</router-link>
+                        <router-link to="/main/feedBack" class="item" v-show="false">留言</router-link>
                         <router-link to="/main/publishArticles/0" class="item">发表文章</router-link>
                         <router-link to="/main/articleManagement" class="item">文章管理</router-link>
                         <router-link to="/main/userManagement" class="item">用户管理</router-link>

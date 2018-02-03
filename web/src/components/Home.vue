@@ -1,5 +1,5 @@
 <template>
-    <el-card  v-loading="loadingHomeContent" class="box-card" style="width: 100%;margin-top: 10px">
+    <el-card  v-loading="loadingHomeContent" class="box-card" style="width: 100%;margin-top: 10px;">
 <!--        <el-carousel :interval="6000" trigger="click" type="card" :height="elCarouselHeight">
             <el-carousel-item v-for="item in 6" :key="item">
                 <h3>{{ item }}</h3>
@@ -21,25 +21,27 @@
                 <el-input  prefix-icon="el-icon-search" v-model="addClass" @change="searchArticleList" size="mini" placeholder="请输入关键字"></el-input>
             </div>
         </div>
-        <div class="homeContent">
-            <el-steps direction="vertical"
-                      :active="0"
-                      class="timeLine"
-                      :space="260">
-                <el-step v-for="(item,index) in aScreenArticle"
-                         :title="item.created_at.substr(0,10)"
-                :key="index"></el-step>
-            </el-steps>
-            <div class="contentPopover">
-                <div class="elCardClass"
+        <div style="height: 500px;overflow: auto"  @mousewheel="mousewheel($event)" @DOMMouseScroll="mousewheel($event)">
+            <div class="homeContent">
+                <el-steps direction="vertical"
+                          :active="0"
+                          class="timeLine"
+                          :space="260">
+                    <el-step v-for="(item,index) in aScreenArticle"
+                             :title="item.created_at.substr(0,10)"
+                             :key="index"></el-step>
+                </el-steps>
+                <div class="contentPopover">
+                    <div class="elCardClass"
                          v-for="(item,index) in aScreenArticle"
                          :key="index">
-                    <header class="articleTitleText">{{item.title}}</header>
-                    <div class="bottomContent">
-                        <img class="everArticleImg" :src="item.img"/>
-                        <div class="bottomContentRight">
-                            <div class="articleIntroduction">{{item.description}}</div>
-                            <el-button @click="readFullArticle(item.id)" type="success" class="readAllArticleButton">阅读全文>></el-button>
+                        <header class="articleTitleText">{{item.title}}</header>
+                        <div class="bottomContent">
+                            <img class="everArticleImg" :src="item.img"/>
+                            <div class="bottomContentRight">
+                                <div class="articleIntroduction">{{item.description}}</div>
+                                <el-button @click="readFullArticle(item.id)" type="success" class="readAllArticleButton">阅读全文>></el-button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -67,6 +69,24 @@
             }
         },
         methods:{
+            mousewheel(e){
+                e = e || window.event;
+                if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
+                    if (e.wheelDelta > 0) { //当滑轮向上滚动时
+                        //事件
+                    }
+                    if (e.wheelDelta < 0) { //当滑轮向下滚动时
+                        console.log(e);
+                    }
+                } else if (e.detail) {  //Firefox滑轮事件
+                    if (e.detail> 0) { //当滑轮向上滚动时
+                        //事件
+                    }
+                    if (e.detail< 0) { //当滑轮向下滚动时
+                        //事件
+                    }
+                }
+            },
             readFullArticle(id){
                 this.$router.push({ path: `/displayArticle/${id}` })
             },
@@ -136,7 +156,6 @@
     .homeContent{
         position: relative;
         margin-top: 10px;
-
         .contentPopover{
             width: calc(100% - 150px);
             position: absolute;
