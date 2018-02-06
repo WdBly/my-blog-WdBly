@@ -46,6 +46,8 @@
                 addClass: '',
                 options: [],
                 value: '',
+                ca_id: -1,
+                tag: false,
                 mavonValue: ''
             }
         },
@@ -89,11 +91,13 @@
                 })
             },
             getArticleClass(){
-                this.$http.post("/article/getArticleClass",{
-                    name:this.addClass
-                }).then((res)=>{
+                this.$http.get("/article/getArticleClass").then((res)=>{
                     if(res.data.code === 200){
                         this.value = '';
+                        if(this.id!==0){
+                            this.tag = true;
+                            this.publicFn();
+                        }
                         this.options = res.data.data;
                     }else{
                         this.$message.error(res.data.message)
@@ -167,12 +171,22 @@
                 }).then((res)=>{
                     if(res.data.code===200){
                         this.mavonValue = res.data.data.value;
+                        if(this.id!==0){
+                            this.ca_id = res.data.data.ca_id;
+                            this.whetherPublic = res.data.data.whetherPublic===1?true:false;
+                            this.publicFn();
+                        }
                     }else{
                         this.$message.error(res.data.message)
                     }
                 }).catch((err)=>{
                     console.log(err);
                 })
+            },
+            publicFn(){
+                if(this.ca_id!==-1 && this.tag){
+                    this.value = this.ca_id;
+                }
             }
         }
     }

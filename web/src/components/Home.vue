@@ -1,14 +1,9 @@
 <template>
     <el-card  v-loading="loadingHomeContent" class="box-card" style="width: 100%;margin-top: 10px;">
-<!--        <el-carousel :interval="6000" trigger="click" type="card" :height="elCarouselHeight">
-            <el-carousel-item v-for="item in 6" :key="item">
-                <h3>{{ item }}</h3>
-            </el-carousel-item>
-        </el-carousel>-->
         <div class="topSearch">
             <div>
                 <span>文章分类:</span>
-                <el-select v-model="value" size="mini" placeholder="请选择">
+                <el-select v-model="value" size="mini" placeholder="请选择" style="width:40%">
                     <el-option
                             v-for="item in options"
                             :key="item.value"
@@ -17,40 +12,45 @@
                     </el-option>
                 </el-select>
             </div>
-            <div style="display: flex;">
-                <el-input  prefix-icon="el-icon-search" v-model="addClass" @change="searchArticleList" size="mini" placeholder="请输入关键字"></el-input>
+            <div style="display: flex;justify-content: flex-end">
+                <el-input style="width:80%;"  prefix-icon="el-icon-search" v-model="topSearchContent" @change="searchArticleList" size="mini" placeholder="请输入关键字"></el-input>
             </div>
         </div>
-        <div style="height: 500px;overflow: auto"  @mousewheel="mousewheel($event)" @DOMMouseScroll="mousewheel($event)">
-            <div class="homeContent">
-                <el-steps direction="vertical"
-                          :active="0"
-                          class="timeLine"
-                          :space="260">
-                    <el-step v-for="(item,index) in aScreenArticle"
-                             :title="item.created_at.substr(0,10)"
-                             :key="index"></el-step>
-                </el-steps>
-                <div class="contentPopover">
-                    <div class="elCardClass"
-                         v-for="(item,index) in aScreenArticle"
-                         :key="index">
-                        <header class="articleTitleText">{{item.title}}</header>
-                        <div class="bottomContent">
-                            <img class="everArticleImg" :src="item.img"/>
-                            <div class="bottomContentRight">
-                                <div class="articleIntroduction">{{item.description}}</div>
-                                <el-button @click="readFullArticle(item.id)" type="success" class="readAllArticleButton">阅读全文>></el-button>
-                            </div>
+        <div class="homeContent">
+            <el-steps direction="vertical"
+                      :active="0"
+                      class="timeLine"
+                      :space="dynamicSpace">
+                <el-step v-for="(item,index) in aScreenArticle"
+                         :title="item.created_at.substr(0,10)"
+                         :key="index"></el-step>
+            </el-steps>
+            <div class="contentPopover">
+                <div class="elCardClass"
+                     v-for="(item,index) in aScreenArticle"
+                     :key="index">
+                    <header class="articleTitleText">{{item.title}}</header>
+                    <div class="bottomContent">
+                        <img class="everArticleImg" :src="item.img"/>
+                        <div class="bottomContentRight">
+                            <div class="articleIntroduction">{{item.description}}</div>
+                            <el-button @click="readFullArticle(item.id)" type="success" class="readAllArticleButton">阅读全文>></el-button>
                         </div>
                     </div>
                 </div>
             </div>
+            <el-pagination class="elPagination"
+                           @current-change="handleCurrentChange"
+                           :current-page.sync="pageNum"
+                           :page-size="pageSize"
+                           layout="total, prev, pager, next, jumper"
+                           :total="total">
+            </el-pagination>
         </div>
     </el-card>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
     export default {
         name: "home",
         data(){
@@ -59,33 +59,21 @@
                 select:'',
                 options: [],
                 value: '',
-                addClass: '',
+                topSearchContent: '',
+                pageNum: 1,
+                total: 0,
+                pageSize: 10000,
                 loadingHomeContent: true
             }
         },
         computed:{
-            elCarouselHeight(){
-                return document.documentElement.clientWidth<700?'120px':"200px"
+            dynamicSpace(){
+                return document.documentElement.clientWidth<700?190:260
             }
         },
         methods:{
-            mousewheel(e){
-                e = e || window.event;
-                if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
-                    if (e.wheelDelta > 0) { //当滑轮向上滚动时
-                        //事件
-                    }
-                    if (e.wheelDelta < 0) { //当滑轮向下滚动时
-                        console.log(e);
-                    }
-                } else if (e.detail) {  //Firefox滑轮事件
-                    if (e.detail> 0) { //当滑轮向上滚动时
-                        //事件
-                    }
-                    if (e.detail< 0) { //当滑轮向下滚动时
-                        //事件
-                    }
-                }
+            handleCurrentChange() {
+                this.getArticleList();
             },
             readFullArticle(id){
                 this.$router.push({ path: `/displayArticle/${id}` })
@@ -94,9 +82,7 @@
                 this.getArticleList()
             },
             getArticleClass(){
-                this.$http.post("/article/getArticleClass",{
-                    name:this.addClass
-                }).then((res)=>{
+                this.$http.get("/article/getArticleClass").then((res)=>{
                     if(res.data.code === 200){
                         this.value = '';
                         this.options = res.data.data;
@@ -110,14 +96,17 @@
             getArticleList(){
                 this.loadingHomeContent = true;
                 this.$http.post("/article/getArticleList",{
-                    pageNum:1,
-                    pageSize:10,
-                    search:this.addClass
+                    pageNum:this.pageNum,
+                    pageSize:this.pageSize,
+                    search:this.topSearchContent
                 }).then((res)=>{
                     this.loadingHomeContent = false;
                     if(res.data.code===200){
                         this.aScreenArticle = res.data.data.list;
+                        this.total = res.data.data.total;
                     }else{
+                        this.aScreenArticle = [];
+                        this.total = 0;
                         this.$message.error(res.data.message)
                     }
                 }).catch((err)=>{
@@ -134,24 +123,11 @@
 </script>
 
 <style scoped lang="scss" rel="stylesheet/scss">
-    .el-carousel__item h3 {
-        color: #475669;
-        font-size: 14px;
-        opacity: 0.75;
-        line-height: 200px;
-        margin: 0;
-    }
-    .el-carousel__item:nth-child(2n) {
-        background: url("../../static/images/e9137a57d4fb1b02417eac246db7110f.jpg");
-    }
-    .el-carousel__item:nth-child(2n+1) {
-        background: url("../../static/images/loginBg.jpg");
-    }
     .topSearch{
         padding: 10px 0 15px 0;
         display: flex;
         justify-content: space-between;
-        flex-wrap:wrap
+        flex-wrap:nowrap;
     }
     .homeContent{
         position: relative;
@@ -206,6 +182,10 @@
             }
         }
     }
+    .elPagination {
+        float: right;
+        margin: 0 20% 20px 0;
+    }
     @media screen and (max-width: 700px){
         .topSearch{
             width: 100%;
@@ -241,6 +221,9 @@
         .timeLine{
             width: 0;
             opacity: 0;
+        }
+        .elPagination {
+            margin: 15px 0 20px 0;
         }
     }
 </style>

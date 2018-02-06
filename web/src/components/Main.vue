@@ -1,30 +1,29 @@
 <template>
     <div id="mainContent">
 
-            <div class="responseHead">
-                <transition enter-active-class="animated zoomInLeft" leave-active-class="animated zoomOutUp">
-                    <div  v-show="showHeader" style="display: flex;justify-content: space-between;align-items: center;">
-                        <p class="topTextP">WdBly&#8226博客</p>
-                        <el-button type="primary" @click="routerJump">
-                            管理员登陆
-                        </el-button>
-                    </div>
-                </transition>
-                <div class="eachItem">
-                    <div>
-                        <router-link to="/main/home" class="item" >首页</router-link>
-                        <router-link to="/main/aboutMe" class="item" v-show="false">关于我</router-link>
-                        <router-link to="/main/personalGrowth" class="item" v-show="false" >成长</router-link>
-                        <router-link to="/main/shareContent" class="item" v-show="false">分享</router-link>
-                        <router-link to="/main/feedBack" class="item" v-show="false">留言</router-link>
-                        <router-link to="/main/publishArticles/0" class="item">发表文章</router-link>
-                        <router-link to="/main/articleManagement" class="item">文章管理</router-link>
-                        <router-link to="/main/userManagement" class="item">用户管理</router-link>
-                    </div>
-                    <span :class="showHeader?'el-icon-caret-top':'el-icon-caret-bottom'" @click="showHeader =!showHeader"></span>
+        <div class="responseHead">
+            <transition enter-active-class="animated zoomInLeft" leave-active-class="animated zoomOutUp">
+                <div  v-show="showHeader" style="display: flex;justify-content: space-between;align-items: center;">
+                    <p class="topTextP">WdBly&#8226博客</p>
+                    <el-button type="primary" @click="routerJump">
+                        管理员登陆
+                    </el-button>
                 </div>
+            </transition>
+            <div class="eachItem">
+                <div>
+                    <router-link to="/main/home" class="item" >首页</router-link>
+                    <router-link to="/main/aboutMe" class="item" v-show="false">关于我</router-link>
+                    <router-link to="/main/personalGrowth" class="item" v-show="false" >成长</router-link>
+                    <router-link to="/main/shareContent" class="item" v-show="false">分享</router-link>
+                    <router-link to="/main/feedBack" class="item" v-show="false">留言</router-link>
+                    <router-link to="/main/publishArticles/0" class="item">发表文章</router-link>
+                    <router-link to="/main/articleManagement" class="item">文章管理</router-link>
+                    <router-link to="/main/userManagement" class="item">用户管理</router-link>
+                </div>
+                <span :class="showHeader?'el-icon-caret-top':'el-icon-caret-bottom'" @click="showHeader =!showHeader"></span>
             </div>
-
+        </div>
 
         <div class="responseHeadMobile">
             <div class="head">
@@ -126,6 +125,8 @@
     }
     .responseHead{
         display: block;
+        background-color: #2a88bd;
+        padding: 5px 20px;
     }
     .responseHeadMobile{
         display: none;

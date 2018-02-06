@@ -20,7 +20,7 @@
     font-size: 14px;
     font-family: Verdana, Arial, Helvetica, sans-serif;
     /*background: url("/../static/images/e48e1d0cbffed09322e60ec6a930eaf3.jpg") fixed left top no-repeat;*/
-    background-color: #98cbe8;
+    background-color:honeydew;
     background-size: cover;
   }
   td, th, caption {

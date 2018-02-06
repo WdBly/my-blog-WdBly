@@ -39,7 +39,7 @@ class Article extends Model
 
     public function getArticleContent($data)
     {
-        $data = $this->where([['id','=',$data['id']]])->select("content",'value')->first();
+        $data = $this->where([['id','=',$data['id']]])->select("content",'value','whetherPublic','ca_id')->first();
         return $data;
     }
 
@@ -60,7 +60,7 @@ class Article extends Model
         if($id==1){
             $where = [['u_id','=',$id]];
         }else{
-            $where = [['u_id','=',$id],['weatherPublic','=',$index]];
+            $where = [['whetherPublic','=',$index]];
         }
         $all = $this->orderBy('created_at', 'desc')
             ->where($where)
