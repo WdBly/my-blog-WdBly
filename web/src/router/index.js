@@ -22,7 +22,7 @@ function routerProduce() {
     Vue.use(Router);
 
     const router = new Router({
-        mode: 'history',          //可以兼容IE
+       // mode: 'history',          //可以兼容IE
         routes: [
             {
                 path: '/main',
