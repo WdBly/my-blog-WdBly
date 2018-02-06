@@ -5,9 +5,12 @@
             <transition enter-active-class="animated zoomInLeft" leave-active-class="animated zoomOutUp">
                 <div  v-show="showHeader" style="display: flex;justify-content: space-between;align-items: center;">
                     <p class="topTextP">WdBly&#8226博客</p>
-                    <el-button type="primary" @click="routerJump">
+                    <el-button v-if="!username" type="primary" @click="routerJump">
                         管理员登陆
                     </el-button>
+                    <span v-else class="el-icon-star-on" style="font-size: 20px;color: #a6e1ec">
+                        {{username}}
+                    </span>
                 </div>
             </transition>
             <div class="eachItem">
@@ -29,9 +32,12 @@
             <div class="head">
                 <span>
                     WdBly&#8226博客
-                    <el-button type="success" @click="routerJump" size="mini" style="margin: 0 0 0 5px">
+                    <el-button type="success" v-if="!username" @click="routerJump" size="mini" style="margin: 0 0 0 5px">
                         管理员登陆
                     </el-button>
+                    <span v-else style="color: #a6e1ec">
+                        {{username}}
+                    </span>
                 </span>
                 <el-dropdown trigger="click" @command="handleCommand">
                     <el-button type="primary" size="mini">
@@ -39,10 +45,10 @@
                     </el-button>
                     <el-dropdown-menu slot="dropdown" class="dropDownClass">
                         <el-dropdown-item command="/main/home-首页">首页</el-dropdown-item>
-                        <el-dropdown-item command="/main/aboutMe-关于我">关于我</el-dropdown-item>
-                        <el-dropdown-item command="/main/home-成长">成长</el-dropdown-item>
-                        <el-dropdown-item command="/main/aboutMe-分享">分享</el-dropdown-item>
-                        <el-dropdown-item command="/main/home-留言">留言</el-dropdown-item>
+                        <el-dropdown-item command="/main/aboutMe-关于我" v-show="false">关于我</el-dropdown-item>
+                        <el-dropdown-item command="/main/home-成长" v-show="false">成长</el-dropdown-item>
+                        <el-dropdown-item command="/main/aboutMe-分享" v-show="false">分享</el-dropdown-item>
+                        <el-dropdown-item command="/main/home-留言" v-show="false">留言</el-dropdown-item>
                         <el-dropdown-item command="/main/publishArticles/0-发表文章">发表文章</el-dropdown-item>
                         <el-dropdown-item command="/main/articleManagement-文章管理">文章管理</el-dropdown-item>
                         <el-dropdown-item command="/main/userManagement-用户管理">用户管理</el-dropdown-item>
@@ -61,6 +67,11 @@
             return{
                 routerText:"首页",
                 showHeader:true,
+            }
+        },
+        computed:{
+            username(){
+                return sessionStorage.getItem("username");
             }
         },
         methods:{
@@ -130,6 +141,8 @@
     }
     .responseHeadMobile{
         display: none;
+        background-color: #2a88bd;
+        padding: 5px 20px;
     }
     .dropDownClass {
         display: none;

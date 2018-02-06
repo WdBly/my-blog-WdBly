@@ -142,7 +142,7 @@
                 &:first-child{
                     margin-top: 0;
                 }
-                margin-top: 50px;
+                margin-top: 48.4px;
                 padding: 15px;
                 background-color: #fff;
                 .articleTitleText{
@@ -223,7 +223,7 @@
             opacity: 0;
         }
         .elPagination {
-            margin: 15px 0 20px 0;
+            margin: 30px 0 20px 0;
         }
     }
 </style>
