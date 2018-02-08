@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ArticleTags extends Model
 {
-    protected $table = 'articleTags';
+    protected $table = 'articletags';
 
     public function addArticleTags($data)
     {

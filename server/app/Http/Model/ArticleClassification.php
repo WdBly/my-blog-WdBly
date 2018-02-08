@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ArticleClassification extends Model
 {
-    protected $table = 'articleClassification';
+    protected $table = 'articleclassification';
 
     public function addArticleClass($data)
     {
