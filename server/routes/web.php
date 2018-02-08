@@ -21,6 +21,7 @@ Route::group(['namespace'=>'v1'],function (){
         Route::post('/addUser',"UserController@addUser");
         Route::post('/editUser',"UserController@editUser");
         Route::post('/delUser',"UserController@delUser");
+        Route::post('/logout',"LoginController@logout");
     });
 /*    Route::group(['prefix'=>'userManagement'],function (){
         Route::post('/list',"UserController@list");
@@ -34,6 +35,9 @@ Route::group(['namespace'=>'v1'],function (){
         Route::get('/getArticleClass',"ArticleController@getArticleClass");
         Route::post('/addArticleClass',"ArticleController@addArticleClass");
         Route::post('/delArticleClass',"ArticleController@delArticleClass");
+        Route::get('/getArticleTags',"ArticleController@getArticleTags");
+        Route::post('/addArticleTags',"ArticleController@addArticleTags");
+        Route::post('/delArticleTags',"ArticleController@delArticleTags");
         Route::post('/getArticleContent',"ArticleController@getArticleContent");
     });
 });

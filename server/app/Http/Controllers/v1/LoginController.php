@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\UserLoginCheck;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends BasicController
 {
@@ -62,6 +63,12 @@ class LoginController extends BasicController
         $user = new User();
         $res = $user->deleteUser($data);
         return $res?'success':'error';
+    }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+        return renderJson('退出登录成功',null,200);
     }
 }
 

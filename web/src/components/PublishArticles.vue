@@ -25,6 +25,34 @@
                 <el-button @click="delArticleClass" size="mini" type="primary" style="margin-left: 20px">删除分类</el-button>
             </div>
         </div>
+        <div style="padding: 10px 0 15px 0;display: flex;align-items:center;background-color: white">
+            <div style="margin: 3px 0 0 20px;">
+                <el-radio v-model="original" label="0">原创</el-radio>
+                <el-radio v-model="original" label="1">转载</el-radio>
+            </div>
+            <div style="margin-left: 20px;display: flex;flex-wrap: nowrap;align-items: center;">
+                <span style="white-space:nowrap">标签:</span>
+                <el-select
+                        v-model="tags"
+                        size="mini"
+                        multiple
+                        collapse-tags
+                        style="margin-left: 20px;"
+                        placeholder="请选择">
+                    <el-option
+                            v-for="item in optionTags"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                    </el-option>
+                </el-select>
+            </div>
+            <div style="display: flex;margin-left: 15px">
+                <el-input v-model="addTags" size="mini" placeholder="请输入新增或删除的标签名"></el-input>
+                <el-button @click="addArticleTags" size="mini" type="primary" style="margin-left: 20px">添加标签</el-button>
+                <el-button @click="delArticleTags" size="mini" type="primary" style="margin-left: 20px">删除标签</el-button>
+            </div>
+        </div>
         <mavon-editor @save="savePosts"
                       ref=md
                       :value="mavonValue"
@@ -42,12 +70,18 @@
         data(){
             return{
                 article:null,
+                tags:[],
+                tagsTemp:[],
+                optionTags:[],
+                original:"0",
                 whetherPublic: true,
                 addClass: '',
+                addTags: '',
                 options: [],
                 value: '',
                 ca_id: -1,
                 tag: false,
+                tag2: false,
                 mavonValue: ''
             }
         },
@@ -59,7 +93,8 @@
             if(this.id != 0){
                 this.getArticleContent();
             }
-            this.getArticleClass()
+            this.getArticleClass();
+            this.getArticleTags()
         },
         methods:{
             addArticleClass(){
@@ -85,6 +120,51 @@
                         this.getArticleClass();
                     }else{
                         this.$message.error(res.error)
+                    }
+                }).catch((err)=>{
+                    console.log(err);
+                })
+            },
+            addArticleTags(){
+                this.$http.post("/article/addArticleTags",{
+                    name:this.addTags
+                }).then((res)=>{
+                    if(res.data.code === 200){
+                        this.$message.success(res.data.message);
+                        this.getArticleTags();
+                    }else{
+                        this.$message.error(res.error)
+                    }
+                }).catch((err)=>{
+                    console.log(err);
+                })
+            },
+            delArticleTags(){
+                this.$http.post("/article/delArticleTags",{
+                    name:this.addTags
+                }).then((res)=>{
+                    if(res.data.code === 200){
+                        this.$message.success(res.data.message);
+                        this.getArticleClass();
+                    }else{
+                        this.$message.error(res.error)
+                    }
+                }).catch((err)=>{
+                    console.log(err);
+                })
+            },
+            getArticleTags(){
+                this.$http.get("/article/getArticleTags").then((res)=>{
+                    if(res.data.code === 200){
+                        this.tags = [];
+                        if(this.id!==0){
+                            this.tag2 = true;
+                            this.publicFn();
+                            this.publicFn2();
+                        }
+                        this.optionTags = res.data.data;
+                    }else{
+                        this.$message.error(res.data.message)
                     }
                 }).catch((err)=>{
                     console.log(err);
@@ -120,9 +200,6 @@
                     this.$refs.md.$img2Url(pos, this.BASEURL+'/'+res.data.data);
                 })
             },
-            $imgDel(filename){
-                console.log(filename);
-            },
             savePosts(value,render){
                 this.$confirm('是否确定上传博客?', '提示', {
                     confirmButtonText: '确定',
@@ -146,6 +223,8 @@
                         value:value,
                         img:img || "",
                         ca_id:this.value,
+                        original:this.original-0,
+                        tags:JSON.stringify(this.tags),
                         whetherPublic:this.whetherPublic?1:0,
                     };
                     if(this.id!=0){
@@ -173,8 +252,11 @@
                         this.mavonValue = res.data.data.value;
                         if(this.id!==0){
                             this.ca_id = res.data.data.ca_id;
+                            this.tagsTemp = JSON.parse(res.data.data.tags);
+                            this.original = res.data.data.original+"";
                             this.whetherPublic = res.data.data.whetherPublic===1?true:false;
                             this.publicFn();
+                            this.publicFn2();
                         }
                     }else{
                         this.$message.error(res.data.message)
@@ -186,6 +268,11 @@
             publicFn(){
                 if(this.ca_id!==-1 && this.tag){
                     this.value = this.ca_id;
+                }
+            },
+            publicFn2(){
+                if(this.tagsTemp!==-1 && this.tag2){
+                    this.tags = this.tagsTemp || [];
                 }
             }
         }

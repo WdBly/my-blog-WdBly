@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as AuthUser;
 class User extends AuthUser
 {
     protected $table = 'users';
-
+    protected $rememberTokenName = false;
     public function register($data)
     {
         $this->username = $data['username'];

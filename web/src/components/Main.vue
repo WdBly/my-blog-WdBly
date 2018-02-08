@@ -8,8 +8,8 @@
                     <el-button v-if="!username" type="primary" @click="routerJump">
                         管理员登陆
                     </el-button>
-                    <span v-else class="el-icon-star-on" style="font-size: 20px;color: #a6e1ec">
-                        {{username}}
+                    <span v-else style="font-size: 20px;color: #a6e1ec">
+                        {{username}} <span class="logOutSpan" @click="logout">退出</span>
                     </span>
                 </div>
             </transition>
@@ -36,7 +36,7 @@
                         管理员登陆
                     </el-button>
                     <span v-else style="color: #a6e1ec">
-                        {{username}}
+                        {{username}}<span class="logOutSpan">退出</span>
                     </span>
                 </span>
                 <el-dropdown trigger="click" @command="handleCommand">
@@ -57,6 +57,8 @@
             </div>
         </div>
         <router-view/>
+
+        <i class="el-icon-back jumpTop" @click="jumpTopFn"></i>
     </div>
 </template>
 
@@ -75,6 +77,37 @@
             }
         },
         methods:{
+            jumpTopFn(){
+                let timer = setInterval(()=>{
+                    if(document.documentElement.scrollTop<=0){
+                        document.documentElement.scrollTop = 0;
+                        clearInterval(timer);
+                        return;
+                    }
+                    document.documentElement.scrollTop-=50;
+                },5)
+            },
+            logout(){
+                this.$confirm('此操作将退出并退回登陆界面, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    this.$http.post("/user/logout").then((res)=>{
+                         if(res.data.code===200){
+                             this.$message.success(res.data.message);
+                             this.$router.push("/login");
+                             sessionStorage.clear();
+                         }else{
+                             this.$message.error(res.data.message)
+                         }
+                    }).catch((err)=>{
+                        console.log(err);
+                    })
+                }).catch((err) => {
+                    console.log(err);
+                });
+            },
             handleCommand(key){
                 this.$router.push({path:(key.split('-'))[0]});
                 this.routerText = (key.split('-'))[1]
@@ -82,6 +115,9 @@
             routerJump(){
                 this.$router.push("/login")
             }
+        },
+        mounted(){
+
         }
     }
 </script>
@@ -117,7 +153,27 @@
         color: white;
         cursor: pointer;
     }
-
+    .jumpTop {
+        display: block;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        border: 1px solid #333333;
+        border-radius: 5px;
+        background-color: #8c939d;
+        color: white;
+        font-size: 25px;
+        font-weight: bold;
+        transform: rotate(90deg);
+        position: fixed;
+        bottom: 50px;
+        right: 5.8%;
+        cursor: pointer;
+        &:hover {
+            background-color: #6f7180;
+        }
+    }
     .item {
         width: 100px;
         height: 50px;
@@ -150,6 +206,16 @@
     .router-link-active {
         color: #F56C6C;
         border-bottom: 2px solid #F56C6C;
+    }
+    .logOutSpan {
+        color:white;
+        font-size: 16px;
+        margin-left: 10px;
+        cursor: pointer;
+        text-decoration: #2ab27b;
+        &:hover {
+            color: #98cbe8;
+        }
     }
     @media screen and (max-width: 1200px){
         #mainContent {

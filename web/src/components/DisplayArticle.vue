@@ -9,17 +9,19 @@
         <div class="title">
             <div style="display: flex;justify-content: space-between;align-items: center">
                 <div style="display: flex;align-items: center;flex-wrap: wrap">
-                    <span style="border-radius: 52%;background-color: yellow">原</span>
-                    <span class="tags">javascript</span>
-                    <span class="tags">javascript</span>
-                    <span class="tags">javascript</span>
-                    <span style="margin-left: 15px;color: #009A61;font-weight: bold;font-size: 18px">维大大</span>
-                    <span style="margin-left: 15px;">2018-01-01 11:22:32</span>
+                    <span style="border-radius: 52%;background-color: yellow">{{article.original === 0 ?"原":article.original === 1 ? "转" : "转"}}</span>
+                    <span class="tags" :key="key" v-for="(item,key) in tags">{{item}}</span>
+                    <span style="margin-left: 15px;color: #009A61;font-weight: bold;font-size: 18px">{{article.username}}</span>
+                    <span style="margin-left: 15px;">更新时间:{{article.updated_at}}</span>
                 </div>
-                <el-button  type="text" icon="el-icon-edit" style="margin-right: 45px"></el-button>
+                <el-button title="评论"  type="text" icon="el-icon-edit" style="margin-right: 45px"></el-button>
             </div>
         </div>
-        <div class="content markdown-body" v-html="content"></div>
+        <div class="content markdown-body" v-html="article.content"></div>
+        <div class="footer">
+            <span style="margin-left: 15px;">{{article.created_at}}</span>
+        </div>
+        <i class="el-icon-back jumpTop" @click="jumpTopFn"></i>
     </div>
 </template>
 
@@ -31,7 +33,20 @@
         name: "display-article",
         data(){
             return{
-                content:''
+                article:'',
+                tags:[],
+            }
+        },
+        methods:{
+            jumpTopFn(){
+                let timer = setInterval(()=>{
+                    if(document.documentElement.scrollTop<=0){
+                        document.documentElement.scrollTop = 0;
+                        clearInterval(timer);
+                        return;
+                    }
+                    document.documentElement.scrollTop-=50;
+                },5)
             }
         },
         components: {
@@ -39,19 +54,22 @@
         },
         beforeRouteEnter (to, from, next) {
             next(vm => {
-                console.log(vm.id);
-                vm.$http.post("/article/getArticleContent",{
+                vm.$http.all([vm.$http.post("/article/getArticleContent",{
                     id:vm.id
-                }).then((res)=>{
-                    if (res.data.code === 200) {
-                        vm.content = res.data.data.content;
-
+                }), vm.$http.get("/article/getArticleTags")]).then(vm.$http.spread((res, res2)=>{
+                    if (res.data.code === 200 && res2.data.code === 200){
+                        vm.article = res.data.data;
+                        vm.article.tags = JSON.parse(vm.article.tags);
+                        vm.tags = [];
+                        res2.data.data.forEach((val)=>{
+                            if(vm.article.tags.indexOf(val.value)>-1){
+                                vm.tags.push(val.label)
+                            }
+                        })
                     }else{
-
+                        vm.$message.error(res.data.message+res2.data.message)
                     }
-                }).catch((err)=>{
-                    console.log(err);
-                })
+                }))
             })
         },
         updated(){
@@ -104,17 +122,43 @@
         margin-left: 10px;
         cursor:pointer;
         &:hover{
+            color: white;
             background-color: #017E66;
         }
     }
+    .footer{
+        height: 100px;
+    }
     .displayArticle {
         width: 1200px;
+        position: relative;
         margin: 0 auto;
         box-shadow: 0 2px 12px 0 rgba(0,0,0,.5);
     }
     .content{
         background-color: white;
         padding: 20px;
+    }
+    .jumpTop {
+        display: block;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        border: 1px solid #333333;
+        border-radius: 5px;
+        background-color: #8c939d;
+        color: white;
+        font-size: 25px;
+        font-weight: bold;
+        transform: rotate(90deg);
+        position: fixed;
+        bottom: 50px;
+        right: 5.8%;
+        cursor: pointer;
+        &:hover {
+            background-color: #6f7180;
+        }
     }
     @media screen and (max-width: 1200px){
         .displayArticle {

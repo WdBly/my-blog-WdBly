@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Model\Article;
 use App\Http\Model\ArticleClassification;
+use App\Http\Model\ArticleTags;
 use App\Http\Requests\ArticleImgCheck;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -118,6 +119,47 @@ class ArticleController extends BasicController
         } else
         {
             return renderJson('暂无文章分类', null, 400);
+        }
+    }
+
+    public function addArticleTags(Request $request)
+    {
+        $data = $this->validate($request,['name'=>'required|string|unique:articleClassification']);
+        $addArticleClass = new ArticleTags();
+        $res = $addArticleClass->addArticleTags($data);
+        if (!empty($res))
+        {
+            return renderJson('添加文章标签成功', $res, 200);
+        } else
+        {
+            return renderJson('添加文章标签失败', null, 400);
+        }
+    }
+
+    public function delArticleTags(Request $request)
+    {
+        $data = $this->validate($request,['name'=>'required|string']);
+        $delArticleClass = new ArticleTags();
+        $res = $delArticleClass->delArticleTags($data);
+        if ($res)
+        {
+            return renderJson('删除文章标签成功', null, 200);
+        } else
+        {
+            return renderJson('删除文章标签失败', null, 400);
+        }
+    }
+
+    public function getArticleTags()
+    {
+        $addArticleClass = new ArticleTags();
+        $res = $addArticleClass->getArticleTags();
+        if (!empty($res))
+        {
+            return renderJson('获取文章标签成功', $res, 200);
+        } else
+        {
+            return renderJson('暂无文章标签', null, 400);
         }
     }
 }

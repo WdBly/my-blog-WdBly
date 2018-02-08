@@ -17,7 +17,7 @@ class Article extends Model
     public function addArticle($data)
     {
         if(!$data['img']){
-            $data['img'] = "http://127.0.0.1/image/article/acb1c4189f5727fff608a11543663b69.jpg";
+            $data['img'] = "http://101.200.61.216/image/article/acb1c4189f5727fff608a11543663b69.jpg";
         }
         $this->img = $data['img'];
         $this->title = $data['title'];
@@ -26,6 +26,8 @@ class Article extends Model
         $this->description = $data['description'];
         $this->ca_id = $data['ca_id'];
         $this->whetherPublic = $data['whetherPublic'];
+        $this->original = $data['original'];
+        $this->tags = $data['tags'];
         $this->u_id = Auth::id();
         $re = $this->save();
         return $re?true:false;
@@ -39,7 +41,9 @@ class Article extends Model
 
     public function getArticleContent($data)
     {
-        $data = $this->where([['id','=',$data['id']]])->select("content",'value','whetherPublic','ca_id')->first();
+        $data = $this->where([['id','=',$data['id']]])->select("*")->first();
+        $d = DB::table('users')->where('id','=',$data['u_id'])->value('username');
+        $data["username"] = $d;
         return $data;
     }
 

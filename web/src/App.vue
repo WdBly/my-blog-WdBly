@@ -5,6 +5,12 @@
 </template>
 
 <script>
+    window.onbeforeunload  = function () {
+        if(event.clientX>document.body.clientWidth&&event.clientY<0||event.altKey)
+        {
+            return "您要离开吗？";
+        }
+    }
     export default {
         name: 'app'
     }
