@@ -83,7 +83,7 @@ class ArticleController extends BasicController
 
     public function addArticleClass(Request $request)
     {
-        $data = $this->validate($request,['name'=>'required|string|unique:articleClassification']);
+        $data = $this->validate($request,['name'=>'required|string|unique:articleclassification']);
         $addArticleClass = new ArticleClassification();
         $res = $addArticleClass->addArticleClass($data);
         if (!empty($res))
@@ -124,7 +124,7 @@ class ArticleController extends BasicController
 
     public function addArticleTags(Request $request)
     {
-        $data = $this->validate($request,['name'=>'required|string|unique:articleClassification']);
+        $data = $this->validate($request,['name'=>'required|string|unique:articletags']);
         $addArticleClass = new ArticleTags();
         $res = $addArticleClass->addArticleTags($data);
         if (!empty($res))
