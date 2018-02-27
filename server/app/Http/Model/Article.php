@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Article extends Model
 {
     protected $table = 'articles';
+    protected $guarded = [];
 
 /*    public function getCreatedAtAttribute($value)
     {
@@ -19,17 +20,8 @@ class Article extends Model
         if(!$data['img']){
             $data['img'] = "http://101.200.61.216/image/article/acb1c4189f5727fff608a11543663b69.jpg";
         }
-        $this->img = $data['img'];
-        $this->title = $data['title'];
-        $this->content = $data['content'];
-        $this->value = $data['value'];
-        $this->description = $data['description'];
-        $this->ca_id = $data['ca_id'];
-        $this->whetherPublic = $data['whetherPublic'];
-        $this->original = $data['original'];
-        $this->tags = $data['tags'];
-        $this->u_id = Auth::id();
-        $re = $this->save();
+        $data['u_id'] = Auth::id();
+        $re = $this->create($data);
         return $re?true:false;
     }
 
