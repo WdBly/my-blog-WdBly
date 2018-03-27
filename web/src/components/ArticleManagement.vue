@@ -8,7 +8,7 @@
                 <el-button  type="primary" icon="el-icon-plus" @click="newArticle">新建文章</el-button>
             </el-form-item>
         </el-form>
-        <el-table :data="tableData" size="mini" v-scroll="loadMore"
+        <el-table :data="tableData" size="mini"
                   border
                   v-loading="loadingHomeContent"
                   style="width:100%;">
@@ -61,11 +61,6 @@
                 </template>
             </el-table-column>
         </el-table>
-        <div style="height: 50px;background-color: #C0C4CC;text-align: center;line-height: 50px;position: relative">
-           <!-- <i class="el-icon-loading" v-show="!loadingAndDownUpShow"></i>-->
-            <span>{{promptInfo}}</span>
-            <i class="el-icon-d-arrow-left downUpAnimate" v-show="loadingAndDownUpShow"></i>
-        </div>
     </div>
 </template>
 
@@ -77,37 +72,12 @@
                 tableData:[],
                 loadingHomeContent:true,
                 pageNum:1,
-                pageSize:20,
+                pageSize:20000,
                 topSearchContent:'',
-                scrollDisable:true,
-                loadingAndDownUpShow:true,
-                promptInfo:"向下加载更多"
-            }
-        },
-        directives: {
-            scroll: {
-                bind(el,binding){
-                    window.addEventListener('scroll', (e)=> {
-                        if(document.documentElement.scrollTop + document.body.scrollTop + window.innerHeight >= document.body.scrollHeight){
-                            let fnc = binding.value;
-                            fnc();
-                        }
-                    })
-                }
+                scrollDisable:true
             }
         },
         methods:{
-            loadMore() {
-                if(this.scrollDisable === true){
-                    if(this.pageNum<Math.ceil(this.total/this.pageSize)){
-                        this.pageNum++;
-                        this.getArticleList();
-                    }else{
-                        this.loadingAndDownUpShow =false;
-                        this.promptInfo = '没有更多数据了'
-                    }
-                }
-            },
             onSubmit(){
                 this.getArticleList();
             },
