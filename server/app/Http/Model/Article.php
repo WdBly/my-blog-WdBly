@@ -42,7 +42,11 @@ class Article extends Model
     public function editArticle($data)
     {
         if(!$data['img']){
+<<<<<<< HEAD
             $data['img'] = "https://127.0.0.1/image/article/acb1c4189f5727fff608a11543663b69.jpg";
+=======
+            $data['img'] = "http://101.200.61.216/image/article/acb1c4189f5727fff608a11543663b69.jpg";
+>>>>>>> wdBlyBranch
         }
         $re = $this->where('id',$data['id'])->update($data);
         return $re?true:false;
