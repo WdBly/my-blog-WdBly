@@ -28,9 +28,9 @@ Vue.config.productionTip = false;
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.baseURL = 'http://101.200.61.216';
+axios.defaults.baseURL = 'http://112.74.34.178';
 Vue.prototype.$http = axios;
-Vue.prototype.BASEURL = 'http://101.200.61.216';
+Vue.prototype.BASEURL = 'http://112.74.34.178';
 
 /* eslint-disable no-new */
 new Vue({

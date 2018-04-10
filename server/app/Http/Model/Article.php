@@ -18,7 +18,7 @@ class Article extends Model
     public function addArticle($data)
     {
         if(!$data['img']){
-            $data['img'] = "http://101.200.61.216/image/article/acb1c4189f5727fff608a11543663b69.jpg";
+            $data['img'] = "http://112.74.34.178/image/article/acb1c4189f5727fff608a11543663b69.jpg";
         }
         $data['u_id'] = Auth::id();
         $re = $this->create($data);
@@ -42,7 +42,7 @@ class Article extends Model
     public function editArticle($data)
     {
         if(!$data['img']){
-             $data['img'] = "http://101.200.61.216/image/article/acb1c4189f5727fff608a11543663b69.jpg";
+             $data['img'] = "http://112.74.34.178/image/article/acb1c4189f5727fff608a11543663b69.jpg";
         }
         $re = $this->where('id',$data['id'])->update($data);
         return $re?true:false;
