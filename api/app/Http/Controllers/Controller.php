@@ -10,7 +10,7 @@ class Controller extends BaseController
 {
     public function __construct($actions=[])
     {
-        $this->middleware('auth',['except'=>$actions]);
+        $this->middleware('auth:api',['except'=>$actions]);
     }
 
     public function validateParams($data,$rule,$message=[])

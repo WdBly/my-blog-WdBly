@@ -16,11 +16,11 @@ $router->get('/', function () use ($router) {
 });
 $router->group([],function () use ($router){
     $router->group(['prefix'=>'user'],function () use ($router){
-        $router->post('/register',"UserController@register");
+        $router->post('/register','UserController@register');
         $router->post('/login',"UserController@login");
         $router->post('/update',"UserController@update");
         $router->post('/delete',"UserController@delete");
-        $router->post('/list',"UserController@list");
+        $router->post('/list',"UserController@userList");
         $router->post('/addUser',"UserController@addUser");
         $router->post('/editUser',"UserController@editUser");
         $router->post('/delUser',"UserController@delUser");

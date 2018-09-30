@@ -43,3 +43,9 @@ if(!function_exists('ddd')){
         call_user_func_array('dd', $args);
     }
 }
+
+if(!function_exists('html_path')){
+    function html_path($path){
+        return rtrim(app()->basePath('html/'.$path), '/');
+    }
+}

@@ -22,10 +22,9 @@ class UserRepository extends BasicRepository
     }
 
     //生成token
-    public function getToken($uid)
+    public function getToken($uid,$token)
     {
-        $token = password_hash(generateToken(), PASSWORD_BCRYPT);
-        $expire_at = time() + 60 * 24 * 60;  ///设置token过期时间24小时
+        $expire_at = time() + 6*60*60;
         $this->user->where('id', $uid)->update(['token' => $token, 'expire' => $expire_at]);   //token存入数据库
         return $token;
     }
@@ -53,9 +52,9 @@ class UserRepository extends BasicRepository
             ->select("id","username",'mobile')
             ->first();
         if($res){
-            Auth::guard('web')->loginUsingId($data->id);
-            $token = $this->getToken($res->id);
-            $all = ['user_id' => $res->id, 'token' => $token, 'username' => $res->username, 'mobile' => $res->mobile];
+            $token = Auth::login($res);
+            $token = $this->getToken($res->id,$token);
+            $all = ['user_id' => $res->id, 'token' => 'Bearer '.$token, 'username' => $res->username, 'mobile' => $res->mobile];
             return renderJson('登录成功', $all, 200);
         }
         return renderJson('登录失败，请稍后再试');

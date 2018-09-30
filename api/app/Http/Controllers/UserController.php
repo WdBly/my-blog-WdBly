@@ -19,13 +19,20 @@ class UserController extends Controller
 
     public function __construct(UserRepository $repository)
     {
-        parent::__construct(['login','logout']);
+        parent::__construct(['login','logout','register']);
         $this->repository = $repository;
     }
 
     public function register(Request $request)
     {
+        $rule = [
+            'username'=>'required',
+            'password'=>'required',
+            'email'=>'required',
+            'mobile'=>'required'
+        ];
         $data = $request->all();
+        $this->validateParams($data,$rule);
         return $this->repository->register($data);
     }
 

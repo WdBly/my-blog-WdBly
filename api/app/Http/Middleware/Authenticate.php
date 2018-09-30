@@ -35,7 +35,7 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (!$this->auth->guard('web')->check()) {
+        if (!$this->auth->check()) {
             return response('请重新登录', 400);
         }
 

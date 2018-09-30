@@ -58,20 +58,16 @@ class Article extends Model
         }else{
             $where = [['whetherPublic','=',$index]];
         }
-        $all = $this->orderBy('created_at', 'desc')
+        $all = $this->join('users','users.id','=','articles.u_id')
             ->where($where)
-            ->where(function ($query) use ($parameter) {
+            ->when($parameter,function ($query) use ($parameter) {
                 $query->where('title', 'like', '%' . $parameter . '%')->orWhere(function ($query) use ($parameter) {
                     $query->where('description', 'like', '%' . $parameter . '%');
                 });
             })
-            ->select("*");
+            ->select("articles.*",'users.username');
         $total = $all->count();
-        $list = $all->skip(($data['pageNum'] - 1) * $data['pageSize'])->take($data['pageSize'])->get()->toArray();
-        for($i = 0;$i < count($list); $i++){
-            $d = DB::table('users')->where('id','=',$list[$i]['u_id'])->value('username');
-            $list[$i]['username'] = $d;
-        }
-        return $list?['total'=>$total,'list'=>$list]:[];
+        $list = $all->skip(($data['pageNum'] - 1) * $data['pageSize'])->take($total)->orderBy('articles.created_at', 'desc')->get();
+        return $list->isNotEmpty()?['total'=>$total,'list'=>$list]:[];
     }
 }

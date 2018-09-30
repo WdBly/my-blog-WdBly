@@ -78,7 +78,8 @@ class ArticleRepository
             $where = [['articles.whetherPublic','=',$index]];
         }
         $all = $this->article->join('users','users.id','=','articles.u_id')
-            ->where($where)->where(function ($query) use ($parameter) {
+            ->where($where)
+            ->when($parameter,function ($query) use ($parameter) {
                 $query->where('title', 'like', '%' . $parameter . '%')->orWhere(function ($query) use ($parameter) {
                     $query->where('description', 'like', '%' . $parameter . '%');
                 });

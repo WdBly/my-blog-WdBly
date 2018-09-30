@@ -30,7 +30,7 @@
                     </el-form>
                 </template>
             </el-table-column>
-            <el-table-column label="ID" width="50">
+            <el-table-column label="ID" width="150">
                 <template slot-scope="scope">
                     <span style="margin-left: 10px">{{ scope.row.id }}</span>
                 </template>
