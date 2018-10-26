@@ -4,7 +4,7 @@
         <div class="responseHead">
             <transition enter-active-class="animated zoomInLeft" leave-active-class="animated zoomOutUp">
                 <div  v-show="showHeader" style="display: flex;justify-content: space-between;align-items: center;">
-                    <p class="topTextP">WdBly&#8226博客</p>
+                    <p class="topTextP">WdBly&#8226;博客</p>
                     <el-button v-if="!username" type="primary" @click="routerJump">
                         管理员登陆
                     </el-button>
@@ -31,7 +31,7 @@
         <div class="responseHeadMobile">
             <div class="head">
                 <span>
-                    WdBly&#8226博客
+                    WdBly&#8226;博客
                     <el-button type="success" v-if="!username" @click="routerJump" size="mini" style="margin: 0 0 0 5px">
                         管理员登陆
                     </el-button>
@@ -73,7 +73,9 @@
         },
         computed:{
             username(){
-                return sessionStorage.getItem("username");
+                if(process.env.VUE_ENV !== "server"){
+                    return sessionStorage.getItem("username");
+                }
             }
         },
         methods:{
@@ -95,11 +97,13 @@
                 }).then(() => {
                     this.$http.post("/user/logout").then((res)=>{
                          if(res.data.code===200){
-                             this.$message.success(res.data.message);
-                             this.$router.push("/login");
-                             sessionStorage.clear();
+                            this.$message.success(res.data.message);
+                            this.$router.push("/login");
+                            if(process.env.VUE_ENV !== "server"){
+                                sessionStorage.clear();
+                            }
                          }else{
-                             this.$message.error(res.data.message)
+                            this.$message.error(res.data.message)
                          }
                     }).catch((err)=>{
                         console.log(err);

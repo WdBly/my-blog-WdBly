@@ -1,5 +1,5 @@
 <template>
-    <el-card  v-loading="loadingHomeContent" class="box-card" style="width: 100%;margin-top: 10px;">
+    <el-card  v-loading="loadding" class="box-card" style="width: 100%;margin-top: 10px;">
         <div class="topSearch">
             <div>
                 <span>文章分类:</span>
@@ -21,13 +21,13 @@
                       :active="0"
                       class="timeLine"
                       :space="dynamicSpace">
-                <el-step v-for="(item,index) in aScreenArticle"
+                <el-step v-for="(item,index) in articleList"
                          :title="item.created_at.substr(0,10)"
                          :key="index"></el-step>
             </el-steps>
             <div class="contentPopover">
                 <div class="elCardClass"
-                     v-for="(item,index) in aScreenArticle"
+                     v-for="(item,index) in articleList"
                      :key="index">
                     <header class="articleTitleText">{{item.title}}</header>
                     <div class="bottomContent">
@@ -51,24 +51,36 @@
 </template>
 
 <script type="text/ecmascript-6">
+
+    import { mapActions, mapGetters } from 'vuex'
+
     export default {
         name: "home",
         data(){
             return {
-                aScreenArticle:[],
                 select:'',
                 options: [],
                 value: '',
                 topSearchContent: '',
                 pageNum: 1,
-                total: 0,
                 pageSize: 10000,
-                loadingHomeContent: true
+                loadding: true
             }
         },
+        asyncData ({ store, route }) {
+            // 触发 action 后，会返回 Promise
+            return store.dispatch("getArticleList",{
+                pageNum: 1,
+                pageSize: 10000,
+                search: ""
+            })
+        },
         computed:{
+            ...mapGetters(["articleList","total"]),
             dynamicSpace(){
-                return document.documentElement.clientWidth<700?190:260
+                if(process.env.VUE_ENV !== "server"){
+                    return document.documentElement.clientWidth<700?190:260
+                }
             }
         },
         methods:{
@@ -79,7 +91,7 @@
                 this.$router.push({ path: `/displayArticle/${id}` })
             },
             searchArticleList(){
-                this.getArticleList()
+                this.getArticleList();
             },
             getArticleClass(){
                 this.$http.get("/article/getArticleClass").then((res)=>{
@@ -94,24 +106,15 @@
                 })
             },
             getArticleList(){
-                this.loadingHomeContent = true;
-                this.$http.post("/article/getArticleList",{
-                    pageNum:this.pageNum,
-                    pageSize:this.pageSize,
-                    search:this.topSearchContent
-                }).then((res)=>{
-                    this.loadingHomeContent = false;
-                    if(res.data.code===200){
-                        this.aScreenArticle = res.data.data.list;
-                        this.total = res.data.data.total;
-                    }else{
-                        this.aScreenArticle = [];
-                        this.total = 0;
+                this.$store.dispatch("getArticleList",{
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
+                    search: this.topSearchContent
+                }).then(res => {
+                    this.loadding = false;
+                    if(res.data.code !== 200){
                         this.$message.error(res.data.message)
                     }
-                }).catch((err)=>{
-                    this.loadingHomeContent = false;
-                    console.log(err);
                 })
             }
         },
