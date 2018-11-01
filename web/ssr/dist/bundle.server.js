@@ -12908,7 +12908,6 @@ __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = 'http://api.wdd
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     get:(url, origin, cookies) => {
-        console.log(typeof cookies, cookies,"get");
         if(cookies){
             let translateString = `XSRF-TOKEN=${cookies["XSRF-TOKEN"]};laravel_session=${cookies["laravel_session"]}`
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers['Cookie'] = translateString;
@@ -12917,7 +12916,6 @@ __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = 'http://api.wdd
         return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get((origin || __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL) + url);
     },
     post:(url, params, origin, cookies) => {
-        console.log(typeof cookies, cookies,"post");
         if(cookies){
             let translateString = `XSRF-TOKEN=${cookies["XSRF-TOKEN"]};laravel_session=${cookies["laravel_session"]}`
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers['Cookie'] = translateString;
@@ -61731,7 +61729,7 @@ const allApi = {
         return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].post("/article/getArticleContent",params, null, cookies);
     },
 
-    getArticleTags(){
+    getArticleTags(cookies){
         return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].get("/article/getArticleTags", null, cookies);
     },
 
@@ -61740,7 +61738,7 @@ const allApi = {
     },
 
     userLogout(){
-        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].post("/user/logout", null, cookies);
+        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].post("/user/logout", null);
     }
 
 }
