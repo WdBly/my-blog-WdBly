@@ -27,7 +27,7 @@ Vue.config.productionTip = false;
 });
 
 Vue.prototype.$http = axios;
-Vue.prototype.BASEURL = 'http://112.74.34.178';
+Vue.prototype.BASEURL = 'http://api.wddsss.com';
 
 const store = createStore()
 const router = createRouter()

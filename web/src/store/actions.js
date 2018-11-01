@@ -4,7 +4,8 @@ import api from "./../api"
 
 export default {
     getHomeData({ commit }, params){
-        return Promise.all([api.getArticleList(params),api.getArticleClassList()]).then(res => {
+        var {pageNum,pageSize,search} = params;
+        return Promise.all([api.getArticleList({pageNum,pageSize,search}, params.cookies),api.getArticleClassList(params.cookies)]).then(res => {
             if(res[0].data.code === 200 && res[1].data.code === 200){
                 commit(types.SET_ARTICLE_LIST, {
                     list: res[0].data.data.list,
@@ -17,7 +18,7 @@ export default {
         })
     },
     getArticleData({ commit }, params){
-        return Promise.all([api.getArticleContent(params),api.getArticleTags()]).then(res => {
+        return Promise.all([api.getArticleContent(params.id, params.cookies),api.getArticleTags(params.cookies)]).then(res => {
             if(res[0].data.code === 200 && res[1].data.code === 200){
                 var article = res[0].data.data;
                 article.tags = JSON.parse(article.tags);

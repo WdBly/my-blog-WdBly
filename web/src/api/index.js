@@ -4,20 +4,20 @@ import http from "./axios"
 
 const allApi = {
 
-    getArticleList(params){
-        return http.post("/article/getArticleList",params);
+    getArticleList(params,cookies){
+        return http.post("/article/getArticleList", params, null, cookies);
     },
 
-    getArticleClassList(){
-        return http.get("/article/getArticleClass");
+    getArticleClassList(cookies){
+        return http.get("/article/getArticleClass", null, cookies);
     },
 
-    getArticleContent(params){
-        return http.post("/article/getArticleContent",params);
+    getArticleContent(params,cookies){
+        return http.post("/article/getArticleContent",params, null, cookies);
     },
 
     getArticleTags(){
-        return http.get("/article/getArticleTags");
+        return http.get("/article/getArticleTags", null, cookies);
     },
 
     userLogin(params){
@@ -25,7 +25,7 @@ const allApi = {
     },
 
     userLogout(){
-        return http.post("/user/logout");
+        return http.post("/user/logout", null, cookies);
     }
 
 }

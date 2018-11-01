@@ -46,7 +46,7 @@
         },
         asyncData ({ store, route }, url, cookies) {
             var id = url.replace("/displayArticle/","");
-            return store.dispatch("getArticleData",{ id })
+            return store.dispatch("getArticleData",{ id, cookies })
         },
         computed:{
             ...mapGetters(["articleContent","tags"])

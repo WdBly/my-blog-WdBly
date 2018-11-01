@@ -14,8 +14,8 @@ Vue.use(ElementUI);
 
 Vue.prototype.$http = axios;
 Vue.prototype.BASEURL = 'http://api.wddsss.com';
-//Vue.prototype.ORIGIN = 'http://www.wddsss.com';
 Vue.prototype.ORIGIN = 'http://www.wddsss.com';
+//Vue.prototype.ORIGIN = 'http://localhost:2500';
 
 // 导出一个工厂函数，用于创建新的
 // 应用程序、router 和 store 实例

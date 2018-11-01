@@ -69,11 +69,11 @@
         },
         asyncData ({ store, route }, emp, cookies) {
             cookies && store.dispatch("setCookie",cookies);
-            // 触发 action 后，会返回 Promise
             return store.dispatch("getHomeData",{
                 pageNum: 1,
                 pageSize: 10000,
-                search: ""
+                search: "",
+                cookies
             })
         },
         computed:{

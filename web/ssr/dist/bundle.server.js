@@ -12907,10 +12907,22 @@ __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = 'http://api.wdd
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    get:(url, origin) => {
+    get:(url, origin, cookies) => {
+        console.log(typeof cookies, cookies,"get");
+        if(cookies){
+            let translateString = `XSRF-TOKEN=${cookies["XSRF-TOKEN"]};laravel_session=${cookies["laravel_session"]}`
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers['Cookie'] = translateString;
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers['X-XSRF-TOKEN'] = cookies["XSRF-TOKEN"];
+        }
         return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get((origin || __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL) + url);
     },
-    post:(url, params, origin) => {
+    post:(url, params, origin, cookies) => {
+        console.log(typeof cookies, cookies,"post");
+        if(cookies){
+            let translateString = `XSRF-TOKEN=${cookies["XSRF-TOKEN"]};laravel_session=${cookies["laravel_session"]}`
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers['Cookie'] = translateString;
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers['X-XSRF-TOKEN'] = cookies["XSRF-TOKEN"];
+        }
         return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post((origin || __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL) + url, params);
     },
     axios: __WEBPACK_IMPORTED_MODULE_0_axios___default.a
@@ -15640,8 +15652,8 @@ _vue2.default.use(_elementUi2.default); // The Vue build version to load with th
 
 _vue2.default.prototype.$http = _axios2.default;
 _vue2.default.prototype.BASEURL = 'http://api.wddsss.com';
-//Vue.prototype.ORIGIN = 'http://www.wddsss.com';
 _vue2.default.prototype.ORIGIN = 'http://www.wddsss.com';
+//Vue.prototype.ORIGIN = 'http://localhost:2500';
 
 // 导出一个工厂函数，用于创建新的
 // 应用程序、router 和 store 实例
@@ -61656,7 +61668,8 @@ function createStore() {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     getHomeData({ commit }, params){
-        return Promise.all([__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleList(params),__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleClassList()]).then(res => {
+        var {pageNum,pageSize,search} = params;
+        return Promise.all([__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleList({pageNum,pageSize,search}, params.cookies),__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleClassList(params.cookies)]).then(res => {
             if(res[0].data.code === 200 && res[1].data.code === 200){
                 commit(__WEBPACK_IMPORTED_MODULE_0__types__["b" /* SET_ARTICLE_LIST */], {
                     list: res[0].data.data.list,
@@ -61669,7 +61682,7 @@ function createStore() {
         })
     },
     getArticleData({ commit }, params){
-        return Promise.all([__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleContent(params),__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleTags()]).then(res => {
+        return Promise.all([__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleContent(params.id, params.cookies),__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleTags(params.cookies)]).then(res => {
             if(res[0].data.code === 200 && res[1].data.code === 200){
                 var article = res[0].data.data;
                 article.tags = JSON.parse(article.tags);
@@ -61706,20 +61719,20 @@ function createStore() {
 
 const allApi = {
 
-    getArticleList(params){
-        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].post("/article/getArticleList",params);
+    getArticleList(params,cookies){
+        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].post("/article/getArticleList", params, null, cookies);
     },
 
-    getArticleClassList(){
-        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].get("/article/getArticleClass");
+    getArticleClassList(cookies){
+        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].get("/article/getArticleClass", null, cookies);
     },
 
-    getArticleContent(params){
-        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].post("/article/getArticleContent",params);
+    getArticleContent(params,cookies){
+        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].post("/article/getArticleContent",params, null, cookies);
     },
 
     getArticleTags(){
-        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].get("/article/getArticleTags");
+        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].get("/article/getArticleTags", null, cookies);
     },
 
     userLogin(params){
@@ -61727,7 +61740,7 @@ const allApi = {
     },
 
     userLogout(){
-        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].post("/user/logout");
+        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].post("/user/logout", null, cookies);
     }
 
 }

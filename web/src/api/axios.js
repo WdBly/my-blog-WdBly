@@ -20,10 +20,22 @@ axios.defaults.baseURL = 'http://api.wddsss.com';
 
 
 export default {
-    get:(url, origin) => {
+    get:(url, origin, cookies) => {
+        console.log(typeof cookies, cookies,"get");
+        if(cookies){
+            let translateString = `XSRF-TOKEN=${cookies["XSRF-TOKEN"]};laravel_session=${cookies["laravel_session"]}`
+            axios.defaults.headers['Cookie'] = translateString;
+            axios.defaults.headers['X-XSRF-TOKEN'] = cookies["XSRF-TOKEN"];
+        }
         return axios.get((origin || axios.defaults.baseURL) + url);
     },
-    post:(url, params, origin) => {
+    post:(url, params, origin, cookies) => {
+        console.log(typeof cookies, cookies,"post");
+        if(cookies){
+            let translateString = `XSRF-TOKEN=${cookies["XSRF-TOKEN"]};laravel_session=${cookies["laravel_session"]}`
+            axios.defaults.headers['Cookie'] = translateString;
+            axios.defaults.headers['X-XSRF-TOKEN'] = cookies["XSRF-TOKEN"];
+        }
         return axios.post((origin || axios.defaults.baseURL) + url, params);
     },
     axios
