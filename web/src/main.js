@@ -2,9 +2,9 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
-import store from './store'
-import axios from 'axios'
+import createRouter from './router'
+import createStore from './store'
+import axios from './api/axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Animate from 'animate.css'
@@ -26,23 +26,11 @@ Vue.config.productionTip = false;
     };
 });
 
-// 添加响应拦截器
-axios.interceptors.response.use(function (res) {
-    if(res.data.code !== 200){
-        sessionStorage.clear();
-    }
-    return res;
-}, function (err) {
-    // 对响应错误做点什么
-    return Promise.reject(err);
-});
-
-
-axios.defaults.withCredentials = true;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.baseURL = 'http://112.74.34.178';
 Vue.prototype.$http = axios;
 Vue.prototype.BASEURL = 'http://112.74.34.178';
+
+const store = createStore()
+const router = createRouter()
 
 /* eslint-disable no-new */
 new Vue({

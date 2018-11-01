@@ -76,13 +76,14 @@
                 this.$refs[formName].validate((valid) => {
                     if(valid){
                         this.loginButtonDisabled = true;
-                        this.$http.post("/user/login",this.form).then((res)=>{
+                        this.$http.post("/user/login", this.form, this.ORIGIN).then((res)=>{
                             this.loginButtonDisabled = false;
                             if(res.data.code===200){
                                 this.$router.push("/home");
                                 sessionStorage.setItem('token', res.data.data.token);
                                 sessionStorage.setItem('user_id', res.data.data.user_id);
                                 sessionStorage.setItem('username',res.data.data.username);
+                                this.$store.dispatch("setCookie",{username: res.data.data.username});
                                 sessionStorage.setItem('mobile',res.data.data.mobile);
                                 this.$message.success(res.data.message);
                             }else{

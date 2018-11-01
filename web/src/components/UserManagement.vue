@@ -122,7 +122,11 @@
         },
         computed: {
             tableH() {
-                return document.documentElement.clientHeight - 300;
+                if(process.env.VUE_ENV !== "server"){
+                    return document.documentElement.clientHeight - 300;
+                }else {
+                    return 500;
+                }
             }
         },
         methods: {

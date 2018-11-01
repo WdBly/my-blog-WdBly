@@ -9,77 +9,92 @@
         <div class="title">
             <div style="display: flex;justify-content: space-between;align-items: center">
                 <div style="display: flex;align-items: center;flex-wrap: wrap">
-                    <span style="border-radius: 52%;background-color: yellow">{{article.original === 0 ?"原":article.original === 1 ? "转" : "转"}}</span>
+                    <span style="border-radius: 52%;background-color: yellow">{{articleContent.original === 0 ?"原":articleContent.original === 1 ? "转" : "转"}}</span>
                     <span class="tags" :key="key" v-for="(item,key) in tags">{{item}}</span>
-                    <span style="margin-left: 15px;color: #009A61;font-weight: bold;font-size: 18px">{{article.username}}</span>
-                    <span style="margin-left: 15px;">更新时间:{{article.updated_at}}</span>
+                    <span style="margin-left: 15px;color: #009A61;font-weight: bold;font-size: 18px">{{articleContent.username}}</span>
+                    <span style="margin-left: 15px;">更新时间:{{articleContent.updated_at}}</span>
                 </div>
                 <el-button title="评论"  type="text" icon="el-icon-edit" style="margin-right: 45px"></el-button>
             </div>
         </div>
-        <div class="content markdown-body" v-html="article.content"></div>
+        <div class="content markdown-body" v-html="articleContent.content"></div>
         <div class="footer">
-            <span style="margin-left: 15px;">{{article.created_at}}</span>
+            <span style="margin-left: 15px;">{{articleContent.created_at}}</span>
         </div>
         <i class="el-icon-back jumpTop" @click="jumpTopFn"></i>
     </div>
 </template>
 
 <script>
-    var mavonEditor = require('mavon-editor');
+    if(process.env.VUE_ENV !== "server"){
+        var mavonEditor = require('mavon-editor');
+    } else {
+        var ComponentA = {
+            template: '<div></div>'
+        };
+    }
+    
     import 'mavon-editor/dist/css/index.css'
+    import { mapActions, mapGetters } from 'vuex'
     export default {
         props: ['id'],
         name: "display-article",
         data(){
             return{
-                article:'',
-                tags:[],
+                vue_env: process.env.VUE_ENV
             }
+        },
+        asyncData ({ store, route }, url, cookies) {
+            var id = url.replace("/displayArticle/","");
+            return store.dispatch("getArticleData",{ id })
+        },
+        computed:{
+            ...mapGetters(["articleContent","tags"])
         },
         methods:{
             jumpTopFn(){
-                let timer = setInterval(()=>{
-                    if(document.documentElement.scrollTop<=0){
-                        document.documentElement.scrollTop = 0;
-                        clearInterval(timer);
-                        return;
+                if(process.env.VUE_ENV !== "server"){
+                    let timer = setInterval(()=>{
+                        if(document.documentElement.scrollTop<=0){
+                            document.documentElement.scrollTop = 0;
+                            clearInterval(timer);
+                            return;
+                        }
+                        document.documentElement.scrollTop-=50;
+                    },5)
+                }
+            },
+            getArticleData(){
+                this.$store.dispatch("getArticleData",{
+                    id: this.id
+                }).then(res => {
+                    console.log(this.articleContent);
+                    
+                    this.loadding = false;
+                    if(res[0].data.code !== 200 || res[1].data.code !== 200){
+                        this.$message.error(res.data.message)
                     }
-                    document.documentElement.scrollTop-=50;
-                },5)
+                })
             }
         },
         components: {
-            'mavon-editor': mavonEditor.mavonEditor
+            'mavon-editor': process.env.VUE_ENV !== "server" ? mavonEditor.mavonEditor : ComponentA
         },
-        beforeRouteEnter (to, from, next) {
-            next(vm => {
-                vm.$http.all([vm.$http.post("/article/getArticleContent",{
-                    id:vm.id
-                }), vm.$http.get("/article/getArticleTags")]).then(vm.$http.spread((res, res2)=>{
-                    if (res.data.code === 200 && res2.data.code === 200){
-                        vm.article = res.data.data;
-                        vm.article.tags = JSON.parse(vm.article.tags);
-                        vm.tags = [];
-                        res2.data.data.forEach((val)=>{
-                            if(vm.article.tags.indexOf(val.value)>-1){
-                                vm.tags.push(val.label)
-                            }
-                        })
-                    }else{
-                        vm.$message.error(res.data.message+res2.data.message)
-                    }
-                }))
-            })
+        beforeMount () {
+            if(!window.__INITIAL_STATE__){
+                this.getArticleData();
+            }
         },
         updated(){
-            document.querySelectorAll('img').forEach((item)=>{
-                if(document.documentElement.clientWidth<1200){
-                    item.style.maxWidth="75vw"
-                }else{
-                    item.style.maxWidth="1000px"
-                }
-            })
+            if(process.env.VUE_ENV !== "server"){
+                document.querySelectorAll('img').forEach((item)=>{
+                    if(document.documentElement.clientWidth<1200){
+                        item.style.maxWidth="75vw"
+                    }else{
+                        item.style.maxWidth="1000px"
+                    }
+                })
+            }
         }
     }
 </script>
