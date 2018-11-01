@@ -1,7 +1,9 @@
 /* webpack.server.js */
 const path = require('path');
 const webpack = require('webpack');
-const utils = require('./../../build/utils')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const utils = require('./../../build/utils');
 const projectRoot = path.resolve(__dirname, '..');
 
 function resolve (dir) {
@@ -16,6 +18,7 @@ module.exports = {
         libraryTarget: 'commonjs2',
         path: path.join(projectRoot, 'dist'),
         filename: 'bundle.server.js',
+        publicPath: "/"
     },
     module: {
         rules: [{
@@ -32,8 +35,8 @@ module.exports = {
                 },
             },
             {
-                test: /\.css$/,
-                use: ['css-loader']
+                test:/\.css$/,
+                use:['vue-style-loader', 'css-loader'],
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -67,8 +70,20 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.VUE_ENV': '"server"'
-        })
+            'process.env.VUE_ENV': '"server"',
+            'process.env.NODE_ENV': '"development"',
+        }),
+
+
+        new ExtractTextPlugin({ filename: 'common.[chunkhash].css' }),
+        // copy custom static assets
+        new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, '../../static'),
+                to: "static",
+                ignore: ['.*']
+            }
+        ])
     ],
     resolve: {
         extensions: ['.js', '.vue', '.json'],

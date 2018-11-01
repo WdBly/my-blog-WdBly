@@ -14,17 +14,17 @@ axios.interceptors.response.use(function (res) {
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.baseURL = 'http://112.74.34.178';
+axios.defaults.baseURL = 'http://api.wddsss.com';
 
 
 
 
 export default {
-    get:(url) => {
-        return axios.get(axios.defaults.baseURL+url);
+    get:(url, origin) => {
+        return axios.get((origin || axios.defaults.baseURL) + url);
     },
-    post:(url,params) => {
-        return axios.post(axios.defaults.baseURL+url,params);
+    post:(url, params, origin) => {
+        return axios.post((origin || axios.defaults.baseURL) + url, params);
     },
     axios
 }

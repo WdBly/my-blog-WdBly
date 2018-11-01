@@ -5,17 +5,17 @@
             <transition enter-active-class="animated zoomInLeft" leave-active-class="animated zoomOutUp">
                 <div  v-show="showHeader" style="display: flex;justify-content: space-between;align-items: center;">
                     <p class="topTextP">WdBly&#8226;博客</p>
-                    <el-button v-if="!username" type="primary" @click="routerJump">
+                    <el-button v-if="!cookie.username" type="primary" @click="routerJump">
                         管理员登陆
                     </el-button>
                     <span v-else style="font-size: 20px;color: #a6e1ec">
-                        {{username}} <span class="logOutSpan" @click="logout">退出</span>
+                        {{cookie.username}} <span class="logOutSpan" @click="logout">退出</span>
                     </span>
                 </div>
             </transition>
             <div class="eachItem">
                 <div>
-                    <router-link to="/main/home" class="item" >首页</router-link>
+                    <router-link to="/main/home" class="item">首页</router-link>
                     <router-link to="/main/aboutMe" class="item" v-show="false">关于我</router-link>
                     <router-link to="/main/personalGrowth" class="item" v-show="false" >成长</router-link>
                     <router-link to="/main/shareContent" class="item" v-show="false">分享</router-link>
@@ -32,11 +32,11 @@
             <div class="head">
                 <span>
                     WdBly&#8226;博客
-                    <el-button type="success" v-if="!username" @click="routerJump" size="mini" style="margin: 0 0 0 5px">
+                    <el-button type="success" v-show="!cookie.username" @click="routerJump" size="mini" style="margin: 0 0 0 5px">
                         管理员登陆
                     </el-button>
-                    <span v-else style="color: #a6e1ec">
-                        {{username}}<span class="logOutSpan">退出</span>
+                    <span v-show="cookie.username" style="color: #a6e1ec">
+                        {{cookie.username}}<span class="logOutSpan">退出</span>
                     </span>
                 </span>
                 <el-dropdown trigger="click" @command="handleCommand">
@@ -63,20 +63,18 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
+
     export default {
         name: "mainContent",
         data(){
-            return{
+            return {
                 routerText:"首页",
                 showHeader:true,
             }
         },
         computed:{
-            username(){
-                if(process.env.VUE_ENV !== "server"){
-                    return sessionStorage.getItem("username");
-                }
-            }
+            ...mapGetters(["cookie"])
         },
         methods:{
             jumpTopFn(){
@@ -95,9 +93,10 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.post("/user/logout").then((res)=>{
+                    this.$http.post("/user/logout",null,this.ORIGIN).then((res)=>{
                          if(res.data.code===200){
                             this.$message.success(res.data.message);
+                            this.$store.dispatch("setCookie",{});
                             this.$router.push("/login");
                             if(process.env.VUE_ENV !== "server"){
                                 sessionStorage.clear();

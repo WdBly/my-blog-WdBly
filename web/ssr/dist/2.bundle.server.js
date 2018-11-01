@@ -9,12 +9,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Login_vue__ = __webpack_require__(262);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Login_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Login_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Login_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_9fcfedee_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Login_vue__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6cc5c351_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Login_vue__ = __webpack_require__(280);
 function injectStyle (ssrContext) {
 var i
 ;(i=__webpack_require__(278),i.__inject__&&i.__inject__(ssrContext),i)
 }
-var normalizeComponent = __webpack_require__(96)
+var normalizeComponent = __webpack_require__(97)
 /* script */
 
 
@@ -25,18 +25,17 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-9fcfedee"
+var __vue_scopeId__ = "data-v-6cc5c351"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = "77a89089"
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Login_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_9fcfedee_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Login_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6cc5c351_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Login_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "src\\components\\Login.vue"
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
@@ -127,13 +126,14 @@ exports.default = {
             this.$refs[formName].validate(function (valid) {
                 if (valid) {
                     _this.loginButtonDisabled = true;
-                    _this.$http.post("/user/login", _this.form).then(function (res) {
+                    _this.$http.post("/user/login", _this.form, _this.ORIGIN).then(function (res) {
                         _this.loginButtonDisabled = false;
                         if (res.data.code === 200) {
                             _this.$router.push("/home");
                             sessionStorage.setItem('token', res.data.data.token);
                             sessionStorage.setItem('user_id', res.data.data.user_id);
                             sessionStorage.setItem('username', res.data.data.username);
+                            _this.$store.dispatch("setCookie", { username: res.data.data.username });
                             sessionStorage.setItem('mobile', res.data.data.mobile);
                             _this.$message.success(res.data.message);
                         } else {
@@ -161,9 +161,9 @@ var content = __webpack_require__(279);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add CSS to SSR context
-var add = __webpack_require__(95)
+var add = __webpack_require__(53)
 module.exports.__inject__ = function (context) {
-  add("fa8a6244", content, false, context)
+  add("56d4da7a", content, true, context)
 };
 
 /***/ }),
@@ -176,7 +176,7 @@ exports = module.exports = __webpack_require__(52)(false);
 
 
 // module
-exports.push([module.i, "\n#login[data-v-9fcfedee] {\n  height: 100vh;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  background: url(\"/../../static/images/e48e1d0cbffed09322e60ec6a930eaf3.jpg\") fixed left top no-repeat;\n  background-size: cover;\n}\n#login .describeText[data-v-9fcfedee] {\n    color: white;\n    -webkit-animation: opacityChange 2s;\n            animation: opacityChange 2s;\n    position: relative;\n}\n#login .describeText .rotateIn[data-v-9fcfedee] {\n      width: 350px;\n      position: absolute;\n      -webkit-animation: rotateTransition-data-v-9fcfedee 4s infinite linear;\n              animation: rotateTransition-data-v-9fcfedee 4s infinite linear;\n}\n#login .describeText .rotateOut[data-v-9fcfedee] {\n      width: 350px;\n      position: absolute;\n      -webkit-animation: rotateTransition-data-v-9fcfedee 5s infinite linear;\n              animation: rotateTransition-data-v-9fcfedee 5s infinite linear;\n}\n#login .describeText .sharpOut[data-v-9fcfedee] {\n      width: 218px;\n      height: 218px;\n      position: absolute;\n      left: 66px;\n      top: 66px;\n      -webkit-animation: sizeChange-data-v-9fcfedee 0.6s 0.4s;\n              animation: sizeChange-data-v-9fcfedee 0.6s 0.4s;\n}\n#login .describeText .p1_kuang2[data-v-9fcfedee] {\n      width: 201px;\n      height: 203px;\n      position: absolute;\n      left: 74px;\n      top: 74px;\n      -webkit-animation: sizeChange2-data-v-9fcfedee 0.4s 0.4s;\n              animation: sizeChange2-data-v-9fcfedee 0.4s 0.4s;\n}\n#login .describeText .p1_jqr[data-v-9fcfedee] {\n      width: 40%;\n      left: -40%;\n      top: -80px;\n      position: absolute;\n}\n#login .elColWidth[data-v-9fcfedee] {\n    width: 400px;\n}\n#login .elColWidth .loginFrame[data-v-9fcfedee] {\n      padding: 20px;\n      background-color: white;\n}\n#login .elColWidth .loginFrame .loginFrameHead[data-v-9fcfedee] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: justify;\n            -ms-flex-pack: justify;\n                justify-content: space-between;\n        margin-bottom: 20px;\n}\n#login .elColWidth .loginFrame .loginFrameHead span[data-v-9fcfedee] {\n          font-size: 18px;\n          color: black;\n          line-height: 40px;\n}\n#login .elColWidth .loginFrame .loginFrameHead .QRCode[data-v-9fcfedee] {\n          width: 40px;\n          height: 40px;\n          background: url(\"/../../static/images/QRcodeImg.png\");\n          cursor: pointer;\n}\n#login .elColWidth .loginFrame .downForgetPw[data-v-9fcfedee] {\n        float: right;\n        cursor: pointer;\n        margin-top: -15px;\n        font-size: 12px;\n}\n#login .elColWidth .loginFrame .downForgetPw[data-v-9fcfedee]:hover {\n          color: #2a88bd;\n}\n#login .elColWidth .loginFrame .otherMethodLogin[data-v-9fcfedee] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: start;\n            -ms-flex-pack: start;\n                justify-content: start;\n        padding: 15px 0 0 0;\n}\n#login .elColWidth .loginFrame .otherMethodLogin span[data-v-9fcfedee] {\n          line-height: 25px;\n}\n#login .elColWidth .loginFrame .otherMethodLogin a[data-v-9fcfedee] {\n          width: 25px;\n          height: 25px;\n          margin-left: 15px;\n}\n#login .elColWidth .loginFrame .otherMethodLogin a[data-v-9fcfedee]:nth-child(2) {\n            background: url(\"/../../static/images/wx.png\") no-repeat center;\n            background-size: 25px 25px;\n}\n#login .elColWidth .loginFrame .otherMethodLogin a[data-v-9fcfedee]:nth-child(3) {\n            background: url(\"/../../static/images/qq.png\") no-repeat center;\n            background-size: 25px 25px;\n}\n@media screen and (max-width: 400px) {\n#login .elColWidth[data-v-9fcfedee] {\n    width: 90%;\n    min-width: 300px;\n}\n}\n@-webkit-keyframes rotateTransition-data-v-9fcfedee {\nfrom {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes rotateTransition-data-v-9fcfedee {\nfrom {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@-webkit-keyframes sizeChange-data-v-9fcfedee {\nfrom {\n    width: 100%;\n    left: 0;\n    top: 0;\n    opacity: 0.5;\n    -webkit-transform: rotate(270deg);\n            transform: rotate(270deg);\n}\nto {\n    width: 218px;\n    left: 66px;\n    top: 66px;\n    opacity: 1;\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes sizeChange-data-v-9fcfedee {\nfrom {\n    width: 100%;\n    left: 0;\n    top: 0;\n    opacity: 0.5;\n    -webkit-transform: rotate(270deg);\n            transform: rotate(270deg);\n}\nto {\n    width: 218px;\n    left: 66px;\n    top: 66px;\n    opacity: 1;\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@-webkit-keyframes sizeChange2-data-v-9fcfedee {\nfrom {\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    opacity: 0.5;\n}\nto {\n    width: 201px;\n    height: 203px;\n    left: 74px;\n    top: 74px;\n    opacity: 1;\n}\n}\n@keyframes sizeChange2-data-v-9fcfedee {\nfrom {\n    width: 100%;\n    height: 100%;\n    left: 0;\n    top: 0;\n    opacity: 0.5;\n}\nto {\n    width: 201px;\n    height: 203px;\n    left: 74px;\n    top: 74px;\n    opacity: 1;\n}\n}\n", ""]);
+exports.push([module.i, "#login[data-v-6cc5c351]{height:100vh;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;background:url(\"/../../static/images/e48e1d0cbffed09322e60ec6a930eaf3.jpg\") fixed 0 0 no-repeat;background-size:cover}#login .describeText[data-v-6cc5c351]{color:#fff;-webkit-animation:opacityChange 2s;animation:opacityChange 2s;position:relative}#login .describeText .rotateIn[data-v-6cc5c351]{width:350px;position:absolute;-webkit-animation:rotateTransition-data-v-6cc5c351 4s infinite linear;animation:rotateTransition-data-v-6cc5c351 4s infinite linear}#login .describeText .rotateOut[data-v-6cc5c351]{width:350px;position:absolute;-webkit-animation:rotateTransition-data-v-6cc5c351 5s infinite linear;animation:rotateTransition-data-v-6cc5c351 5s infinite linear}#login .describeText .sharpOut[data-v-6cc5c351]{width:218px;height:218px;position:absolute;left:66px;top:66px;-webkit-animation:sizeChange-data-v-6cc5c351 .6s .4s;animation:sizeChange-data-v-6cc5c351 .6s .4s}#login .describeText .p1_kuang2[data-v-6cc5c351]{width:201px;height:203px;position:absolute;left:74px;top:74px;-webkit-animation:sizeChange2-data-v-6cc5c351 .4s .4s;animation:sizeChange2-data-v-6cc5c351 .4s .4s}#login .describeText .p1_jqr[data-v-6cc5c351]{width:40%;left:-40%;top:-80px;position:absolute}#login .elColWidth[data-v-6cc5c351]{width:400px}#login .elColWidth .loginFrame[data-v-6cc5c351]{padding:20px;background-color:#fff}#login .elColWidth .loginFrame .loginFrameHead[data-v-6cc5c351]{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;margin-bottom:20px}#login .elColWidth .loginFrame .loginFrameHead span[data-v-6cc5c351]{font-size:18px;color:#000;line-height:40px}#login .elColWidth .loginFrame .loginFrameHead .QRCode[data-v-6cc5c351]{width:40px;height:40px;background:url(\"/../../static/images/QRcodeImg.png\");cursor:pointer}#login .elColWidth .loginFrame .downForgetPw[data-v-6cc5c351]{float:right;cursor:pointer;margin-top:-15px;font-size:12px}#login .elColWidth .loginFrame .downForgetPw[data-v-6cc5c351]:hover{color:#2a88bd}#login .elColWidth .loginFrame .otherMethodLogin[data-v-6cc5c351]{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:start;padding:15px 0 0}#login .elColWidth .loginFrame .otherMethodLogin span[data-v-6cc5c351]{line-height:25px}#login .elColWidth .loginFrame .otherMethodLogin a[data-v-6cc5c351]{width:25px;height:25px;margin-left:15px}#login .elColWidth .loginFrame .otherMethodLogin a[data-v-6cc5c351]:nth-child(2){background:url(\"/../../static/images/wx.png\") no-repeat 50%;background-size:25px 25px}#login .elColWidth .loginFrame .otherMethodLogin a[data-v-6cc5c351]:nth-child(3){background:url(\"/../../static/images/qq.png\") no-repeat 50%;background-size:25px 25px}@media screen and (max-width:400px){#login .elColWidth[data-v-6cc5c351]{width:90%;min-width:300px}}@-webkit-keyframes rotateTransition-data-v-6cc5c351{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes rotateTransition-data-v-6cc5c351{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@-webkit-keyframes sizeChange-data-v-6cc5c351{0%{width:100%;left:0;top:0;opacity:.5;-webkit-transform:rotate(270deg);transform:rotate(270deg)}to{width:218px;left:66px;top:66px;opacity:1;-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes sizeChange-data-v-6cc5c351{0%{width:100%;left:0;top:0;opacity:.5;-webkit-transform:rotate(270deg);transform:rotate(270deg)}to{width:218px;left:66px;top:66px;opacity:1;-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@-webkit-keyframes sizeChange2-data-v-6cc5c351{0%{width:100%;height:100%;left:0;top:0;opacity:.5}to{width:201px;height:203px;left:74px;top:74px;opacity:1}}@keyframes sizeChange2-data-v-6cc5c351{0%{width:100%;height:100%;left:0;top:0;opacity:.5}to{width:201px;height:203px;left:74px;top:74px;opacity:1}}", ""]);
 
 // exports
 
@@ -187,221 +187,8 @@ exports.push([module.i, "\n#login[data-v-9fcfedee] {\n  height: 100vh;\n  displa
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { attrs: { id: "login" } },
-    [
-      _c(
-        "el-row",
-        { attrs: { type: "flex", justify: "space-around" } },
-        [
-          _c("el-col", { staticStyle: { width: "400px" }, attrs: { xs: 0 } }, [
-            _c("div", { staticClass: "describeText" }, [
-              _c("img", {
-                staticClass: "rotateIn",
-                attrs: {
-                  src: __webpack_require__(281)
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                staticClass: "rotateOut",
-                attrs: {
-                  src: __webpack_require__(282)
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                staticClass: "sharpOut",
-                attrs: { src: __webpack_require__(283) }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                staticClass: "p1_kuang2",
-                attrs: {
-                  src: __webpack_require__(284)
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                staticClass: "p1_jqr",
-                attrs: { src: __webpack_require__(285) }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("el-col", { staticClass: "elColWidth" }, [
-            _c(
-              "div",
-              { staticClass: "loginFrame" },
-              [
-                _c(
-                  "div",
-                  { staticClass: "loginFrameHead" },
-                  [
-                    _c("span", [_vm._v("密码登陆")]),
-                    _vm._v(" "),
-                    _c(
-                      "el-tooltip",
-                      {
-                        staticClass: "item",
-                        attrs: {
-                          effect: "light",
-                          content:
-                            _vm.pwOrQRCode == "PW" ? "扫码登陆" : "密码登陆",
-                          placement: "left"
-                        }
-                      },
-                      [_c("div", { staticClass: "QRCode" })]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("p", { staticStyle: { "margin-bottom": "15px" } }, [
-                  _vm._v("管理员可通过密码登陆")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "el-form",
-                  {
-                    ref: "form",
-                    attrs: {
-                      "status-icon": "",
-                      rules: _vm.rules,
-                      model: _vm.form
-                    }
-                  },
-                  [
-                    _c(
-                      "el-form-item",
-                      { attrs: { prop: "username", "auto-complete": "off" } },
-                      [
-                        _c("el-input", {
-                          attrs: { placeholder: "邮箱/手机号" },
-                          nativeOn: {
-                            keyup: function($event) {
-                              if (
-                                !("button" in $event) &&
-                                _vm._k(
-                                  $event.keyCode,
-                                  "enter",
-                                  13,
-                                  $event.key,
-                                  "Enter"
-                                )
-                              ) {
-                                return null
-                              }
-                              _vm.onSubmit("form")
-                            }
-                          },
-                          model: {
-                            value: _vm.form.username,
-                            callback: function($$v) {
-                              _vm.$set(_vm.form, "username", $$v)
-                            },
-                            expression: "form.username"
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "el-form-item",
-                      { attrs: { prop: "password", "auto-complete": "off" } },
-                      [
-                        _c("el-input", {
-                          attrs: { type: "password", placeholder: "用户密码" },
-                          nativeOn: {
-                            keyup: function($event) {
-                              if (
-                                !("button" in $event) &&
-                                _vm._k(
-                                  $event.keyCode,
-                                  "enter",
-                                  13,
-                                  $event.key,
-                                  "Enter"
-                                )
-                              ) {
-                                return null
-                              }
-                              _vm.onSubmit("form")
-                            }
-                          },
-                          model: {
-                            value: _vm.form.password,
-                            callback: function($$v) {
-                              _vm.$set(_vm.form, "password", $$v)
-                            },
-                            expression: "form.password"
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "el-form-item",
-                      [
-                        _c(
-                          "el-button",
-                          {
-                            staticStyle: {
-                              width: "100%",
-                              "background-color": "#00C1De"
-                            },
-                            attrs: {
-                              type: "primary",
-                              disabled: _vm.loginButtonDisabled
-                            },
-                            on: {
-                              click: function($event) {
-                                _vm.onSubmit("form")
-                              }
-                            }
-                          },
-                          [_vm._v("立即登陆")]
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c("div", [
-                  _c("a", { staticClass: "downForgetPw" }, [_vm._v("忘记密码")])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "otherMethodLogin" }, [
-                  _c("span", { staticStyle: { "font-size": "14px" } }, [
-                    _vm._v("其他方式登陆:")
-                  ]),
-                  _vm._v(" "),
-                  _c("a", { attrs: { href: "###" } }),
-                  _vm._v(" "),
-                  _c("a", { attrs: { href: "###" } })
-                ])
-              ],
-              1
-            )
-          ])
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"login"}},[_c('el-row',{attrs:{"type":"flex","justify":"space-around"}},[_c('el-col',{staticStyle:{"width":"400px"},attrs:{"xs":0}},[_c('div',{staticClass:"describeText"},[_c('img',{staticClass:"rotateIn",attrs:{"src":__webpack_require__(281)}}),_vm._v(" "),_c('img',{staticClass:"rotateOut",attrs:{"src":__webpack_require__(282)}}),_vm._v(" "),_c('img',{staticClass:"sharpOut",attrs:{"src":__webpack_require__(283)}}),_vm._v(" "),_c('img',{staticClass:"p1_kuang2",attrs:{"src":__webpack_require__(284)}}),_vm._v(" "),_c('img',{staticClass:"p1_jqr",attrs:{"src":__webpack_require__(285)}})])]),_vm._v(" "),_c('el-col',{staticClass:"elColWidth"},[_c('div',{staticClass:"loginFrame"},[_c('div',{staticClass:"loginFrameHead"},[_c('span',[_vm._v("密码登陆")]),_vm._v(" "),_c('el-tooltip',{staticClass:"item",attrs:{"effect":"light","content":_vm.pwOrQRCode=='PW'?'扫码登陆':'密码登陆',"placement":"left"}},[_c('div',{staticClass:"QRCode"})])],1),_vm._v(" "),_c('p',{staticStyle:{"margin-bottom":"15px"}},[_vm._v("管理员可通过密码登陆")]),_vm._v(" "),_c('el-form',{ref:"form",attrs:{"status-icon":"","rules":_vm.rules,"model":_vm.form}},[_c('el-form-item',{attrs:{"prop":"username","auto-complete":"off"}},[_c('el-input',{attrs:{"placeholder":"邮箱/手机号"},nativeOn:{"keyup":function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }_vm.onSubmit('form')}},model:{value:(_vm.form.username),callback:function ($$v) {_vm.$set(_vm.form, "username", $$v)},expression:"form.username"}})],1),_vm._v(" "),_c('el-form-item',{attrs:{"prop":"password","auto-complete":"off"}},[_c('el-input',{attrs:{"type":"password","placeholder":"用户密码"},nativeOn:{"keyup":function($event){if(!('button' in $event)&&_vm._k($event.keyCode,"enter",13,$event.key,"Enter")){ return null; }_vm.onSubmit('form')}},model:{value:(_vm.form.password),callback:function ($$v) {_vm.$set(_vm.form, "password", $$v)},expression:"form.password"}})],1),_vm._v(" "),_c('el-form-item',[_c('el-button',{staticStyle:{"width":"100%","background-color":"#00C1De"},attrs:{"type":"primary","disabled":_vm.loginButtonDisabled},on:{"click":function($event){_vm.onSubmit('form')}}},[_vm._v("立即登陆")])],1)],1),_vm._v(" "),_c('div',[_c('a',{staticClass:"downForgetPw"},[_vm._v("忘记密码")])]),_vm._v(" "),_c('div',{staticClass:"otherMethodLogin"},[_c('span',{staticStyle:{"font-size":"14px"}},[_vm._v("其他方式登陆:")]),_vm._v(" "),_c('a',{attrs:{"href":"###"}}),_vm._v(" "),_c('a',{attrs:{"href":"###"}})])],1)])],1)],1)}
 var staticRenderFns = []
-render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
 

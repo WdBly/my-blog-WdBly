@@ -63,7 +63,14 @@
 </template>
 
 <script type="text/ecmascript-6">
-    var mavonEditor = require('mavon-editor');
+    var mavonEditor
+    if(process.env.VUE_ENV !== "server"){
+        mavonEditor = require('mavon-editor');
+    } else {
+        mavonEditor = {
+            template: '<div></div>'
+        };
+    }
     import 'mavon-editor/dist/css/index.css'
     export default {
         props:["id"],

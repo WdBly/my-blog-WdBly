@@ -82,4 +82,4 @@ function routerProduce() {
     return router;
 }
 
-export default routerProduce();
+export default routerProduce;

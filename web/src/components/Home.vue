@@ -3,9 +3,9 @@
         <div class="topSearch">
             <div>
                 <span>文章分类:</span>
-                <el-select v-model="value" size="mini" placeholder="请选择" style="width:40%">
+                <el-select v-model="curr_value" size="mini" placeholder="请选择" style="width:40%">
                     <el-option
-                            v-for="item in options"
+                            v-for="item in articleClassList"
                             :key="item.value"
                             :label="item.label"
                             :value="item.value">
@@ -21,14 +21,14 @@
                       :active="0"
                       class="timeLine"
                       :space="dynamicSpace">
-                <el-step v-for="(item,index) in articleList"
+                <el-step v-for="item in articleList"
                          :title="item.created_at.substr(0,10)"
-                         :key="index"></el-step>
+                         :key="item.id"></el-step>
             </el-steps>
             <div class="contentPopover">
                 <div class="elCardClass"
-                     v-for="(item,index) in articleList"
-                     :key="index">
+                     v-for="item in articleList"
+                     :key="item.id">
                     <header class="articleTitleText">{{item.title}}</header>
                     <div class="bottomContent">
                         <img class="everArticleImg" :src="item.img"/>
@@ -59,29 +59,25 @@
         data(){
             return {
                 select:'',
-                options: [],
-                value: '',
+                curr_value: '',
                 topSearchContent: '',
                 pageNum: 1,
                 pageSize: 10000,
-                loadding: true
+                loadding: false,
+                dynamicSpace: 260
             }
         },
-        asyncData ({ store, route }) {
+        asyncData ({ store, route }, emp, cookies) {
+            cookies && store.dispatch("setCookie",cookies);
             // 触发 action 后，会返回 Promise
-            return store.dispatch("getArticleList",{
+            return store.dispatch("getHomeData",{
                 pageNum: 1,
                 pageSize: 10000,
                 search: ""
             })
         },
         computed:{
-            ...mapGetters(["articleList","total"]),
-            dynamicSpace(){
-                if(process.env.VUE_ENV !== "server"){
-                    return document.documentElement.clientWidth<700?190:260
-                }
-            }
+            ...mapGetters(["articleList","total","articleClassList"])
         },
         methods:{
             handleCurrentChange() {
@@ -93,34 +89,24 @@
             searchArticleList(){
                 this.getArticleList();
             },
-            getArticleClass(){
-                this.$http.get("/article/getArticleClass").then((res)=>{
-                    if(res.data.code === 200){
-                        this.value = '';
-                        this.options = res.data.data;
-                    }else{
-                        this.$message.error(res.data.message)
-                    }
-                }).catch((err)=>{
-                    console.log(err);
-                })
-            },
-            getArticleList(){
-                this.$store.dispatch("getArticleList",{
+            getHomeData(){
+                this.$store.dispatch("getHomeData",{
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                     search: this.topSearchContent
                 }).then(res => {
                     this.loadding = false;
-                    if(res.data.code !== 200){
+                    if(res[0].data.code !== 200 || res[1].data.code !== 200){
                         this.$message.error(res.data.message)
                     }
                 })
             }
         },
-        mounted(){
-            this.getArticleClass();
-            this.getArticleList();
+        beforeMount(){
+            if(!this.articleList.length){
+                this.loadding = true;
+                this.getHomeData()
+            }
         }
     }
 </script>

@@ -17,7 +17,7 @@ export default context => {
             // 匹配不到的路由，执行 reject 函数，并返回 404
             if (!matchedComponents.length) {
                 return reject({
-                code: 404
+                    code: 404
                 })
             }
 
@@ -27,7 +27,7 @@ export default context => {
                     return Component.asyncData({
                         store,
                         route: router.currentRoute
-                    })
+                    }, context.url, context.cookies)
                 }
             }))
             .then(() => {
@@ -37,13 +37,9 @@ export default context => {
                 // 并且 `template` 选项用于 renderer 时，
                 // 状态将自动序列化为 `window.__INITIAL_STATE__`，并注入 HTML。
                 context.state = store.state
-                
                 resolve(app)
             })
             .catch(reject)
-
-            // Promise 应该 resolve 应用程序实例，以便它可以渲染
-            resolve(app)
         }, reject)
     })
 }

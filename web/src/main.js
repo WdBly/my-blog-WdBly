@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
+import createRouter from './router'
 import createStore from './store'
 import axios from './api/axios'
 import ElementUI from 'element-ui'
@@ -30,6 +30,7 @@ Vue.prototype.$http = axios;
 Vue.prototype.BASEURL = 'http://112.74.34.178';
 
 const store = createStore()
+const router = createRouter()
 
 /* eslint-disable no-new */
 new Vue({
