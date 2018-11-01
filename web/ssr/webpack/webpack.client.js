@@ -69,7 +69,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.VUE_ENV': '"client"',
-            'process.env.NODE_ENV': '"development"',
+            'process.env.NODE_ENV': '"production"',
         }),
         new ExtractTextPlugin({ filename: 'common.[chunkhash].css' }),
         // copy custom static assets
