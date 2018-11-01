@@ -75,6 +75,6 @@ express.get('*', (req, res) => {
     })
 })
 
-express.listen(2500, () => {
-    console.log("localhost://2500");
+express.listen(5006, () => {
+    console.log("localhost://5006");
 });
