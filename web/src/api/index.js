@@ -16,7 +16,7 @@ const allApi = {
         return http.post("/article/getArticleContent",params, null, cookies);
     },
 
-    getArticleTags(){
+    getArticleTags(cookies){
         return http.get("/article/getArticleTags", null, cookies);
     },
 
@@ -25,7 +25,7 @@ const allApi = {
     },
 
     userLogout(){
-        return http.post("/user/logout", null, cookies);
+        return http.post("/user/logout", null);
     }
 
 }
