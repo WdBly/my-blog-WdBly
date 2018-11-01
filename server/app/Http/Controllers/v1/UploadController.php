@@ -51,6 +51,11 @@ class UploadController extends BasicController
                 //生成图片唯一id
                 $image_key = md5(file_get_contents($file->getPathname())) . '.' . $ext;
                 //检测图片是否已经存在，存在则删除替换，不存在则上传
+
+                $publicImagePath = base_path().'/public/image/article/';
+                $htmlImagePath = base_path().'/html/image/article/';
+
+
                 if ($disk->exists($bucket . '/' . $image_key))
                 {
                     $res = $disk->delete($bucket . '/' . $image_key);
@@ -59,6 +64,8 @@ class UploadController extends BasicController
                         $picture_path = $file->storeAs($bucket, $image_key, 'public');
                         if ($picture_path)
                         {
+							copy($htmlImagePath.$image_key, $publicImagePath.$image_key);
+
                             $picture_path = 'image/' . $picture_path;
                             return renderJson('上传成功', $picture_path, 200);
                         } else
@@ -71,6 +78,7 @@ class UploadController extends BasicController
                     $picture_path = $file->storeAs($bucket, $image_key, 'public');
                     if ($picture_path)
                     {
+                        copy($htmlImagePath.$image_key, $publicImagePath.$image_key);
                         $picture_path = 'image/' . $picture_path;
                         return renderJson('上传成功', $picture_path, 200);
                     } else
