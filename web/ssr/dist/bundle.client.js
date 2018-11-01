@@ -13282,7 +13282,7 @@ __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = 'http://api.wdd
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     get:(url, origin, cookies) => {
-        if(cookies){
+        if(cookies && cookies["XSRF-TOKEN"] && cookies["laravel_session"]){
             let translateString = `XSRF-TOKEN=${cookies["XSRF-TOKEN"]};laravel_session=${cookies["laravel_session"]}`
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers['Cookie'] = translateString;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers['X-XSRF-TOKEN'] = cookies["XSRF-TOKEN"];
@@ -13290,7 +13290,7 @@ __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = 'http://api.wdd
         return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get((origin || __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL) + url);
     },
     post:(url, params, origin, cookies) => {
-        if(cookies){
+        if(cookies && cookies["XSRF-TOKEN"] && cookies["laravel_session"]){
             let translateString = `XSRF-TOKEN=${cookies["XSRF-TOKEN"]};laravel_session=${cookies["laravel_session"]}`
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers['Cookie'] = translateString;
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers['X-XSRF-TOKEN'] = cookies["XSRF-TOKEN"];

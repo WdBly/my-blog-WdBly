@@ -21,7 +21,7 @@ axios.defaults.baseURL = 'http://api.wddsss.com';
 
 export default {
     get:(url, origin, cookies) => {
-        if(cookies){
+        if(cookies && cookies["XSRF-TOKEN"] && cookies["laravel_session"]){
             let translateString = `XSRF-TOKEN=${cookies["XSRF-TOKEN"]};laravel_session=${cookies["laravel_session"]}`
             axios.defaults.headers['Cookie'] = translateString;
             axios.defaults.headers['X-XSRF-TOKEN'] = cookies["XSRF-TOKEN"];
@@ -29,7 +29,7 @@ export default {
         return axios.get((origin || axios.defaults.baseURL) + url);
     },
     post:(url, params, origin, cookies) => {
-        if(cookies){
+        if(cookies && cookies["XSRF-TOKEN"] && cookies["laravel_session"]){
             let translateString = `XSRF-TOKEN=${cookies["XSRF-TOKEN"]};laravel_session=${cookies["laravel_session"]}`
             axios.defaults.headers['Cookie'] = translateString;
             axios.defaults.headers['X-XSRF-TOKEN'] = cookies["XSRF-TOKEN"];
