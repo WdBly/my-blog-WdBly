@@ -61651,7 +61651,7 @@ function createStore() {
 /* harmony default export */ __webpack_exports__["a"] = ({
     getHomeData({ commit }, params){
         var {pageNum,pageSize,search} = params;
-        return Promise.all([__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleList({pageNum,pageSize,search}),__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleClassList()]).then(res => {
+        return Promise.all([__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleList({pageNum,pageSize,search}, params.cookies),__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleClassList(params.cookies)]).then(res => {
             if(res[0].data.code === 200 && res[1].data.code === 200){
                 commit(__WEBPACK_IMPORTED_MODULE_0__types__["b" /* SET_ARTICLE_LIST */], {
                     list: res[0].data.data.list,
@@ -61664,7 +61664,7 @@ function createStore() {
         })
     },
     getArticleData({ commit }, params){
-        return Promise.all([__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleContent(params.id),__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleTags()]).then(res => {
+        return Promise.all([__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleContent(params.id, params.cookies),__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleTags(params.cookies)]).then(res => {
             if(res[0].data.code === 200 && res[1].data.code === 200){
                 var article = res[0].data.data;
                 article.tags = JSON.parse(article.tags);

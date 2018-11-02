@@ -30,7 +30,7 @@ const data = {
 
 express.post('/user/login', (req, res) => {
     api.default.userLogin(req.body).then(rs => {
-        console.log(req.cookies,"req.cookies");
+        console.log(rs);
         
         if(rs.data.code === 200){
             res.cookie('username', rs.data.data.username);
