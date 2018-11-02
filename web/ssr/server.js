@@ -30,13 +30,15 @@ const data = {
 
 express.post('/user/login', (req, res) => {
     api.default.userLogin(req.body).then(rs => {
-        console.log(rs);
+        //获取lavavel返回的set-cookie的头信息
+        let set_cookies = rs.headers["set-cookie"];
         if(rs.data.code === 200){
-            res.cookie('username', rs.data.data.username);
+            //组装node的cookie
+            set_cookies.push(`username=${rs.data.data.username}`);
         }
         res.writeHead(200, {
             "Content-Type": "application/json;charset=utf-8",
-            "Set-Cookie": rs.headers["Set-Cookie"]
+            "Set-Cookie": set_cookies
         });
         res.end(JSON.stringify(rs.data));
     })
