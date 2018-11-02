@@ -34,7 +34,7 @@ express.post('/user/login', (req, res) => {
         let set_cookies = rs.headers["set-cookie"];
         if(rs.data.code === 200){
             //组装node的cookie
-            set_cookies.push(`username=${rs.data.data.username}`);
+            set_cookies.push(`username=${rs.data.data.username}; path=/`);
         }
         res.writeHead(200, {
             "Content-Type": "application/json;charset=utf-8",
