@@ -2,8 +2,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const utils = require('./../../build/utils')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const utils = require('./../../build/utils');
 const projectRoot = path.resolve(__dirname, '..');
 
 function resolve (dir) {
@@ -12,11 +13,15 @@ function resolve (dir) {
 
 
 module.exports = {
-    entry: [path.join(projectRoot, 'entry-client.js')],
+    entry: {
+        "app": path.join(projectRoot, 'entry-client.js'),
+        "vendor": ['vue', 'vue-router', 'vuex', 'element-ui','mavon-editor']
+    },
     output: {
         path: path.join(projectRoot, 'dist'),
-        filename: 'bundle.client.js',
-        publicPath: "/"
+        filename: 'client/[name].client.js',
+        chunkFilename: 'client/[name].[chunkHash:6].bundle.js',
+        publicPath: "/",
     },
     module: {
         rules: [{
@@ -79,7 +84,20 @@ module.exports = {
                 to: "static",
                 ignore: ['.*']
             }
-        ])
+        ]),
+        new UglifyJsPlugin({
+            uglifyOptions: {
+                compress: {
+                    warnings: false
+                }
+            },
+            sourceMap: true,
+            parallel: true
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            filename: 'client/[name].bundle.js',
+        })
     ],
     resolve: {
         extensions: ['.js', '.vue', '.json'],

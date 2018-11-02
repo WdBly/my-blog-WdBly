@@ -16,13 +16,14 @@ express.use(bodyParser.json())
 express.use(cookieParser());
 express.use('/', exp.static(__dirname + '/dist'))
 
-const clientBundleFileUrl = '/bundle.client.js'
+const clientBundleFileUrl = '/client/app.client.js'
 const data = {
   title: '维大大的个人博客',
   meta: `
     <meta name="keywords" content="wdbly" />
   `,
   script: `
+    <script src="/client/vendor.bundle.js"></script>
     <script src="${clientBundleFileUrl}"></script>
   `,
   state: ``

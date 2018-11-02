@@ -18,6 +18,7 @@ module.exports = {
         libraryTarget: 'commonjs2',
         path: path.join(projectRoot, 'dist'),
         filename: 'bundle.server.js',
+        chunkFilename: '[name].bundle.js',
         publicPath: "/"
     },
     module: {
