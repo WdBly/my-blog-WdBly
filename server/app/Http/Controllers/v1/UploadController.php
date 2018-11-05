@@ -47,45 +47,66 @@ class UploadController extends BasicController
                 {
                     return renderJson('不允许上传的图片类型', null, 400);
                 }
-                $disk = Storage::disk('public');
-                //生成图片唯一id
+
+                $disk = \Storage::disk('qiniu');
                 $image_key = md5(file_get_contents($file->getPathname())) . '.' . $ext;
-                //检测图片是否已经存在，存在则删除替换，不存在则上传
+                $picture_path = "";
 
-                $publicImagePath = base_path().'/public/image/article/';
-                $htmlImagePath = base_path().'/html/image/article/';
+                if($disk->exists($image_key)){
+                    $picture_path = $disk->getDriver()->downloadUrl($image_key); 
+                }else {
+                    $status = $disk->put($image_key, $file);//上传
 
-
-                if ($disk->exists($bucket . '/' . $image_key))
-                {
-                    $res = $disk->delete($bucket . '/' . $image_key);
-                    if ($res)
-                    {
-                        $picture_path = $file->storeAs($bucket, $image_key, 'public');
-                        if ($picture_path)
-                        {
-							copy($htmlImagePath.$image_key, $publicImagePath.$image_key);
-
-                            $picture_path = 'image/' . $picture_path;
-                            return renderJson('上传成功', $picture_path, 200);
-                        } else
-                        {
-                            return renderJson('上传失败', null, 400);
-                        }
-                    }
-                } else
-                {
-                    $picture_path = $file->storeAs($bucket, $image_key, 'public');
-                    if ($picture_path)
-                    {
-                        copy($htmlImagePath.$image_key, $publicImagePath.$image_key);
-                        $picture_path = 'image/' . $picture_path;
-                        return renderJson('上传成功', $picture_path, 200);
-                    } else
-                    {
+                    if(!$status){
                         return renderJson('上传失败', null, 400);
                     }
+
+                    $picture_path = $disk->getDriver()->downloadUrl($image_key); 
+
                 }
+
+                return renderJson('上传成功', $picture_path, 200);
+
+
+                // $disk = Storage::disk('public');
+                // //生成图片唯一id
+                // $image_key = md5(file_get_contents($file->getPathname())) . '.' . $ext;
+                // //检测图片是否已经存在，存在则删除替换，不存在则上传
+
+                // $publicImagePath = base_path().'/public/image/article/';
+                // $htmlImagePath = base_path().'/html/image/article/';
+
+
+                // if ($disk->exists($bucket . '/' . $image_key))
+                // {
+                //     $res = $disk->delete($bucket . '/' . $image_key);
+                //     if ($res)
+                //     {
+                //         $picture_path = $file->storeAs($bucket, $image_key, 'public');
+                //         if ($picture_path)
+                //         {
+				// 			copy($htmlImagePath.$image_key, $publicImagePath.$image_key);
+
+                //             $picture_path = 'image/' . $picture_path;
+                //             return renderJson('上传成功', $picture_path, 200);
+                //         } else
+                //         {
+                //             return renderJson('上传失败', null, 400);
+                //         }
+                //     }
+                // } else
+                // {
+                //     $picture_path = $file->storeAs($bucket, $image_key, 'public');
+                //     if ($picture_path)
+                //     {
+                //         copy($htmlImagePath.$image_key, $publicImagePath.$image_key);
+                //         $picture_path = 'image/' . $picture_path;
+                //         return renderJson('上传成功', $picture_path, 200);
+                //     } else
+                //     {
+                //         return renderJson('上传失败', null, 400);
+                //     }
+                // }
             } else
             {
                 return renderJson('上传图片不合法', null, 500);

@@ -63,6 +63,13 @@ return [
             'bucket' => env('AWS_BUCKET'),
         ],
 
+        'qiniu' => [
+            'driver'    => 'qiniu',
+            'domain'    => 'cdn.wddsss.com',  //你的七牛域名
+            'access_key'=> 'y5P9BhDmplS-ABe2bE_TiMzotE_nb5pq8dkjX11i',    //AccessKey
+            'secret_key'=> 'Ngwo8I-Xga2z9tTAawy7NowNraZJ9xL25R_CfUEe',   //SecretKey
+            'bucket'    => '',    //Bucket名字
+        ],
     ],
 
 ];
