@@ -198,7 +198,7 @@
                 var formdata = new FormData();
                 formdata.append('file', $file);
                 formdata.append('bucket', 'article');
-                this.$http({
+                this.$http.axios({
                     url: '/article/imgUpload',
                     method: 'post',
                     data: formdata,
