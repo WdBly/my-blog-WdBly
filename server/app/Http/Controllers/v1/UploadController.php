@@ -48,20 +48,23 @@ class UploadController extends BasicController
                     return renderJson('不允许上传的图片类型', null, 400);
                 }
 
-                $disk = \Storage::disk('qiniu');
+                $disk = Storage::disk('qiniu');
                 $image_key = md5(file_get_contents($file->getPathname())) . '.' . $ext;
+				$path = "image/article/" . $image_key;
                 $picture_path = "";
 
-                if($disk->exists($image_key)){
-                    $picture_path = $disk->getDriver()->downloadUrl($image_key); 
+                if($disk->exists($path)){
+                    $picture_path = $disk->getDriver()->downloadUrl($path); 
                 }else {
-                    $status = $disk->put($image_key, $file);//上传
+					$content = file_get_contents($file->getRealPath());
+					
+                    $status = $disk->put($path, $content);
 
                     if(!$status){
                         return renderJson('上传失败', null, 400);
                     }
 
-                    $picture_path = $disk->getDriver()->downloadUrl($image_key); 
+                    $picture_path = $disk->getDriver()->downloadUrl($path); 
 
                 }
 
