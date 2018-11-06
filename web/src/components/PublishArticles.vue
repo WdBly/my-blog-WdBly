@@ -204,7 +204,7 @@
                     data: formdata,
                     headers: {'Content-Type':'multipart/form-data'},
                 }).then((res) => {
-                    this.$refs.md.$img2Url(pos, this.BASEURL+'/'+res.data.data);
+                    this.$refs.md.$img2Url(pos, res.data.data);
                 })
             },
             savePosts(value,render){

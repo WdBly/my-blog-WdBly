@@ -12886,7 +12886,7 @@ __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function
 
 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.withCredentials = true;
 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.headers.post['Content-Type'] = 'application/json';
-__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = 'http://api.wddsss.com';
+__WEBPACK_IMPORTED_MODULE_0_axios___default.a.defaults.baseURL = 'https://api.wddsss.com';
 
 
 
@@ -15633,8 +15633,8 @@ _vue2.default.use(_elementUi2.default); // The Vue build version to load with th
 
 
 _vue2.default.prototype.$http = _axios2.default;
-_vue2.default.prototype.BASEURL = 'http://api.wddsss.com';
-_vue2.default.prototype.ORIGIN = 'http://www.wddsss.com';
+_vue2.default.prototype.BASEURL = 'https://api.wddsss.com';
+_vue2.default.prototype.ORIGIN = 'https://www.wddsss.com';
 //Vue.prototype.ORIGIN = 'http://localhost:2500';
 
 // 导出一个工厂函数，用于创建新的

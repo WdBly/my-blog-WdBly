@@ -13,8 +13,8 @@ Vue.use(ElementUI);
 
 
 Vue.prototype.$http = axios;
-Vue.prototype.BASEURL = 'http://api.wddsss.com';
-Vue.prototype.ORIGIN = 'http://www.wddsss.com';
+Vue.prototype.BASEURL = 'https://api.wddsss.com';
+Vue.prototype.ORIGIN = 'https://www.wddsss.com';
 //Vue.prototype.ORIGIN = 'http://localhost:2500';
 
 // 导出一个工厂函数，用于创建新的

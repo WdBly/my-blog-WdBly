@@ -14,7 +14,7 @@ axios.interceptors.response.use(function (res) {
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.baseURL = 'http://api.wddsss.com';
+axios.defaults.baseURL = 'https://api.wddsss.com';
 
 
 
