@@ -10,6 +10,6 @@ class BasicController extends Controller
     public function __construct()
     {
         $this->middleware('check_login')->except(['login','logout','getArticleClass','getArticleList',
-        'getArticleContent','getArticleTags','imgUpload']);
+        'getArticleContent','getArticleTags']);
     }
 }
