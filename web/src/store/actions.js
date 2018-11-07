@@ -21,6 +21,7 @@ export default {
         return Promise.all([api.getArticleContent(params.id, params.cookies),api.getArticleTags(params.cookies)]).then(res => {
             if(res[0].data.code === 200 && res[1].data.code === 200){
                 var article = res[0].data.data;
+                article.value = "";
                 article.tags = JSON.parse(article.tags);
                 var tags = [];
                 res[1].data.data.forEach((val)=>{

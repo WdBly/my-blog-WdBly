@@ -61667,6 +61667,7 @@ function createStore() {
         return Promise.all([__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleContent(params.id, params.cookies),__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleTags(params.cookies)]).then(res => {
             if(res[0].data.code === 200 && res[1].data.code === 200){
                 var article = res[0].data.data;
+                article.value = "";
                 article.tags = JSON.parse(article.tags);
                 var tags = [];
                 res[1].data.data.forEach((val)=>{

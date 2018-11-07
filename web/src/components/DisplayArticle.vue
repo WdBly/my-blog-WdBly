@@ -65,9 +65,7 @@
                 }
             },
             getArticleData(){
-                this.$store.dispatch("getArticleData",{
-                    id: this.id
-                }).then(res => {
+                this.$store.dispatch("getArticleData",{ id: { id: this.id }}).then(res => {
                     console.log(this.articleContent);
                     
                     this.loadding = false;
