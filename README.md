@@ -1,11 +1,9 @@
-::: hljs-center
-
 # vue 博客优化，服务端渲染(SSR)指南 #
 ## 对已有的单页应用进行改造，优化，使之成为一个具有良好seo的应用 ##
 
 ![image.png](http://cdn.wddsss.com/image/article/da867d289a32c86fe9b4cb44f2699150.png)
-:::
 
+[前往我的个人博客](https://www.wddsss.com/)
 
 ### Vue 项目改造 - 服务端渲染
 
