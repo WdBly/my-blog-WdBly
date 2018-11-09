@@ -6,7 +6,7 @@
 [前往我的个人博客](https://www.wddsss.com/)
 
 ### 安装
-git clone https://github.com/WdBly/my-blog-WdBly.git
+    git clone https://github.com/WdBly/my-blog-WdBly.git
 
 #### 服务端配置：
 	cd server && composer install
@@ -25,6 +25,16 @@ git clone https://github.com/WdBly/my-blog-WdBly.git
 	npm install pm2 -g
 	pm2 start ssr
 
+
+### 优化进度
+
+- [x] webpack开启vendor分包，压缩代码，异步路由组件
+- [x] nginx gzip
+- [x] 服务端渲染
+- [x] cookie转发
+- [x] 图片cdn
+- [x] 部分https
+
 ### Vue 项目改造 - 服务端渲染
 
 几个问题：使用服务端渲染解决了什么问题？，技术上如何实现？ 经过服务端渲染改造的项目和改造前的单页的区别？
@@ -32,7 +42,7 @@ git clone https://github.com/WdBly/my-blog-WdBly.git
 场景：已有基于vue-cli的单页博客项目，前端使用 vue+vue-router+vuex+axios+elementui+webpack,后台使用laravel + mysql
 ，服务器阿里云 Ubuntu 16.04，web服务器nginx。
 
-面临的问题。1：单页应用首屏加载过慢；2：无法被搜索引擎抓取；3：图片加载过慢；
+面临的问题。1：单页应用首屏加载过慢；2：无法被搜索引擎抓取；3：首屏白屏时间过长（重要）；
 
 解决一：首屏加载过慢。
 经过分析，页面首屏慢主要是首次需要加载的js文件过大。
@@ -82,7 +92,7 @@ git clone https://github.com/WdBly/my-blog-WdBly.git
 
 通过前面两部的优化，首屏加载快了不少，但还是有点慢。
 
-解决二：SEO
+解决二三：SEO和白屏的处理
 #### 开启服务端的渲染
 
 首先我们来捋一捋实现流程，传统的单页应用的流程为前端将文件打包后生成了index.html文件和其他依赖文件，index.html文件中引入了一些js文件和css文件。如下：
@@ -93,20 +103,16 @@ git clone https://github.com/WdBly/my-blog-WdBly.git
     <head>
         <meta charset=utf-8>
         <meta http-equiv=X-UA-Compatible content="IE=edge">
-        <link rel="shortcut icon" type=image/x-icon href=/static/images/log.png>
-        <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-        <link href=/static/css/app.d7870aa3331359b670dcc68b12acbf1c.css rel=stylesheet>
+        <link href=b12acbf1c.css rel=stylesheet>
     </head>
     <body>
         <div id=app></div>
-        <script type=text/javascript src=/static/js/manifest.58325323c3b8fe4ed982.js></script>
-        <script type=text/javascript src=/static/js/vendor.8a01502e87cfadd8f748.js></script>
-        <script type=text/javascript src=/static/js/app.df3c871f3751a0c9b0e9.js></script>
+        <script type=text/javascript src=982.js></script>
     </body>
 </html>
 ```
 
-nginx中配置相应的server_name和root字段,两个路由分别代表前端页面和后台接口。
+nginx中配置相应的server_name和root字段,两个路由分别对应前端页面和后台接口。
 
 ```javascript
 //前端页面的路由
@@ -131,8 +137,8 @@ server {
 
 ```javascript
 
-//node监听了 5006端口，注意我们并不对外暴露5006端口，也就是说同过
-//www.wddsss.com：5006的访问是会失败的。
+//node监听了 5006端口，注意我们并不对外部暴露5006端口，也就是说通过
+//www.wddsss.com:5006的访问是会失败的。
 
 upstream z.com {
    server 127.0.0.1:5006;
@@ -144,7 +150,7 @@ server {
     access_log  /var/log/nginx/blog.api.access.log;
     error_log  /var/log/nginx/blog.api.error.log;
     location / {
-        proxy_pass http://l.com;
+        proxy_pass http://z.com;
     }
 }
 
