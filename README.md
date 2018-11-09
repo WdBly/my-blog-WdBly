@@ -35,7 +35,7 @@ git clone https://github.com/WdBly/my-blog-WdBly.git
 面临的问题。1：单页应用首屏加载过慢；2：无法被搜索引擎抓取；3：图片加载过慢；
 
 解决一：首屏加载过慢。
-经过分析，页面首屏慢主要是首次需要加载的js问价过大。
+经过分析，页面首屏慢主要是首次需要加载的js文件过大。
 
 1：对webpack打包过程进行优化，采用多入口将项目的vender依赖分割，对不需要变动的文件做缓存，同时对路由做异步加载。
 ```javascript
@@ -78,7 +78,7 @@ git clone https://github.com/WdBly/my-blog-WdBly.git
      gzip_types text/plain text/css application/json application/javascript 
      text/xml application/xml application/xml+rss text/javascript;
 
->进过验证 开启gzip压缩的js文件大小大概能缩减为源文件的1/5
+>经过验证 开启gzip压缩的js文件大小大概能缩减为源文件的1/5
 
 通过前面两部的优化，首屏加载快了不少，但还是有点慢。
 
@@ -118,7 +118,7 @@ server {
 //后台接口路由
 server {
     root /www/wwwroot/myblog-WdBly/server/public
-    server_name 112.74.34.177
+    server_name api.wddsss.com
     ...
 }
 ```
@@ -156,7 +156,7 @@ server {
 
 vue-server-renderer 提供了一个renderToString方法，此方法接受一个Vue组件，返回一段对应的html代码。这不就解决了我们的问题嘛。
 
-重新整理思路，node在监听到某个路由被访问时，会去查找前端路由表，并找到对应的组件。对于某些需要ssr的组件，我们手动为其添加了一个asyncData()方法，在node加载这些组件同时回去执行asyncData()方法，拿到组件内的数据渲染到组件中。最后将这个组件传入renderToString方法。这样一个简陋无比的ssr就做好了！部分代码如下(删减版，完整的请前往github查看)
+重新整理思路，node在监听到某个路由被访问时，会去查找前端路由表，并找到对应的组件。对于某些需要ssr的组件，我们手动为其添加了一个asyncData()方法，在node加载这些组件同时会去执行asyncData()方法，拿到组件内的数据渲染到组件中。最后将这个组件传入renderToString方法。这样一个简陋无比的ssr就做好了！部分代码如下(删减版，完整的请前往[github](https://github.com/WdBly/my-blog-WdBly)查看)
 
 ```javascript
 const { createRenderer } = require('vue-server-renderer')
@@ -224,6 +224,12 @@ webpack.server.js部分配置
 
 #### element-ui样式丢失问题。
 在 app.js 中我们引入了 'element-ui/lib/theme-chalk/index.css'的css文件，我们必须要清楚 app.js本身会在服务端执行，所以我们必须在webpack.server.js中配置处理css文件的loader
+```javascript
+    {
+        test:/\.css$/,
+        use:['vue-style-loader', 'css-loader'],
+    }
+```
 
 #### 区分是当前执行环境时node还是浏览器
 因为我们的项目是要在服务端执行，同时也会在客户端执行，到时服务端不支持某些客户端对象 如window对象，所以在我们的代码中如果有使用到window，document等浏览器API的地方需要对当前的执行环境进行判断
