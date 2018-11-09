@@ -5,6 +5,26 @@
 
 [前往我的个人博客](https://www.wddsss.com/)
 
+### 安装
+git clone
+
+服务端配置：
+cd server && composer install
+配置.env文件 包含了SESSION_DOMAIN APP_KEY DATABASE的相关信息
+配置目录权限
+配置nginx 参考下方配置
+
+客户端配置
+cd web && npm install
+npm run build-client && npm run build-server
+
+启动客户端
+node ssr
+
+后台启动 需要pm2
+npm install pm2 -g
+pm2 start ssr
+
 ### Vue 项目改造 - 服务端渲染
 
 几个问题：使用服务端渲染解决了什么问题？，技术上如何实现？ 经过服务端渲染改造的项目和改造前的单页的区别？
