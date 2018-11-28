@@ -41,6 +41,7 @@
                         <span style="font-size: 14px">其他方式登陆:</span>
                         <a href="###"></a>
                         <a href="###"></a>
+                        <el-checkbox v-model="is_table_figure">is_table_figure</el-checkbox>
                     </div>
                 </div>
             </el-col>
@@ -68,7 +69,8 @@
                         { required: true, message: '请输入登录密码', trigger: 'blur' },
                         { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
                     ]
-                }
+                },
+                is_table_figure: false
             }
         },
         methods:{
@@ -79,13 +81,17 @@
                         this.$http.post("/user/login", this.form, this.ORIGIN).then((res)=>{
                             this.loginButtonDisabled = false;
                             if(res.data.code===200){
-                                this.$router.push("/home");
                                 sessionStorage.setItem('token', res.data.data.token);
                                 sessionStorage.setItem('user_id', res.data.data.user_id);
                                 sessionStorage.setItem('username',res.data.data.username);
-                                this.$store.dispatch("setCookie",{username: res.data.data.username});
                                 sessionStorage.setItem('mobile',res.data.data.mobile);
-                                this.$message.success(res.data.message);
+                                if(this.is_table_figure){
+                                    window.location.href = "http://ws.wddsss.com"
+                                }else {
+                                    this.$router.push("/home");
+                                    this.$store.dispatch("setCookie",{username: res.data.data.username});
+                                    this.$message.success(res.data.message);
+                                }
                             }else{
                                 this.$message.error(res.data.message);
                             }
