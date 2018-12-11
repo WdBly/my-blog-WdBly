@@ -27,9 +27,8 @@
     color: #555;
     font-size: 14px;
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    /*background: url("/../static/images/e48e1d0cbffed09322e60ec6a930eaf3.jpg") fixed left top no-repeat;*/
-    background-color:honeydew;
-    background-size: cover;
+    background: url("http://cdn.wddsss.com/image/article/british-columbia-3787200_1920.jpg") fixed left top no-repeat; 
+    background-size: 100% cover;
   }
   td, th, caption {
     font-size: 14px;
@@ -71,5 +70,9 @@
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  .el-step .el-step__title.is-wait {
+    color: #FFF !important;
+    font-weight: bolder;
   }
 </style>

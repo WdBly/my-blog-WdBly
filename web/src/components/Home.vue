@@ -2,7 +2,7 @@
     <el-card  v-loading="loadding" class="box-card" style="width: 100%;margin-top: 10px;">
         <div class="topSearch">
             <div>
-                <span>文章分类:</span>
+                <span style="color: #fff">文章分类:</span>
                 <el-select v-model="curr_value" size="mini" placeholder="请选择" style="width:40%">
                     <el-option
                             v-for="item in articleClassList"
@@ -34,7 +34,7 @@
                         <img class="everArticleImg" :src="item.img"/>
                         <div class="bottomContentRight">
                             <div class="articleIntroduction">{{item.description}}</div>
-                            <el-button @click="readFullArticle(item.id)" type="success" class="readAllArticleButton">阅读全文>></el-button>
+                            <el-button @click="readFullArticle(item.id)" type="text" class="readAllArticleButton">阅读全文>></el-button>
                         </div>
                     </div>
                 </div>
@@ -112,6 +112,10 @@
 </script>
 
 <style scoped lang="scss" rel="stylesheet/scss">
+    .box-card {
+        background: none;
+        border: none
+    }
     .topSearch{
         padding: 10px 0 15px 0;
         display: flex;
@@ -127,13 +131,14 @@
             left: 150px;
             top:0;
             .elCardClass {
-                box-shadow: 0 2px 12px 0 rgba(0,0,0,.3);
+                box-shadow: 0 2px 12px 0 rgba(158, 175, 167, 0.8);
+                background: rgba(255, 255, 255, 0.7);
+                
                 &:first-child{
                     margin-top: 0;
                 }
                 margin-top: 48.4px;
                 padding: 15px;
-                background-color: #fff;
                 .articleTitleText{
                     font-size: 20px;
                     font-weight: bold;
@@ -162,6 +167,7 @@
                             color: black;
                         }
                         .readAllArticleButton{
+                            color: #02abef;
                             width: 100px;
                             text-indent:-5px;
                             margin-left: calc(100% - 100px);

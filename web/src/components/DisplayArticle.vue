@@ -2,17 +2,17 @@
     <div class="displayArticle">
         <mavon-editor style="display: none">
         </mavon-editor>
-        <header class="header">
-            <router-link to="/main" class="el-icon-back"></router-link>
-            <!--<router-link to="/main/publishArticles/0" class="el-icon-edit"></router-link>-->
-        </header>
+
         <div class="title">
             <div style="display: flex;justify-content: space-between;align-items: center">
                 <div style="display: flex;align-items: center;flex-wrap: wrap">
-                    <span style="border-radius: 52%;background-color: yellow">{{articleContent.original === 0 ?"原":articleContent.original === 1 ? "转" : "转"}}</span>
+                    <header class="header">
+                        <router-link to="/main" class="el-icon-back"></router-link>
+                    </header>
+                    <span style="border-radius: 50%;background-color: yellow;display: block;width: 20px;text-align: center;">{{articleContent.original === 0 ?"原":articleContent.original === 1 ? "转" : "转"}}</span>
                     <span class="tags" :key="key" v-for="(item,key) in tags">{{item}}</span>
-                    <span style="margin-left: 15px;color: #009A61;font-weight: bold;font-size: 18px">{{articleContent.username}}</span>
-                    <span style="margin-left: 15px;">更新时间:{{articleContent.updated_at}}</span>
+                    <span style="margin-left: 15px;color: #fff;font-weight: bold;font-size: 18px">{{articleContent.username}}</span>
+                    <span style="margin-left: 15px;color: #fff">更新时间:{{articleContent.updated_at}}</span>
                 </div>
                 <el-button title="评论"  type="text" icon="el-icon-edit" style="margin-right: 45px"></el-button>
             </div>
@@ -99,9 +99,6 @@
 
 <style scoped lang="scss" rel="stylesheet/scss">
     .header{
-        width: 100%;
-        height: 70px;
-        background: url("../../static/images/loginBg.jpg");
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -111,7 +108,7 @@
             height: 100%;
             text-align: center;
             font-size: 25px;
-            color: white;
+            color: #000;
             line-height: 70px;
             font-weight: bold;
             cursor: pointer;
@@ -124,7 +121,7 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        padding: 10px;
+        background: rgb(29, 114, 136);
     }
     .tags {
         background-color: #EBF5F3;
@@ -158,9 +155,7 @@
         height: 50px;
         text-align: center;
         line-height: 50px;
-        border: 1px solid #333333;
         border-radius: 5px;
-        background-color: #8c939d;
         color: white;
         font-size: 25px;
         font-weight: bold;
@@ -170,7 +165,7 @@
         right: 5.8%;
         cursor: pointer;
         &:hover {
-            background-color: #6f7180;
+            background-color: #407bd4;
         }
     }
     @media screen and (max-width: 1200px){

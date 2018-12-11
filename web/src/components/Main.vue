@@ -5,7 +5,7 @@
             <transition enter-active-class="animated zoomInLeft" leave-active-class="animated zoomOutUp">
                 <div  v-show="showHeader" style="display: flex;justify-content: space-between;align-items: center;">
                     <p class="topTextP">WdBly&#8226;博客</p>
-                    <el-button v-if="!cookie.username" type="primary" @click="routerJump">
+                    <el-button type="text" style="color: #437CD1" v-if="!cookie.username" @click="routerJump">
                         管理员登陆
                     </el-button>
                     <span v-else style="font-size: 20px;color: #a6e1ec">
@@ -20,9 +20,9 @@
                     <router-link to="/main/personalGrowth" class="item" v-show="false" >成长</router-link>
                     <router-link to="/main/shareContent" class="item" v-show="false">分享</router-link>
                     <router-link to="/main/feedBack" class="item" v-show="false">留言</router-link>
-                    <router-link to="/main/publishArticles/0" class="item">发表文章</router-link>
-                    <router-link to="/main/articleManagement" class="item">文章管理</router-link>
-                    <router-link to="/main/userManagement" class="item">用户管理</router-link>
+                    <router-link to="/main/publishArticles/0" class="item" v-show="user_id === 1">发表文章</router-link>
+                    <router-link to="/main/articleManagement" class="item" v-show="user_id === 1">文章管理</router-link>
+                    <router-link to="/main/userManagement" class="item" v-show="user_id === 1">用户管理</router-link>
                 </div>
                 <span :class="showHeader?'el-icon-caret-top':'el-icon-caret-bottom'" @click="showHeader =!showHeader"></span>
             </div>
@@ -32,7 +32,7 @@
             <div class="head">
                 <span>
                     WdBly&#8226;博客
-                    <el-button type="success" v-show="!cookie.username" @click="routerJump" size="mini" style="margin: 0 0 0 5px">
+                    <el-button type="text" v-show="!cookie.username" @click="routerJump" size="mini" style="margin: 0 0 0 5px">
                         管理员登陆
                     </el-button>
                     <span v-show="cookie.username" style="color: #a6e1ec">
@@ -49,15 +49,16 @@
                         <el-dropdown-item command="/main/home-成长" v-show="false">成长</el-dropdown-item>
                         <el-dropdown-item command="/main/aboutMe-分享" v-show="false">分享</el-dropdown-item>
                         <el-dropdown-item command="/main/home-留言" v-show="false">留言</el-dropdown-item>
-                        <el-dropdown-item command="/main/publishArticles/0-发表文章">发表文章</el-dropdown-item>
-                        <el-dropdown-item command="/main/articleManagement-文章管理">文章管理</el-dropdown-item>
-                        <el-dropdown-item command="/main/userManagement-用户管理">用户管理</el-dropdown-item>
+                        <el-dropdown-item command="/main/publishArticles/0-发表文章" v-show="user_id === 1">发表文章</el-dropdown-item>
+                        <el-dropdown-item command="/main/articleManagement-文章管理" v-show="user_id === 1">文章管理</el-dropdown-item>
+                        <el-dropdown-item command="/main/userManagement-用户管理" v-show="user_id === 1">用户管理</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
         </div>
-        <router-view/>
-
+        <div class="content-body">
+            <router-view/>
+        </div>
         <i class="el-icon-back jumpTop" @click="jumpTopFn"></i>
     </div>
 </template>
@@ -70,7 +71,8 @@
         data(){
             return {
                 routerText:"首页",
-                showHeader:true,
+                showHeader:false,
+                user_id: Number(sessionStorage.getItem("user_id"))
             }
         },
         computed:{
@@ -127,7 +129,6 @@
 
 <style scoped lang="scss" rel="stylesheet/scss">
     #mainContent {
-        width: 1200px;
         height: 100vh;
         margin: 0 auto;
         .topTextP{
@@ -137,13 +138,17 @@
             line-height: 100px;
         }
     }
+    .content-body {
+        width: 1200px;
+        margin: 0 auto;
+    }
     .eachItem{
-        width: 100%;
+        width: 1200px;
+        margin: 0 auto;
         height: 50px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 2px solid #E4EDE7;
     }
     .eachItem>div{
         height: 50px;
@@ -162,9 +167,7 @@
         height: 50px;
         text-align: center;
         line-height: 50px;
-        border: 1px solid #333333;
         border-radius: 5px;
-        background-color: #8c939d;
         color: white;
         font-size: 25px;
         font-weight: bold;
@@ -174,7 +177,7 @@
         right: 5.8%;
         cursor: pointer;
         &:hover {
-            background-color: #6f7180;
+            background-color: #407bd4;
         }
     }
     .item {
@@ -185,7 +188,7 @@
         text-align: center;
         line-height: 50px;
         &:hover {
-            color: #F56C6C;
+            color: #fff;
             text-decoration: none;
         }
     }
@@ -195,7 +198,7 @@
     }
     .responseHead{
         display: block;
-        background-color: #2a88bd;
+        background-color: none;
         padding: 5px 20px;
     }
     .responseHeadMobile{
@@ -207,8 +210,8 @@
         display: none;
     }
     .router-link-active {
-        color: #F56C6C;
-        border-bottom: 2px solid #F56C6C;
+        color: #fff;
+        border-bottom: 2px solid #fff;
     }
     .logOutSpan {
         color:white;
@@ -221,13 +224,19 @@
         }
     }
     @media screen and (max-width: 1200px){
-        #mainContent {
-            width: 90%;
+        .eachItem {
+            width: 80%;
+        }
+        .content-body {
+            width: 80%;
         }
     }
     @media screen and (max-width: 700px){
-        #mainContent {
-            width: 96%;
+        .eachItem {
+            width: 98%;
+        }
+        .content-body {
+            width: 98%;
         }
         .responseHead{
             display: none;
