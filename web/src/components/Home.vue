@@ -100,6 +100,40 @@
                         this.$message.error(res.data.message)
                     }
                 })
+            },
+            getPosition(callback){
+                var positionInfo = {
+                    gps: false
+                }
+
+                if(navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        positionInfo.gps = true;
+                        positionInfo.lng = position.coords.latitude;
+                        positionInfo.lat = position.coords.latitude;
+                        callback(positionInfo);
+                    },function(error) {
+                        positionInfo.gps = false;
+                        switch(error.code){
+                            case error.PERMISSION_DENIED:
+                                positionInfo.error="用户拒绝对获取地理位置的请求";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                positionInfo.error="位置信息是不可用的";
+                                break;
+                            case error.TIMEOUT:
+                                positionInfo.error="请求用户地理位置超时";
+                                break;
+                            case error.UNKNOWN_ERROR:
+                                positionInfo.error="未知错误";
+                                break;
+                        }
+                        callback(positionInfo);
+                    });
+                }else {
+                    positionInfo.error="不支持定位";
+                    callback(positionInfo);
+                }
             }
         },
         beforeMount(){
@@ -107,6 +141,10 @@
                 this.loadding = true;
                 this.getHomeData()
             }
+
+            this.getPosition(function(positionInfo) {
+                console.log(positionInfo);
+            })
         }
     }
 </script>
