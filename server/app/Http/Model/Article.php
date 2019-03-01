@@ -31,7 +31,7 @@ class Article extends Model
         $articleData = $this->find($data['id']);
         if (!empty($articleData)) {
             if ($articleData->u_id != $id && $id != 1) {
-                return 'forbidden';
+                return false;
             }
 
             $re = $this->where([['id','=',$data['id']]])->delete();
@@ -58,7 +58,7 @@ class Article extends Model
         $articleData = $this->find($data['id']);
         if (!empty($articleData)) {
             if ($articleData->u_id != $id && $id != 1) {
-                return 'forbidden';
+                return false;
             }
 
             $re = $this->where('id',$data['id'])->update($data);
