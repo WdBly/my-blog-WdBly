@@ -48,8 +48,8 @@ express.post('/user/logout', (req, res) => {
     api.default.userLogout().then(rs => {
         if(rs.data.code === 200){
             res.clearCookie('username');
-            res.clearCookie('laravel_session');
-            res.clearCookie('XSRF-TOKEN');
+            res.clearCookie('laravel_session', {domain:'.wddsss.com'});
+            res.clearCookie('XSRF-TOKEN', {domain:'.wddsss.com'});
         }
         res.writeHead(200, { "Content-Type": "application/json;charset=utf-8" });
         res.end(JSON.stringify(rs.data));

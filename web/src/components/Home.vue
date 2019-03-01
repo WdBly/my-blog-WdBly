@@ -142,9 +142,9 @@
                 this.getHomeData()
             }
 
-            this.getPosition(function(positionInfo) {
-                console.log(positionInfo);
-            })
+            // this.getPosition(function(positionInfo) {
+            //     console.log(positionInfo);
+            // })
         }
     }
 </script>
