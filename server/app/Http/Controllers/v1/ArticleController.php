@@ -30,12 +30,12 @@ class ArticleController extends BasicController
         $data = $request->all();
         $user = new Article();
         $res = $user->delArticle($data);
-        if ($res)
+        if ($res && $res != "forbidden")
         {
             return renderJson('文章删除成功', null, 200);
         } else
         {
-            return renderJson('文章删除失败', null, 400);
+            return renderJson($res ? '你不能删除其他用户的文章哦' : '文章删除失败', null, 400);
         }
     }
 
@@ -44,12 +44,12 @@ class ArticleController extends BasicController
         $data = $request->all();
         $user = new Article();
         $res = $user->editArticle($data);
-        if ($res)
+        if ($res && $res != "forbidden")
         {
             return renderJson('文章编辑成功', null, 200);
         } else
         {
-            return renderJson('文章编辑失败', null, 400);
+            return renderJson($res ? '你不能编辑其他用户的文章哦' : '文章编辑失败', null, 400);
         }
     }
 

@@ -27,8 +27,17 @@ class Article extends Model
 
     public function delArticle($data)
     {
-        $re = $this->where([['id','=',$data['id']]])->delete();
-        return $re?true:false;
+        $id = Auth::id();
+        $articleData = $this->find($data['id']);
+        if (!empty($articleData)) {
+            if ($articleData->u_id != $id && $id !== 1) {
+                return 'forbidden';
+            }
+
+            $re = $this->where([['id','=',$data['id']]])->delete();
+            return $re?true:false;
+        }
+        return false;
     }
 
     public function getArticleContent($data)
@@ -42,10 +51,20 @@ class Article extends Model
     public function editArticle($data)
     {
         if(!$data['img']){
-             $data['img'] = "http://cdn.wddsss.com/image/article/acb1c4189f5727fff608a11543663b69.jpg";
+            $data['img'] = "http://cdn.wddsss.com/image/article/acb1c4189f5727fff608a11543663b69.jpg";
         }
-        $re = $this->where('id',$data['id'])->update($data);
-        return $re?true:false;
+
+        $id = Auth::id();
+        $articleData = $this->find($data['id']);
+        if (!empty($articleData)) {
+            if ($articleData->u_id != $id && $id !== 1) {
+                return 'forbidden';
+            }
+
+            $re = $this->where('id',$data['id'])->update($data);
+            return $re?true:false;
+        }
+        return false;
     }
 
     public function getArticleList($data)
