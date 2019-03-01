@@ -44,7 +44,7 @@ class ArticleController extends BasicController
         $data = $request->all();
         $user = new Article();
         $res = $user->editArticle($data);
-        if ($res && $res != "forbidden")
+        if ($res)
         {
             return renderJson('文章编辑成功', null, 200);
         } else
