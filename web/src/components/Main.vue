@@ -20,9 +20,9 @@
                     <router-link to="/main/personalGrowth" class="item" v-show="false" >成长</router-link>
                     <router-link to="/main/shareContent" class="item" v-show="false">分享</router-link>
                     <router-link to="/main/feedBack" class="item" v-show="false">留言</router-link>
-                    <router-link to="/main/publishArticles/0" class="item" v-show="cookie.username === 'zhouwei'">发表文章</router-link>
-                    <router-link to="/main/articleManagement" class="item" v-show="cookie.username === 'zhouwei'">文章管理</router-link>
-                    <router-link to="/main/userManagement" class="item" v-show="cookie.username === 'zhouwei'">用户管理</router-link>
+                    <router-link to="/main/publishArticles/0" class="item" v-show="!!cookie.username">发表文章</router-link>
+                    <router-link to="/main/articleManagement" class="item" v-show="!!cookie.username">文章管理</router-link>
+                    <router-link to="/main/userManagement" class="item" v-show="!!cookie.username">用户管理</router-link>
                 </div>
                 <span :class="showHeader?'el-icon-caret-top':'el-icon-caret-bottom'" @click="showHeader =!showHeader"></span>
             </div>
@@ -49,9 +49,9 @@
                         <el-dropdown-item command="/main/home-成长" v-show="false">成长</el-dropdown-item>
                         <el-dropdown-item command="/main/aboutMe-分享" v-show="false">分享</el-dropdown-item>
                         <el-dropdown-item command="/main/home-留言" v-show="false">留言</el-dropdown-item>
-                        <el-dropdown-item command="/main/publishArticles/0-发表文章" v-show="cookie.username === 'zhouwei'">发表文章</el-dropdown-item>
-                        <el-dropdown-item command="/main/articleManagement-文章管理" v-show="cookie.username === 'zhouwei'">文章管理</el-dropdown-item>
-                        <el-dropdown-item command="/main/userManagement-用户管理" v-show="cookie.username === 'zhouwei'">用户管理</el-dropdown-item>
+                        <el-dropdown-item command="/main/publishArticles/0-发表文章" v-show="!!cookie.username">发表文章</el-dropdown-item>
+                        <el-dropdown-item command="/main/articleManagement-文章管理" v-show="!!cookie.username">文章管理</el-dropdown-item>
+                        <el-dropdown-item command="/main/userManagement-用户管理" v-show="!!cookie.username">用户管理</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
