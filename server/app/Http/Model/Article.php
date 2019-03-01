@@ -30,7 +30,7 @@ class Article extends Model
         $id = Auth::id();
         $articleData = $this->find($data['id']);
         if (!empty($articleData)) {
-            if ($articleData->u_id != $id && $id !== 1) {
+            if ($articleData->u_id != $id && $id != 1) {
                 return 'forbidden';
             }
 
@@ -57,7 +57,7 @@ class Article extends Model
         $id = Auth::id();
         $articleData = $this->find($data['id']);
         if (!empty($articleData)) {
-            if ($articleData->u_id != $id && $id !== 1) {
+            if ($articleData->u_id != $id && $id != 1) {
                 return 'forbidden';
             }
 
