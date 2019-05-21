@@ -42,7 +42,7 @@
             </el-table-column>
             <el-table-column label="首图" width="50">
                 <template slot-scope="scope">
-                    <img :src="scope.row.img" style="width: 25px;height: 25px"/>
+                    <img :src="imageFilter(scope.row.img)" style="width: 25px;height: 25px"/>
                 </template>
             </el-table-column>
             <el-table-column label="作者" width="150">
@@ -78,6 +78,10 @@
             }
         },
         methods:{
+            imageFilter(src) {
+                src += "?imageView2/1/w/200/h/140/q/65/webp";
+                return src;
+            },
             onSubmit(){
                 this.getArticleList();
             },

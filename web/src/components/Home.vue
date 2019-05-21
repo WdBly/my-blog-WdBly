@@ -31,7 +31,7 @@
                      :key="item.id">
                     <header class="articleTitleText">{{item.title}}</header>
                     <div class="bottomContent">
-                        <img class="everArticleImg" :src="item.img"/>
+                        <img class="everArticleImg" :src="imageFilter(item.img)"/>
                         <div class="bottomContentRight">
                             <div class="articleIntroduction">{{item.description}}</div>
                             <el-button @click="readFullArticle(item.id)" type="text" class="readAllArticleButton">阅读全文>></el-button>
@@ -80,6 +80,10 @@
             ...mapGetters(["articleList","total","articleClassList"])
         },
         methods:{
+            imageFilter(src) {
+                src += "?imageView2/1/w/200/h/140/q/65/webp";
+                return src;
+            },
             handleCurrentChange() {
                 this.getArticleList();
             },
