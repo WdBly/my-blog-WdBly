@@ -58780,7 +58780,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_App_vue__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_App_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_App_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_App_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_App_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2bd464e0_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_73c58a8d_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__ = __webpack_require__(197);
 function injectStyle (ssrContext) {
 var i
 ;(i=__webpack_require__(194),i.__inject__&&i.__inject__(ssrContext),i)
@@ -58801,7 +58801,7 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = "3129662a"
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_App_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2bd464e0_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_73c58a8d_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
@@ -58824,7 +58824,7 @@ if(content.locals) module.exports = content.locals;
 // add CSS to SSR context
 var add = __webpack_require__(53)
 module.exports.__inject__ = function (context) {
-  add("abc07408", content, true, context)
+  add("4995e6fc", content, true, context)
 };
 
 /***/ }),
@@ -58836,7 +58836,7 @@ exports = module.exports = __webpack_require__(52)(false);
 
 
 // module
-exports.push([module.i, "blockquote,body,button,code,dd,div,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,input,legend,li,ol,p,pre,td,textarea,th,ul{margin:0;padding:0}body{color:#555;font-family:Verdana,Arial,Helvetica,sans-serif;background:url(\"http://cdn.wddsss.com/image/article/british-columbia-3787200_1920.jpg\") fixed 0 0 no-repeat;background-size:100% cover}body,caption,td,th{font-size:14px}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:400}a{color:#555;text-decoration:none}a:hover{text-decoration:underline}img{border:none}li,ol,ul{list-style:none}button,input,select,textarea{font:14px Verdana,Helvetica,Arial,sans-serif}.clearfix:after{content:\".\";display:block;height:0;clear:both;visibility:hidden}.clearfix{*zoom:1}input::-ms-clear{display:none}#app{font-family:Avenir,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.el-step .el-step__title.is-wait{color:#fff!important;font-weight:bolder}", ""]);
+exports.push([module.i, "blockquote,body,button,code,dd,div,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,input,legend,li,ol,p,pre,td,textarea,th,ul{margin:0;padding:0}body{color:#555;font-family:Verdana,Arial,Helvetica,sans-serif;background:url(\"http://cdn.wddsss.com/image/article/british-columbia-3787200_1920.jpg?imageView2/1/w/0/h/0/q/50/webp\") fixed 0 0 no-repeat;background-size:100% cover}body,caption,td,th{font-size:14px}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:400}a{color:#555;text-decoration:none}a:hover{text-decoration:underline}img{border:none}li,ol,ul{list-style:none}button,input,select,textarea{font:14px Verdana,Helvetica,Arial,sans-serif}.clearfix:after{content:\".\";display:block;height:0;clear:both;visibility:hidden}.clearfix{*zoom:1}input::-ms-clear{display:none}#app{font-family:Avenir,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.el-step .el-step__title.is-wait{color:#fff!important;font-weight:bolder}", ""]);
 
 // exports
 
@@ -61651,7 +61651,7 @@ function createStore() {
 /* harmony default export */ __webpack_exports__["a"] = ({
     getHomeData({ commit }, params){
         var {pageNum,pageSize,search} = params;
-        return Promise.all([__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleList({pageNum,pageSize,search}, params.cookies),__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleClassList(params.cookies)]).then(res => {
+        return Promise.all([__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getHomeArticleList({pageNum,pageSize,search}, params.cookies),__WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getArticleClassList(params.cookies)]).then(res => {
             if(res[0].data.code === 200 && res[1].data.code === 200){
                 commit(__WEBPACK_IMPORTED_MODULE_0__types__["b" /* SET_ARTICLE_LIST */], {
                     list: res[0].data.data.list,
@@ -61704,6 +61704,10 @@ const allApi = {
 
     getArticleList(params,cookies){
         return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].post("/article/getArticleList", params, null, cookies);
+    },
+
+    getHomeArticleList(params,cookies){
+        return __WEBPACK_IMPORTED_MODULE_0__axios__["default"].post("/article/getHomeArticleList", params, null, cookies);
     },
 
     getArticleClassList(cookies){

@@ -93,6 +93,21 @@
             searchArticleList(){
                 this.getArticleList();
             },
+            getArticleList(){
+                this.loadding = true;
+                this.$http.post("/article/getHomeArticleList",{
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
+                    search: this.topSearchContent
+                }).then((res)=>{
+                    this.loadding = false;
+                    if(res.data.code === 200){
+                        this.articleList=res.data.data.list;
+                    }else{
+                        this.$message.error(res.data.message)
+                    }
+                })
+            },
             getHomeData(){
                 this.$store.dispatch("getHomeData",{
                     pageNum: this.pageNum,

@@ -8,6 +8,10 @@ const allApi = {
         return http.post("/article/getArticleList", params, null, cookies);
     },
 
+    getHomeArticleList(params,cookies){
+        return http.post("/article/getHomeArticleList", params, null, cookies);
+    },
+
     getArticleClassList(cookies){
         return http.get("/article/getArticleClass", null, cookies);
     },

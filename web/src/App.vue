@@ -27,7 +27,7 @@
     color: #555;
     font-size: 14px;
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    background: url("http://cdn.wddsss.com/image/article/british-columbia-3787200_1920.jpg") fixed left top no-repeat; 
+    background: url("http://cdn.wddsss.com/image/article/british-columbia-3787200_1920.jpg?imageView2/1/w/0/h/0/q/50/webp") fixed left top no-repeat; 
     background-size: 100% cover;
   }
   td, th, caption {
