@@ -81,6 +81,20 @@ class ArticleController extends BasicController
         }
     }
 
+    public function getHomeArticleList(Request $request)
+    {
+        $data = $this->validate($request,['pageSize'=>'required|integer','pageNum'=>'required|integer','search'=>'present']);
+        $article = new Article();
+        $res = $article->getHomeArticleList($data);
+        if (!empty($res))
+        {
+            return renderJson('获取文章列表成功', $res, 200);
+        } else
+        {
+            return renderJson('获取文章列表失败', null, 400);
+        }
+    }
+
     public function addArticleClass(Request $request)
     {
         $data = $this->validate($request,['name'=>'required|string|unique:articleclassification']);

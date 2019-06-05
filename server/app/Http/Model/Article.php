@@ -70,15 +70,36 @@ class Article extends Model
     public function getArticleList($data)
     {
         $id = Auth::id();
-        $index =1;
         $parameter = $data['search'];
-        if($id==1){
-            $where = [['u_id','=',$id]];
-        }else{
-            $where = [['whetherPublic','=',$index]];
-        }
+        $where = [['u_id','=',$id]];
+
         $all = $this->join('users','users.id','=','articles.u_id')
             ->where($where)
+            ->when($parameter,function ($query) use ($parameter) {
+                $query->where('title', 'like', '%' . $parameter . '%')->orWhere(function ($query) use ($parameter) {
+                    $query->where('description', 'like', '%' . $parameter . '%');
+                });
+            })
+            ->select("articles.title","articles.description","articles.img","articles.id","articles.original","articles.tags","articles.u_id","articles.updated_at","articles.whetherPublic","articles.ca_id","articles.created_at",'users.username');
+        $total = $all->count();
+        $list = $all->skip(($data['pageNum'] - 1) * $data['pageSize'])->take($total)->orderBy('articles.created_at', 'desc')->get();
+        return $list->isNotEmpty()?['total'=>$total,'list'=>$list]:[];
+    }
+
+    public function getHomeArticleList($data)
+    {
+        // 登陆后可以看到所有公开文章 + 自己的私人文章
+        $id = Auth::id();
+        $parameter = $data['search'];
+        $model = new Article();
+        if(!$id) {
+            // 未登录
+            $model = $model->where('whetherPublic', 1);
+        } else {
+            // 登陆
+            $model = $model->where('u_id', $id)->orWhere('whetherPublic', 1);
+        }
+        $all = $model->join('users','users.id','=','articles.u_id')
             ->when($parameter,function ($query) use ($parameter) {
                 $query->where('title', 'like', '%' . $parameter . '%')->orWhere(function ($query) use ($parameter) {
                     $query->where('description', 'like', '%' . $parameter . '%');
