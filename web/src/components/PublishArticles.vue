@@ -204,8 +204,8 @@
                     data: formdata,
                     headers: {'Content-Type':'multipart/form-data'},
                 }).then((res) => {
-                    res = res.data.data + "?imageView2/1/w/0/h/0/q/50/webp"
-                    this.$refs.md.$img2Url(pos, res.data.data);
+                    let url = res.data.data + "?imageView2/1/w/0/h/0/q/50/webp";
+                    this.$refs.md.$img2Url(pos, url);
                 })
             },
             savePosts(value,render){
