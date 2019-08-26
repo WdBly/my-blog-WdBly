@@ -23,15 +23,12 @@ class ArticleClassification extends Model
 
     public function getArticleClass()
     {
-        $da = $this->select('id','name')->get()->toArray();
-        $data1 = [];
-        for($i = 0; $i < count($da); $i++){
-            $data = [
-                'value' => $da[$i]['id'],
-                'label' => $da[$i]['name'],
-            ];
-            array_push($data1,$data);
-        }
-        return $data1;
+        $da = $this->select('articleclassification.id as value','articleclassification.name as label')
+                ->selectRaw('count(*) as total')
+                ->leftJoin('articles', 'articleclassification.id', '=', 'articles.ca_id')
+                ->groupBy('articleclassification.id')
+                ->get()
+                ->toArray();
+        return $da;
     }
 }

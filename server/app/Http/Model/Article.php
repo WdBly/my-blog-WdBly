@@ -45,6 +45,12 @@ class Article extends Model
         $data = $this->where([['id','=',$data['id']]])->select("*")->first();
         $d = DB::table('users')->where('id','=',$data['u_id'])->value('username');
         $data["username"] = $d;
+
+        // 设置文章阅读次数
+        $articleData = $this->find($data['id']);
+        $articleData['read_num'] + 1;
+        $this->where('id',$data['id'])->update($articleData);
+        
         return $data;
     }
 
@@ -99,13 +105,26 @@ class Article extends Model
             // 登陆
             $model = $model->where('u_id', $id)->orWhere('whetherPublic', 1);
         }
-        $all = $model->join('users','users.id','=','articles.u_id')
+
+        // 重构后新增逻辑
+        // 1 文章列表中包含了 class name
+        // 2 文章可通过tag_id 和class_id来筛选
+        // 3 文章新增阅读次数 延后
+        if (isset($data['type_tag']) && is_numeric($data['type_tag'])) {
+            $model = $model->where('articles.tags', 'like', '%' . $$data['type_tag'] . '%');
+        }
+        if (isset($data['type_class']) && is_numeric($data['type_class'])) {
+            $model = $model->where('articles.ca_id', $data['type_class']);
+        }
+
+        $all = $model->leftJoin('users','users.id','=','articles.u_id')
             ->when($parameter,function ($query) use ($parameter) {
-                $query->where('title', 'like', '%' . $parameter . '%')->orWhere(function ($query) use ($parameter) {
-                    $query->where('description', 'like', '%' . $parameter . '%');
+                $query->where('articles.title', 'like', '%' . $parameter . '%')->orWhere(function ($query) use ($parameter) {
+                    $query->where('articles.description', 'like', '%' . $parameter . '%');
                 });
             })
-            ->select("articles.title","articles.description","articles.img","articles.id","articles.original","articles.tags","articles.u_id","articles.updated_at","articles.whetherPublic","articles.ca_id","articles.created_at",'users.username');
+            ->leftJoin('articleclassification', 'articles.ca_id', '=', 'articleclassification.id')
+            ->select("articleclassification.name as class_name", "articles.title","articles.description","articles.img","articles.id","articles.original","articles.tags","articles.u_id","articles.updated_at","articles.whetherPublic","articles.ca_id","articles.created_at","articles.read_num",'users.username');
         $total = $all->count();
         $list = $all->skip(($data['pageNum'] - 1) * $data['pageSize'])->take($total)->orderBy('articles.created_at', 'desc')->get();
         return $list->isNotEmpty()?['total'=>$total,'list'=>$list]:[];
