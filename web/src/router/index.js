@@ -3,8 +3,10 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 export const createRouter = () => {
-    const Main = ()=> import('@/refactor/Main.vue');
-    const Home = ()=> import('@/refactor/Home.vue');
+    // const Main = ()=> import('@/refactor/Main.vue');
+    // const Home = ()=> import('@/refactor/Home.vue');
+    const Main = ()=> import('@/components/Main.vue');
+    const Home = ()=> import('@/components/Home.vue');
     const Login = ()=> import('@/components/Login.vue');
     const AboutMe = ()=> import('@/components/AboutMe.vue');
     const Register = ()=> import('@/components/Register.vue');
