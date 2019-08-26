@@ -30,7 +30,8 @@
             return {
             }
         },
-        asyncData ({ store, route }, emp, cookies) {
+        asyncData ({ store, route }, url, cookies) {
+            // 这里面不能通过 this.props取到路由参数， 需要自己去匹配
             cookies && store.dispatch("setCookie",cookies);
             let obj = {
                 pageNum: 1,
@@ -38,11 +39,15 @@
                 search: "",
                 cookies
             };
-            if(this.type === "tag"){
-                obj.type_tag = this.value;
+
+            /main\/archive\/(\w+)\/(\w+)/.test(url);
+            let type = RegExp.$1;
+            let value = RegExp.$2;
+            if(type === "tag"){
+                obj.type_tag = value;
             }
-            if(this.type === "class"){
-                obj.type_class = this.value;
+            if(type === "class"){
+                obj.type_class = value;
             }
             return store.dispatch("getArchive", obj)
         },

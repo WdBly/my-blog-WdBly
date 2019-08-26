@@ -44,7 +44,9 @@
                 <div class="overview">
                     <img src="http://cdn.wddsss.com/image/article/51c770fc5af90a909309ece131d89614.png?imageView2/1/w/0/h/0/q/50/webp" />
                     <p class="name">周维 | Jim</p>
-                    <p class="signature">乘以风，破路之棘</p>
+                    <!-- 懂事、有趣、保持理智 -->
+                    <!-- 有些路只能一个人走 -->
+                    <p class="signature" style="color: #363636">有些路只能一个人走</p>
 
                     <!-- 三个分类入口， 日志， web， app 都是进入归档页面 -->
                     <!-- <nav class="overview-nav">
@@ -65,6 +67,12 @@
                         <p style="color: #363636; font-size: 18px">友情链接</p>
                         <a href="https://www.penlsun.cn" target="_blank">
                             西桥听雨
+                        </a>
+                        <a href="https://www.printf520.com" target="_blank">
+                            Printf & 520
+                        </a>
+                        <a href="https://www.ohdata.top" target="_blank">
+                            胡大大的个人博客
                         </a>
                     </div>
                 </div>
@@ -263,6 +271,7 @@
                         cursor: pointer;
                         display: flex;
                         align-items: center;
+                        line-height: 30px;
 
                         &:hover {
                             color: #0090F0;

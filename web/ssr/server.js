@@ -67,7 +67,7 @@ express.get('*', (req, res) => {
     // console.log(req.cookies,"req.cookies");
 
     createApp(context).then(app => {
-        console.log(context, "context");
+        // console.log(context, "context");
 
         // 如果是文章详情页面
         if(context.url.search(/\/main\/displayArticle/) !== -1) {
