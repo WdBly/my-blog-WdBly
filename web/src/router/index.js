@@ -2,9 +2,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-function routerProduce() {
-    const Main = ()=> import('@/components/Main.vue');
-    const Home = ()=> import('@/components/Home.vue');
+export const createRouter = () => {
+    const Main = ()=> import('@/refactor/Main.vue');
+    const Home = ()=> import('@/refactor/Home.vue');
     const Login = ()=> import('@/components/Login.vue');
     const AboutMe = ()=> import('@/components/AboutMe.vue');
     const Register = ()=> import('@/components/Register.vue');
@@ -16,7 +16,10 @@ function routerProduce() {
     const UserManagement = ()=> import('@/components/UserManagement.vue');
 
 
-    const DisplayArticle = ()=> import('@/components/DisplayArticle.vue');
+    const DisplayArticle = ()=> import('@/refactor/DisplayArticle.vue');
+    const ArchiveComponent = ()=> import('@/refactor/ArchiveComponent.vue');
+    const Categories = ()=> import('@/refactor/Categories.vue');
+    const Tags = ()=> import('@/refactor/Tags.vue');
 
 
     Vue.use(Router);
@@ -53,12 +56,21 @@ function routerProduce() {
                 },{
                     path: 'userManagement',
                     component: UserManagement
+                },{
+                    path: 'displayArticle/:id',
+                    component: DisplayArticle,
+                    props: true
+                },{
+                    path: 'archive/:type/:value',
+                    component: ArchiveComponent,
+                    props: true
+                },{
+                    path: 'categories',
+                    component: Categories
+                },{
+                    path: 'tags',
+                    component: Tags
                 }]
-            },
-            {
-                path: '/displayArticle/:id',
-                component: DisplayArticle,
-                props: true
             },
             {
                 path: '/login',
@@ -81,5 +93,3 @@ function routerProduce() {
 
     return router;
 }
-
-export default routerProduce;

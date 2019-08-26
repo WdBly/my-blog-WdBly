@@ -1,16 +1,12 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import ElementUI from 'element-ui'
 import App from './../src/App.vue'
-import createRouter from './../src/router'
+import {createSsrRouter} from './../src/router/ssr'
 import createStore from './../src/store'
 import axios from './../src/api/axios'
 
 import 'element-ui/lib/theme-chalk/index.css'
-
-Vue.use(ElementUI);
-
 
 Vue.prototype.$http = axios;
 Vue.prototype.BASEURL = 'https://api.wddsss.com';
@@ -22,7 +18,7 @@ Vue.prototype.ORIGIN = 'https://www.wddsss.com';
 
 export function createApp () {
 
-    const router = createRouter()
+    const router = createSsrRouter()
     const store = createStore()
 
     const app = new Vue({

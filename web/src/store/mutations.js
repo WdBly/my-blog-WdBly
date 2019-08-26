@@ -15,6 +15,16 @@ const mutations = {
     },
     [types.SET_COOKIE] (state, cookie) {
         state.cookie = cookie;
+    },
+    [types.SET_ARCHIVE] (state, { archiveList, total }) {
+        state.archiveList = archiveList;
+        state.total = total;
+    },
+    [types.SET_CATEGORY] (state, { articleClassList }) {
+        state.articleClassList = articleClassList;
+    },
+    [types.SET_TAGS] (state, { tags }) {
+        state.tags = tags;
     }
 }
 

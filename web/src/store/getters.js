@@ -17,5 +17,8 @@ export default {
     },
     cookie: (state) => {
         return state.cookie
+    },
+    archiveList: (state) => {
+        return state.archiveList
     }
 }

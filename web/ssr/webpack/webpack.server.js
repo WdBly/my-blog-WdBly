@@ -2,7 +2,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const utils = require('./../../build/utils');
 const projectRoot = path.resolve(__dirname, '..');
 
@@ -84,7 +85,16 @@ module.exports = {
                 to: "static",
                 ignore: ['.*']
             }
-        ])
+        ]),
+        new UglifyJsPlugin({
+            uglifyOptions: {
+                compress: {
+                    warnings: false
+                }
+            },
+            sourceMap: true,
+            parallel: true
+        })
     ],
     resolve: {
         extensions: ['.js', '.vue', '.json'],

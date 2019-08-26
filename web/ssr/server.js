@@ -18,9 +18,11 @@ express.use('/', exp.static(__dirname + '/dist'))
 
 const clientBundleFileUrl = '/client/app.client.js'
 const data = {
-  title: '维大大的个人博客',
+  title: '周维的个人博客',
   meta: `
     <meta name="keywords" content="wdbly" />
+    <meta name="keywords" content="前端技术分享" />
+    <meta name="keywords" content="前端资源" />
   `,
   script: `
     <script src="/client/vendor.bundle.js"></script>
@@ -44,6 +46,7 @@ express.post('/user/login', (req, res) => {
         res.end(JSON.stringify(rs.data));
     })
 })
+
 express.post('/user/logout', (req, res) => {
     api.default.userLogout().then(rs => {
         if(rs.data.code === 200){
@@ -61,9 +64,42 @@ express.get('*', (req, res) => {
         url: req.url,
         cookies: req.cookies
     };
-    console.log(req.cookies,"req.cookies");
+    // console.log(req.cookies,"req.cookies");
 
     createApp(context).then(app => {
+        console.log(context, "context");
+
+        // 如果是文章详情页面
+        if(context.url.search(/\/main\/displayArticle/) !== -1) {
+            // 加载编辑器的样式 和修改title 和meta等头信息。
+            data.script = `
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+                ${data.script}
+            `;
+
+            var article_title = context.state.mutations.articleContent.title;
+            var article_description = context.state.mutations.articleContent.description;
+            var article_tags = context.state.mutations.tags;
+            data.title = article_title;
+            data.meta = `
+                ${
+                    article_tags.map(tag => `<meta name="keywords" content=${tag.label} >`)
+                }
+                <meta name="description" content="${article_description}">
+            `
+        }else if(context.url.search(/\/main\/home/) !== -1) {
+            data.title = "首页-周维的个人博客";
+        }else if(context.url.search(/\/main\/archive/) !== -1) {
+            data.title = "归档-前端开发文章";
+        }else if(context.url.search(/\/main\/tags/) !== -1) {
+            data.title = "标签-文章技能标签";
+        }else if(context.url.search(/\/main\/categories/) !== -1) {
+            data.title = "分类-前端技能分类";
+        }
+        
         var state = JSON.stringify(context.state);
 
         data.state =  `<script>window.__INITIAL_STATE__ = ${state}</script>`

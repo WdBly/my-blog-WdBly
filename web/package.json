@@ -9,7 +9,8 @@
     "start": "npm run dev",
     "build": "node build/build.js",
     "build-server": "cross-env NODE_ENV=production webpack --config ./ssr/webpack/webpack.server.js",
-    "build-client": "cross-env NODE_ENV=production webpack --config ./ssr/webpack/webpack.client.js"
+    "build-client": "cross-env NODE_ENV=production webpack --config ./ssr/webpack/webpack.client.js",
+    "ssr": "nodemon ./ssr"
   },
   "dependencies": {
     "animate.css": "^3.5.2",

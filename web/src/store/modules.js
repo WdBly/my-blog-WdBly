@@ -5,7 +5,8 @@ const state = {
     articleClassList: [],
     articleContent: "",
     tags: [],
-    cookie: {}
+    cookie: {},
+    archiveList: {}
 }
 
 

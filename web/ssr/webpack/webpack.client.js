@@ -15,7 +15,7 @@ function resolve (dir) {
 module.exports = {
     entry: {
         "app": path.join(projectRoot, 'entry-client.js'),
-        "vendor": ['vue', 'vue-router', 'vuex', 'element-ui','mavon-editor']
+        "vendor": ['vue', 'vue-router', 'vuex']
     },
     output: {
         path: path.join(projectRoot, 'dist'),
