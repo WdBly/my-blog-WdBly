@@ -7,7 +7,7 @@
             <!-- 发表时间 | 分类 | 阅读次数 -->
             <div class="article-info">
                 <span class="info-item">发表于{{article.created_at.substr(0, 10)}}</span>
-                <router-link :to="'/main/archive/class/' + article.ca_id" class="info-item">{{article.class_name || "React Native"}}</router-link>
+                <router-link :to="'/main/archive/class/' + article.ca_id" class="info-item" style="color: #0090F0">{{article.class_name || "React Native"}}</router-link>
                 <span class="info-item">阅读{{article.read_num}}</span>
             </div>
             <img class="everArticleImg" src="http://cdn.wddsss.com/image/article/6b4f1ff2ecbe448d15daeefc715a5737.png?imageView2/1/w/616/h/350/q/50/webp"/>

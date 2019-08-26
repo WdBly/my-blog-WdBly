@@ -51,15 +51,18 @@
         },
         methods:{
             getArchive(){
-                this.$store.dispatch("getArchive",{
+                let obj = {
                     pageNum: 1,
                     pageSize: 10000,
-                    search: "",
-                    type: {
-                        type: this.type,
-                        key: this.value
-                    },
-                });
+                    search: ""
+                }
+                if(this.type === "tag"){
+                    obj.type_tag = this.value;
+                }
+                if(this.type === "class"){
+                    obj.type_class = this.value;
+                }
+                this.$store.dispatch("getArchive", obj);
             }
         },
         beforeMount(){

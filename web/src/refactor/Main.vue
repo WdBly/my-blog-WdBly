@@ -62,9 +62,10 @@
                     </div>
                     <!-- 友情链接 -->
                     <div class="links">
-                        <a href="https://github.com/WdBly" target="_blank">...</a>
-                        <a href="https://github.com/WdBly" target="_blank">...</a>
-                        <a href="https://github.com/WdBly" target="_blank">...</a>
+                        <p style="color: #363636; font-size: 18px">友情链接</p>
+                        <a href="https://www.penlsun.cn" target="_blank">
+                            西桥听雨
+                        </a>
                     </div>
                 </div>
                 <!-- 广告 -->
@@ -262,6 +263,10 @@
                         cursor: pointer;
                         display: flex;
                         align-items: center;
+
+                        &:hover {
+                            color: #0090F0;
+                        }
 
                         img {
                             margin: 0;

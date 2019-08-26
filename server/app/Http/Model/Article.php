@@ -47,10 +47,8 @@ class Article extends Model
         $data["username"] = $d;
 
         // 设置文章阅读次数
-        $articleData = $this->find($data['id']);
-        $articleData['read_num'] + 1;
-        $this->where('id',$data['id'])->update($articleData);
-        
+        $this->where('id',$data['id'])->increment('read_num', 1);
+
         return $data;
     }
 
