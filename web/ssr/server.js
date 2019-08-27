@@ -27,6 +27,10 @@ const data = {
   script: `
     <script src="/client/vendor.bundle.js"></script>
     <script src="${clientBundleFileUrl}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   `,
   state: ``
 }
@@ -71,17 +75,10 @@ express.get('*', (req, res) => {
     createApp(context).then(app => {
         // console.log(context, "context");
         useData = {};
+        useData.script = data.script;
         // 如果是文章详情页面
         if(context.url.search(/\/main\/displayArticle/) !== -1) {
             // 加载编辑器的样式 和修改title 和meta等头信息。
-            useData.script = `
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css">
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-                ${data.script}
-            `;
-
             var article_title = context.state.mutations.articleContent.title;
             var article_description = context.state.mutations.articleContent.description;
             var article_tags = context.state.mutations.tags;
@@ -91,7 +88,6 @@ express.get('*', (req, res) => {
         }else {
             useData.title = data.title;
             useData.meta = data.meta;
-            useData.script = data.script;
 
             if(context.url.search(/\/main\/home/) !== -1) {
                 useData.title = "首页-周维的个人博客";
