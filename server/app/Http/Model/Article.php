@@ -101,7 +101,10 @@ class Article extends Model
             $model = $model->where('whetherPublic', 1);
         } else {
             // 登陆
-            $model = $model->where('u_id', $id)->orWhere('whetherPublic', 1);
+            $model = $model->where(function ($query) use($id) {
+                $query->where('u_id', $id)
+                ->orWhere('whetherPublic', 1);
+            });
         }
 
         // 重构后新增逻辑
@@ -109,7 +112,7 @@ class Article extends Model
         // 2 文章可通过tag_id 和class_id来筛选
         // 3 文章新增阅读次数 延后
         if (isset($data['type_tag']) && is_numeric($data['type_tag'])) {
-            $model = $model->where('articles.tags', 'like', '%' . $$data['type_tag'] . '%');
+            $model = $model->where('articles.tags', 'like', '%' . $data['type_tag'] . '%');
         }
         if (isset($data['type_class']) && is_numeric($data['type_class'])) {
             $model = $model->where('articles.ca_id', $data['type_class']);

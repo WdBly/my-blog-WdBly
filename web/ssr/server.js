@@ -31,6 +31,8 @@ const data = {
   state: ``
 }
 
+const useData = {};
+
 express.post('/user/login', (req, res) => {
     api.default.userLogin(req.body).then(rs => {
         //获取lavavel返回的set-cookie的头信息
@@ -68,11 +70,11 @@ express.get('*', (req, res) => {
 
     createApp(context).then(app => {
         // console.log(context, "context");
-
+        useData = {};
         // 如果是文章详情页面
         if(context.url.search(/\/main\/displayArticle/) !== -1) {
             // 加载编辑器的样式 和修改title 和meta等头信息。
-            data.script = `
+            useData.script = `
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
@@ -83,26 +85,28 @@ express.get('*', (req, res) => {
             var article_title = context.state.mutations.articleContent.title;
             var article_description = context.state.mutations.articleContent.description;
             var article_tags = context.state.mutations.tags;
-            data.title = article_title;
-            data.meta = `
-                ${
-                    article_tags.map(tag => `<meta name="keywords" content=${tag.label} >`)
-                }
-                <meta name="description" content="${article_description}">
-            `
-        }else if(context.url.search(/\/main\/home/) !== -1) {
-            data.title = "首页-周维的个人博客";
-        }else if(context.url.search(/\/main\/archive/) !== -1) {
-            data.title = "归档-前端开发文章";
-        }else if(context.url.search(/\/main\/tags/) !== -1) {
-            data.title = "标签-文章技能标签";
-        }else if(context.url.search(/\/main\/categories/) !== -1) {
-            data.title = "分类-前端技能分类";
+            useData.title = article_title;
+            // meta
+            useData.meta = article_tags.reduce((prev, next) => prev + `<meta name="keywords" content=${next.label} >`, `<meta name="description" content="${article_description}"`);
+        }else {
+            useData.title = data.title;
+            useData.meta = data.meta;
+            useData.script = data.script;
+
+            if(context.url.search(/\/main\/home/) !== -1) {
+                useData.title = "首页-周维的个人博客";
+            }else if(context.url.search(/\/main\/archive/) !== -1) {
+                useData.title = "归档-前端开发文章";
+            }else if(context.url.search(/\/main\/tags/) !== -1) {
+                useData.title = "标签-文章技能标签";
+            }else if(context.url.search(/\/main\/categories/) !== -1) {
+                useData.title = "分类-前端技能分类";
+            }
         }
         
         var state = JSON.stringify(context.state);
 
-        data.state =  `<script>window.__INITIAL_STATE__ = ${state}</script>`
+        useData.state =  `<script>window.__INITIAL_STATE__ = ${state}</script>`
     
         renderer.renderToString(app, data, (err, html) => {
             if (err) {

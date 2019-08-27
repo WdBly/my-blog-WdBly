@@ -83,8 +83,11 @@ class ArticleController extends BasicController
 
     public function getHomeArticleList(Request $request)
     {
+        $typeTag = $request->input('type_tag', '');
+        $typeClass = $request->input('type_class', '');
         $data = $this->validate($request,['pageSize'=>'required|integer','pageNum'=>'required|integer','search'=>'present']);
         $article = new Article();
+        $data = array_merge($data, ['type_class' => $typeClass, 'type_tag' => $typeTag]);
         $res = $article->getHomeArticleList($data);
         if (!empty($res))
         {
