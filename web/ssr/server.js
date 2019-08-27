@@ -31,7 +31,7 @@ const data = {
   state: ``
 }
 
-const useData = {};
+let useData = {};
 
 express.post('/user/login', (req, res) => {
     api.default.userLogin(req.body).then(rs => {
@@ -108,7 +108,7 @@ express.get('*', (req, res) => {
 
         useData.state =  `<script>window.__INITIAL_STATE__ = ${state}</script>`
     
-        renderer.renderToString(app, data, (err, html) => {
+        renderer.renderToString(app, useData, (err, html) => {
             if (err) {
                 if (err.code === 404) {
                     res.status(404).end('Page not found')
