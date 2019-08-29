@@ -214,12 +214,13 @@
             margin: 0 auto;
 
             .left-box {
-                width: 240px;
+                min-width: 240px;
                 margin-right: 24px;
             }
 
             .content-box {
-                flex: 1
+                flex: 1;
+                overflow: auto;
             }
 
             .overview {
