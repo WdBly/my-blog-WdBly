@@ -71,11 +71,11 @@
         data(){
             return {
                 routerText:"首页",
-                showHeader:false
+                showHeader:false,
+                cookie: {
+                    username: sessionStorage.getItem("username")
+                }
             }
-        },
-        computed:{
-            ...mapGetters(["cookie"])
         },
         methods:{
             jumpTopFn(){
@@ -130,6 +130,8 @@
     #mainContent {
         height: 100vh;
         margin: 0 auto;
+        background: #a2a8b3;
+
         .topTextP{
             color: white;
             font-size: 50px;
