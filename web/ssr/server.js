@@ -4,6 +4,7 @@ const express = exp()
 const { createRenderer } = require('vue-server-renderer')
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
+import {translation} from './language-translation.js';
 
 const renderer = createRenderer({
     template: require('fs').readFileSync('ssr/view/index.template.html', 'utf-8')
@@ -64,6 +65,32 @@ express.post('/user/logout', (req, res) => {
         res.end(JSON.stringify(rs.data));
     })
 })
+
+// 简繁转换
+express.get('/getTranslateKey', (req, res) => {
+    api.default.getTranslateKey().then(rs => {
+        res.writeHead(200, { "Content-Type": "application/json;charset=utf-8" });
+        res.end(JSON.stringify(rs.data));
+    })
+})
+express.post('/translation', (req, res) => {
+    api.default.translation(req.body.key).then(rs => {
+        // key 校验成功
+        if(rs.data.code === 200){
+            if(req.body.content && (req.body.type === "s2t" || req.body.type === "t2s")){
+                rs.data.data = translation(req.body.content, req.body.type);
+            }else {
+                rs.data.data = "参数错误， 请检查参数";
+            }
+        }else {
+            // key校验失败
+            rs.data.data = "key校验失败， 请确认key是否正确或重新生成key";
+        }
+        res.writeHead(200, { "Content-Type": "application/json;charset=utf-8" });
+        res.end(JSON.stringify(rs.data));
+    })
+})
+
 
 express.get('*', (req, res) => {
     const context = {

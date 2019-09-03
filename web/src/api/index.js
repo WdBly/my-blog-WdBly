@@ -30,6 +30,14 @@ const allApi = {
 
     userLogout(){
         return http.post("/user/logout", null);
+    },
+
+    getTranslateKey() {
+        return http.get("/getTranslateKey", null);
+    },
+
+    translation(key) {
+        return http.post("/translation", {key});
     }
 
 }
