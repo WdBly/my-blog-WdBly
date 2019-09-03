@@ -43,7 +43,7 @@ Route::group(['namespace'=>'v1'],function (){
     });
 
     Route::group(['prefix'=>'api'],function (){
-        Route::post('/getKey',"TranslationController@getKey");
+        Route::get('/getKey',"TranslationController@getKey");
         Route::post('/validateKey',"TranslationController@validateKey");
     });
 });
