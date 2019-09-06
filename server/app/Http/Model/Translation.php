@@ -8,7 +8,7 @@ class Translation extends Model
     protected $table = 'keys';
     public function validateKey($data)
     {
-        $key = $data.key;
+        $key = $data['key'];
         $data = $this->where([['key','=',$key]])->select("id")->first();
         return $data;
     }
