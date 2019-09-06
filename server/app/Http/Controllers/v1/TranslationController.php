@@ -22,7 +22,7 @@ class TranslationController extends BasicController
         }
     }
 
-    public function getKey(Request $request)
+    public function getKey()
     {
         $translate = new Translation();
         $res = $translate->getKey();
