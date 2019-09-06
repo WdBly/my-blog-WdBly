@@ -16,6 +16,7 @@ class Translation extends Model
         $strs="QWERTYUIOPASDFGHJKLZXCVBNM1234567890qwertyuiopasdfghjklzxcvbnm";
         $key=substr(str_shuffle($strs),mt_rand(0,strlen($strs)-11), 5);
         $this->key = $key;
+        $this->num = 0;
         $re = $this->save();
         return $re?$key:false;
     }
