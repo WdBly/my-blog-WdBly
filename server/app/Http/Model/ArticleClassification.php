@@ -26,7 +26,6 @@ class ArticleClassification extends Model
         $da = $this->select('articleclassification.id as value','articleclassification.name as label')
                 ->selectRaw('count(*) as total')
                 ->leftJoin('articles', 'articleclassification.id', '=', 'articles.ca_id')
-                ->where([["whetherPublic", "=", "1"]])
                 ->groupBy('articleclassification.id')
                 ->get()
                 ->toArray();
