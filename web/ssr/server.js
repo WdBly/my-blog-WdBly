@@ -132,7 +132,7 @@ express.get('*', (req, res) => {
                 useData.title = "前端资源整合-合集";
                 useData.meta = `
                     <meta name="keywords" content="免费简繁转换API接口" >
-                    <meta name="description" content="免费简繁转换API接口使用"
+                    <meta name="description" content="免费简繁转换API接口使用">
                 `;
             }
         }
