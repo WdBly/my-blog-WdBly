@@ -37,6 +37,7 @@ const data = {
 }
 
 let useData = {};
+let typeList = ["s2t", "t2s", "s2tw", "tw2s", "s2hk", "hk2s", "s2twp", "tw2sp", "t2tw", "t2hk"];
 
 express.post('/user/login', (req, res) => {
     api.default.userLogin(req.body).then(rs => {
@@ -74,15 +75,18 @@ express.get('/getTranslateKey', (req, res) => {
     })
 })
 express.post('/translation', (req, res) => {
-    api.default.translation(req.body.key).then(rs => {
+    api.default.translation(req.body.key).then(async rs => {
         // key 校验成功
         if(rs.data.code === 200){
-            if(req.body.content && (req.body.type === "s2t" || req.body.type === "t2s")){
-                rs.data.data = translation(req.body.content, req.body.type);
+            if(req.body.content && typeList.find(value => value === req.body.type)){
+                rs.data.message = "success";
+                rs.data.data = await translation(req.body.content, req.body.type);
             }else {
+                rs.data.message = "error";
                 rs.data.data = "参数错误， 请检查参数";
             }
         }else {
+            rs.data.message = "error";
             // key校验失败
             rs.data.data = "key校验失败， 请确认key是否正确或重新生成key";
         }
@@ -124,6 +128,12 @@ express.get('*', (req, res) => {
                 useData.title = "标签-文章技能标签";
             }else if(context.url.search(/\/main\/categories/) !== -1) {
                 useData.title = "分类-前端技能分类";
+            }else if(context.url.search(/\/main\/sourceList/) !== -1) {
+                useData.title = "前端资源整合-合集";
+                useData.meta = `
+                    <meta name="keywords" content="免费简繁转换API接口" >
+                    <meta name="description" content="免费简繁转换API接口使用"
+                `;
             }
         }
         

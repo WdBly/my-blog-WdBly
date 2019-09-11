@@ -10,6 +10,9 @@ class Translation extends Model
     {
         $key = $data['key'];
         $data = $this->where([['key','=',$key]])->select("id")->first();
+
+        // 如果能找到key， 对此key的 num字段加一
+        $this->where('id',$data['id'])->increment('num', 1);
         return $data;
     }
     public function getKey()

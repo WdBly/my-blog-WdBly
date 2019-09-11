@@ -3,7 +3,10 @@ import axios from "axios";
 // 添加响应拦截器
 axios.interceptors.response.use(function (res) {
     if(res.data.code !== 200){
-        sessionStorage.clear();
+        try{
+            sessionStorage.clear();
+        }catch(err) {
+        }
     }
     return res;
 }, function (err) {

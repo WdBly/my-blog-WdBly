@@ -43,8 +43,14 @@ class Article extends Model
     public function getArticleContent($data)
     {
         $data = $this->where([['id','=',$data['id']]])->select("*")->first();
+        $next = $this->where([['id','>',$data['id']]])->select("*")->first();
         $d = DB::table('users')->where('id','=',$data['u_id'])->value('username');
+        $class_name = DB::table('articleclassification')->where('id','=',$data['ca_id'])->value('name');
         $data["username"] = $d;
+        $data["class_name"] = $class_name;
+        $data["next"] = $next;
+
+        // 新增查询下一篇文章
 
         // 设置文章阅读次数
         $this->where('id',$data['id'])->increment('read_num', 1);

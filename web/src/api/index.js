@@ -33,11 +33,11 @@ const allApi = {
     },
 
     getTranslateKey() {
-        return http.get("/getTranslateKey", null);
+        return http.get("/api/getKey", null);
     },
 
     translation(key) {
-        return http.post("/translation", {key});
+        return http.post("/api/validateKey", {key});
     }
 
 }

@@ -3,16 +3,16 @@
         <!-- 文章列表 -->
         <article class="single-article" v-for="article in articleList" :key="article.id">
             <!-- 文章标题 -->
-            <router-link class="article-title" :to="'/main/displayArticle/' + article.id" target="_blank">{{article.title}}</router-link>
+            <router-link :title="article.title" class="article-title" :to="'/main/displayArticle/' + article.id" target="_blank">{{article.title}}</router-link>
             <!-- 发表时间 | 分类 | 阅读次数 -->
             <div class="article-info">
                 <span class="info-item">发表于{{article.created_at.substr(0, 10)}}</span>
-                <router-link :to="'/main/archive/class/' + article.ca_id" class="info-item" style="color: #0090F0">{{article.class_name || "React Native"}}</router-link>
+                <router-link :title="article.class_name" :to="'/main/archive/class/' + article.ca_id" class="info-item" style="color: #0090F0">{{article.class_name}}</router-link>
                 <span class="info-item">阅读{{article.read_num}}</span>
             </div>
             <img class="everArticleImg" src="http://cdn.wddsss.com/image/article/6b4f1ff2ecbe448d15daeefc715a5737.png?imageView2/1/w/616/h/350/q/50/webp"/>
             <p class="article-desc">{{article.description}}</p>
-            <router-link class="read-all" :to="'/main/displayArticle/' + article.id">
+            <router-link :title="article.title" class="read-all" :to="'/main/displayArticle/' + article.id">
                 阅读全文>>
             </router-link>
         </article>

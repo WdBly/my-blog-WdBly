@@ -11,7 +11,7 @@
             </div>
             <!-- month -->
             <div class="month" v-for="month in item.data" :key="month.title">
-                <router-link class="month-title" :to="'/main/displayArticle/' + month.id" target="_blank">
+                <router-link :title="month.title" class="month-title" :to="'/main/displayArticle/' + month.id" target="_blank">
                     <em>{{month.month}}</em> &nbsp;{{month.title}}
                 </router-link>
                 <div class="dot" />

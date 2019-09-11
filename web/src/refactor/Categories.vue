@@ -4,7 +4,7 @@
         <p class="total">共{{articleClassList.length}}个分类</p>
 
         <div class="category-content">
-            <router-link class="category-link" :to="'/main/archive/class/' + item.value" v-for="(item, index) in articleClassList" :key="index">
+            <router-link :title="item.label" class="category-link" :to="'/main/archive/class/' + item.value" v-for="(item, index) in articleClassList" :key="index">
                 {{item.label}} ({{item.total}})
             </router-link>
         </div>

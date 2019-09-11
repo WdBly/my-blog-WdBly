@@ -22,6 +22,7 @@ export const createRouter = () => {
     const ArchiveComponent = ()=> import('@/refactor/ArchiveComponent.vue');
     const Categories = ()=> import('@/refactor/Categories.vue');
     const Tags = ()=> import('@/refactor/Tags.vue');
+    const SourceList = ()=> import('@/refactor/SourceList.vue');
 
 
     Vue.use(Router);
@@ -72,6 +73,9 @@ export const createRouter = () => {
                 },{
                     path: 'tags',
                     component: Tags
+                },{
+                    path: 'sourceList',
+                    component: SourceList
                 }]
             },
             {

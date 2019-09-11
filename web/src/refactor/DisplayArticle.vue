@@ -3,15 +3,15 @@
         <div class="content markdown-body" v-html="articleContent.content"></div>
         <!-- 底部显示分类， 标签， 最后更改时间 -->
         <div class="footer">
-            <router-link :to="'/main/archive/class/' + articleContent.ca_id" style="margin-bottom: 12px">分类：{{articleContent.ca_id}}</router-link>
-            <router-link :to="'/main/archive/tag/' + item.value" :key="key" v-for="(item, key) in tags" class="tag">
+            <router-link :title="articleContent.class_name" :to="'/main/archive/class/' + articleContent.ca_id" style="margin-bottom: 12px">分类：{{articleContent.class_name}}</router-link>
+            <router-link :title="item.label" :to="'/main/archive/tag/' + item.value" :key="key" v-for="(item, key) in tags" class="tag">
                 #{{item.label}}
             </router-link>
             <span style="margin-top: 12px;">最后更新时间: {{articleContent.updated_at && articleContent.updated_at.substr(0, 10)}}</span>
         </div>
         <!-- 下一篇文章地址 -->
-        <div class="next-artice">
-            <router-link class="next-artice-link" :to="'/main/displayArticle/' + articleContent.nextArtice">{{articleContent.nextArtice || "探索新的React>"}}</router-link>
+        <div class="next-artice" v-if="articleContent.next">
+            <router-link :title="articleContent.next.title" class="next-artice-link" :to="'/main/displayArticle/' + articleContent.next.id">{{articleContent.next.title}}</router-link>
         </div>
     </div>
 </template>

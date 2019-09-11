@@ -6,7 +6,7 @@
             <!-- 博客log -->
             <div class="blog-log">
                 <h3 style="line-height: 40px">WdBly Blog</h3>
-                <p>乘以风，破路之棘</p>
+                <p>懂事、有趣、保持理智</p>
             </div>
 
             <!-- 展开收起按钮 -->
@@ -18,10 +18,11 @@
 
             <!-- 导航组件 可复用 -->
             <nav class="nav" v-show="showNav">
-                <router-link to="/main/home" class="item">首页</router-link>
-                <router-link to="/main/categories" class="item">分类</router-link>
-                <router-link to="/main/archive/all/all" class="item">归档</router-link>
-                <router-link to="/main/tags" class="item">标签</router-link>
+                <router-link title="首页" to="/main/home" class="item">首页</router-link>
+                <router-link title="分类" to="/main/categories" class="item">分类</router-link>
+                <router-link title="归档" to="/main/archive/all/all" class="item">归档</router-link>
+                <router-link title="标签" to="/main/tags" class="item">标签</router-link>
+                <router-link title="资源" to="/main/sourceList" class="item">资源</router-link>
             </nav>
         </header>
         <!-- 主体内容 -->
@@ -31,33 +32,27 @@
                 <!-- 博客title 关键字 前端学习，html5 react node vue angular webpack git学习 -->
                 <div class="blog-log">
                     <h3 style="line-height: 40px">WdBly Blog</h3>
-                    <span>乘以风，破路之棘</span>
+                    <span>懂事、有趣、保持理智</span>
                 </div>
                 <!-- 网站导航 -->
                 <nav class="nav">
-                    <router-link to="/main/home" class="item">首页</router-link>
-                    <router-link to="/main/categories" class="item">分类</router-link>
-                    <router-link to="/main/archive/all/all" class="item">归档</router-link>
-                    <router-link to="/main/tags" class="item">标签</router-link>
+                    <router-link title="首页" to="/main/home" class="item">首页</router-link>
+                    <router-link title="分类" to="/main/categories" class="item">分类</router-link>
+                    <router-link title="归档" to="/main/archive/all/all" class="item">归档</router-link>
+                    <router-link title="标签" to="/main/tags" class="item">标签</router-link>
+                    <router-link title="资源" to="/main/sourceList" class="item">资源</router-link>
                 </nav>
                 <!-- 站点概览 style="position: sticky; top: 0px" -->
                 <div class="overview">
-                    <img src="http://cdn.wddsss.com/image/article/51c770fc5af90a909309ece131d89614.png?imageView2/1/w/0/h/0/q/50/webp" />
+                    <img src="http://cdn.wddsss.com/image/article/5cbf514c3dc1bf12b864789f01bcd271.png?imageView2/1/w/0/h/0/q/50/webp" />
                     <p class="name">周维 | Jim</p>
                     <!-- 懂事、有趣、保持理智 -->
                     <!-- 有些路只能一个人走 -->
-                    <p class="signature" style="color: #363636">有些路只能一个人走</p>
-
-                    <!-- 三个分类入口， 日志， web， app 都是进入归档页面 -->
-                    <!-- <nav class="overview-nav">
-                        <router-link to="/main/archive/level/pc" class="item">文章</router-link>
-                        <router-link to="/main/archive/level/mobile" class="item">移动端</router-link>
-                        <router-link to="/main/archive/level/log" class="item">日志</router-link>
-                    </nav> -->
+                    <p class="signature" style="color: #363636">603927378@qq.com</p>
 
                     <!-- github, 个人网站, 等 -->
                     <div class="resouce">
-                        <a href="https://github.com/WdBly" target="_blank">
+                        <a title="github" href="https://github.com/WdBly" target="_blank">
                             <img src="http://cdn.wddsss.com/image/article/99a1c354794555c5c6aebec8cb8728dd.png?imageView2/1/w/200/h/200/q/100/webp" />
                             <span style="margin-left: 4px;">GitHub</span>
                         </a>
@@ -103,11 +98,18 @@
             <!-- 右侧其他路由 -->
             <div class="content-box">
                 <router-view />
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-6933753629630360"
+                    data-ad-slot="3525431445"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true">
+                </ins>
             </div>
         </div>
         <!-- 底栏 -->
         <footer class="footer">
-            WdBly blog copyright-蜀ICP备18002409号-1
+            WdBly|周维 blog copyright-蜀ICP备18002409号-1
         </footer>
     </div>
 </template>
@@ -126,49 +128,6 @@
         },
         computed:{
             ...mapGetters(["cookie"])
-        },
-        methods:{
-            jumpTopFn(){
-                let timer = setInterval(()=>{
-                    if(document.documentElement.scrollTop<=0){
-                        document.documentElement.scrollTop = 0;
-                        clearInterval(timer);
-                        return;
-                    }
-                    document.documentElement.scrollTop-=50;
-                },5)
-            },
-            logout(){
-                this.$confirm('此操作将退出并退回登陆界面, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.$http.post("/user/logout",null,this.ORIGIN).then((res)=>{
-                         if(res.data.code===200){
-                            this.$message.success(res.data.message);
-                            this.$store.dispatch("setCookie",{});
-                            this.$router.push("/login");
-                            if(process.env.VUE_ENV !== "server"){
-                                sessionStorage.clear();
-                            }
-                         }else{
-                            this.$message.error(res.data.message)
-                         }
-                    }).catch((err)=>{
-                        console.log(err);
-                    })
-                }).catch((err) => {
-                    console.log(err);
-                });
-            },
-            handleCommand(key){
-                this.$router.push({path:(key.split('-'))[0]});
-                this.routerText = (key.split('-'))[1]
-            },
-            routerJump(){
-                this.$router.push("/login")
-            }
         },
         mounted() {
             // 动态添加google广告
@@ -220,7 +179,6 @@
 
             .content-box {
                 flex: 1;
-                overflow: auto;
             }
 
             .overview {

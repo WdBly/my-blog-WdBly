@@ -1,15 +1,17 @@
-
 var OpenCC = require("opencc");
 var fn;
 export const translation = async (content, type) => {
 
-    if(type === "s2t") {
-        fn = new OpenCC("s2t.json");
-    }else if(type === "t2s") {
-        fn = new OpenCC("t2s.json");
-    }
+    let value = `${type}.json`
+    fn = new OpenCC(value);
 
-    let destContent = fn.convertSync(content);
-    
-    return destContent;
+    return new Promise((resolve, reject) => {
+        fn.convert(content, function(err, converted) {
+            if(err){
+                reject("出错了" + err);
+                return;
+            }
+            resolve(converted);
+        }); 
+    })
 }
