@@ -33,6 +33,12 @@
         computed:{
             ...mapGetters(["articleContent","tags"])
         },
+        watch: {
+            //监听相同路由下参数变化的时候，从而实现异步刷新
+            '$route'() {
+                this.getArticleData();
+            }
+        },
         methods:{
             jumpTopFn(){
                 if(process.env.VUE_ENV !== "server"){

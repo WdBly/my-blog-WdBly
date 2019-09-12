@@ -29,7 +29,7 @@ class ArticleTags extends Model
                 ->toArray();
         $data1 = [];
 
-        $articleTags = DB::connection('mysql')->table('articles')->select('tags')->get();
+        $articleTags = DB::connection('mysql')->table('articles')->where('whetherPublic', 1)->select('tags')->get();
         $allTags = [];
         foreach ($articleTags as $val) {
             if ($val->tags) {

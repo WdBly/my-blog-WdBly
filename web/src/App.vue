@@ -48,9 +48,6 @@
   img {
     border: none;
   }
-  ol, ul, li {
-    list-style: none;
-  }
   input, textarea, select, button {
     font: 14px Verdana, Helvetica, Arial, sans-serif;
   }
