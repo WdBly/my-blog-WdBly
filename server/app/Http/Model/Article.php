@@ -43,7 +43,7 @@ class Article extends Model
     public function getArticleContent($data)
     {
         $data = $this->where([['id','=',$data['id']]])->select("*")->first();
-        $next = $this->where([['id','>',$data['id']]])->select("*")->first();
+        $next = $this->where([['id','<',$data['id']]])->select("*")->first();
         $d = DB::table('users')->where('id','=',$data['u_id'])->value('username');
         $class_name = DB::table('articleclassification')->where('id','=',$data['ca_id'])->value('name');
         $data["username"] = $d;
