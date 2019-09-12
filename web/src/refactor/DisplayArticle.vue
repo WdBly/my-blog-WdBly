@@ -37,6 +37,7 @@
             //监听相同路由下参数变化的时候，从而实现异步刷新
             '$route'() {
                 this.getArticleData();
+                window.scrollTo(0, 0);
             }
         },
         methods:{

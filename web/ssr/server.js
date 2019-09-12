@@ -115,7 +115,7 @@ express.get('*', (req, res) => {
             var article_tags = context.state.mutations.tags;
             useData.title = article_title;
             // meta
-            useData.meta = article_tags.reduce((prev, next) => prev + `<meta name="keywords" content=${next.label} >`, `<meta name="description" content="${article_description}"`);
+            useData.meta = article_tags.reduce((prev, next) => prev + `<meta name="keywords" content="${next.label}" />`, `<meta name="description" content="${article_description}" />`);
         }else {
             useData.title = data.title;
             useData.meta = data.meta;
@@ -132,7 +132,7 @@ express.get('*', (req, res) => {
                 useData.title = "前端资源整合-合集";
                 useData.meta = `
                     <meta name="keywords" content="免费简繁转换API接口" >
-                    <meta name="description" content="免费简繁转换API接口使用">
+                    <meta name="description" content="免费简繁转换API接口使用" >
                 `;
             }
         }
