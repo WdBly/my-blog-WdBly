@@ -88,7 +88,7 @@
                 this.getArticleList();
             },
             readFullArticle(id){
-                this.$router.push({ path: `/displayArticle/${id}` })
+                this.$router.push({ path: `/main/displayArticle/${id}` })
             },
             searchArticleList(){
                 this.getArticleList();

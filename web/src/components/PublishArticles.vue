@@ -178,7 +178,7 @@
                 })
             },
             getArticleClass(){
-                this.$http.get("/article/getArticleClass").then((res)=>{
+                this.$http.get("/article/getArticleClass?getAll=1").then(res => {
                     if(res.data.code === 200){
                         this.value = '';
                         if(this.id!==0){

@@ -126,9 +126,10 @@ class ArticleController extends BasicController
         }
     }
 
-    public function getArticleClass()
+    public function getArticleClass(Request $request)
     {
-        $addArticleClass = new ArticleClassification();
+        $isAdmin = $request->input('get_all', 0);
+        $addArticleClass = new ArticleClassification($isAdmin);
         $res = $addArticleClass->getArticleClass();
         if (!empty($res))
         {

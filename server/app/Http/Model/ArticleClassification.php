@@ -21,8 +21,12 @@ class ArticleClassification extends Model
         return $re?true:false;
     }
 
-    public function getArticleClass()
+    public function getArticleClass($isAdmin = 0)
     {
+        if ($isAdmin) {
+            return $this->select('articleclassification.id as value','articleclassification.name as label')
+            ->get()->toArray();
+        }
         $da = $this->select('articleclassification.id as value','articleclassification.name as label')
                 ->selectRaw('count(*) as total')
                 ->leftJoin('articles', 'articleclassification.id', '=', 'articles.ca_id')
