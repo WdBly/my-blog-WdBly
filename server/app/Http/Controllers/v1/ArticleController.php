@@ -129,8 +129,8 @@ class ArticleController extends BasicController
     public function getArticleClass(Request $request)
     {
         $isAdmin = $request->input('get_all', 0);
-        $addArticleClass = new ArticleClassification($isAdmin);
-        $res = $addArticleClass->getArticleClass();
+        $addArticleClass = new ArticleClassification();
+        $res = $addArticleClass->getArticleClass($isAdmin);
         if (!empty($res))
         {
             return renderJson('获取文章分类成功', $res, 200);
