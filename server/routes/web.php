@@ -33,7 +33,7 @@ Route::group(['namespace'=>'v1'],function (){
         Route::post('/editArticle',"ArticleController@editArticle");
         Route::post('/getArticleList',"ArticleController@getArticleList");
         Route::post('/getHomeArticleList',"ArticleController@getHomeArticleList");
-        Route::get('/getArticleClass',"ArticleController@getArticleClass");
+        Route::post('/getArticleClass',"ArticleController@getArticleClass");
         Route::post('/addArticleClass',"ArticleController@addArticleClass");
         Route::post('/delArticleClass',"ArticleController@delArticleClass");
         Route::get('/getArticleTags',"ArticleController@getArticleTags");

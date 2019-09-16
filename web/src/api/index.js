@@ -13,7 +13,7 @@ const allApi = {
     },
 
     getArticleClassList(cookies){
-        return http.get("/article/getArticleClass", null, cookies);
+        return http.post("/article/getArticleClass", null, cookies);
     },
 
     getArticleContent(params,cookies){
