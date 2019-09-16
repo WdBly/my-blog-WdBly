@@ -178,6 +178,7 @@
             }
 
             .content-box {
+                overflow: hidden;
                 flex: 1;
             }
 
