@@ -98,7 +98,7 @@
             <!-- 右侧其他路由 -->
             <div class="content-box">
                 <router-view />
-                <ins class="adsbygoogle"
+                <ins class="adsbygoogle toporheader"
                     style="display:block"
                     data-ad-client="ca-pub-6933753629630360"
                     data-ad-slot="3525431445"
@@ -292,6 +292,13 @@
     }
 
 
+    // 横向广告 
+    .toporheader { 
+        width: 320px; height: 100px; 
+    }
+    @media(min-width: 480px) { .toporheader { width: 468px; height: 60px; } }
+    @media(min-width: 768px) { .toporheader { width: 728px; height: 90px; } }
+    @media(min-width:1200px) { .toporheader { width: 970px; height: 90px; } }
 
     @media screen and (max-width: 990px){
         .header {
