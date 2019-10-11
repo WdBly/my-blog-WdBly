@@ -10,7 +10,7 @@
                 <router-link :title="article.class_name" :to="'/main/archive/class/' + article.ca_id" class="info-item" style="color: #0090F0">{{article.class_name}}</router-link>
                 <span class="info-item">阅读{{article.read_num}}</span>
             </div>
-            <img class="everArticleImg" src="http://cdn.wddsss.com/image/article/6b4f1ff2ecbe448d15daeefc715a5737.png?imageView2/1/w/616/h/350/q/50/webp"/>
+            <!-- <img class="everArticleImg" src="http://cdn.wddsss.com/image/article/6b4f1ff2ecbe448d15daeefc715a5737.png?imageView2/1/w/616/h/350/q/50/webp"/> -->
             <p class="article-desc">{{article.description}}</p>
             <router-link :title="article.title" class="read-all" :to="'/main/displayArticle/' + article.id">
                 阅读全文>>
@@ -101,18 +101,15 @@
 
 <style scoped lang="scss" rel="stylesheet/scss">
     .homeContent{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        padding: 0 40px;
         background: #fff;
 
 
         .single-article {
-            padding: 70px 40px;
+            padding: 40px 0;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            align-items: center;
             border-bottom: 1px dashed #b5ada2;
 
             &:last-child {
@@ -121,8 +118,9 @@
 
             .article-title {
                 font-size: 22px;
-                color: #696060;
-                margin-bottom: 14px;
+                color: #353434;
+                margin-bottom: 6px;
+                font-weight: bolder;
             }
 
             .article-info {
@@ -139,13 +137,13 @@
                 }
             }
 
-            img {
-                width: 100%;
-                margin-bottom: 20px;
-            }
+            // img {
+            //     width: 100%;
+            //     margin-bottom: 20px;
+            // }
 
             .article-desc {
-                width: 100%;
+                // width: 100%;
                 text-align: left;
                 color: #363636;
                 margin-bottom: 40px;
@@ -157,7 +155,10 @@
                 border: 2px solid b5ada2;  //自定义边框
                 border-radius: 2px;
                 background: #eee;
-                padding: 5px 20px;
+                width: 120px;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
                 cursor: pointer;
                 text-decoration: none;
                 
