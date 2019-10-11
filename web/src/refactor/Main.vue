@@ -135,6 +135,7 @@
             Object.keys(ads).forEach(() => {
                 (adsbygoogle = window.adsbygoogle || []).push({});
             })
+            // const browser = await puppeteer.launch({ignoreDefaultArgs: ["--enable-automation"]});
         }
     }
 </script>

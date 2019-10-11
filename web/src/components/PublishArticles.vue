@@ -81,7 +81,7 @@
                 tagsTemp:[],
                 optionTags:[],
                 original:"0",
-                whetherPublic: true,
+                whetherPublic: false,
                 addClass: '',
                 addTags: '',
                 options: [],
@@ -244,6 +244,7 @@
                     this.$http.post(url,this.article).then((res)=>{
                         if (res.data.code === 200) {
                             this.$message.success(res.data.message)
+                            url === "/article/addArticle" && this.$router.push("articleManagement")
                         }else{
                             this.$message.error(res.data.message)
                         }
