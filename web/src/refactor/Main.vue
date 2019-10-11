@@ -98,11 +98,11 @@
             <!-- 右侧其他路由 -->
             <div class="content-box">
                 <router-view />
-                <ins class="adsbygoogle toporheader"
+                <ins class="adsbygoogle"
                     style="display:block"
                     data-ad-client="ca-pub-6933753629630360"
                     data-ad-slot="3525431445"
-                    data-ad-format="auto"
+                    data-ad-format="horizontal"
                     data-full-width-responsive="true">
                 </ins>
             </div>
