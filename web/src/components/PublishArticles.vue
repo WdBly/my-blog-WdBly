@@ -244,7 +244,7 @@
                     this.$http.post(url,this.article).then((res)=>{
                         if (res.data.code === 200) {
                             this.$message.success(res.data.message)
-                            url === "/article/addArticle" && this.$router.push("articleManagement")
+                            url === "/article/addArticle" && this.$router.push("/main/articleManagement")
                         }else{
                             this.$message.error(res.data.message)
                         }

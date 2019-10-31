@@ -4,7 +4,7 @@
         <p class="total">共{{tags.length}}个标签</p>
 
         <div class="tag-content">
-            <router-link class="tag-link" :class="[item.size === 'big' ? 'big' : item.size === 'medium' ? 'medium' : 'normal']" :to="'/main/archive/tag/' + item.value" v-for="(item, index) in tags" :key="index">
+            <router-link class="tag-link" :class="[item.size === 'big' ? 'big' : item.size === 'medium' ? 'medium' : 'normal', 'tagsLink' + index]" :to="'/main/archive/tag/' + item.value" v-for="(item, index) in tags" :key="index">
                 {{item.label}}
             </router-link>
         </div>

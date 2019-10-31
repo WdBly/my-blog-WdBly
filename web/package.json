@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "build": "node build/build.js",
     "build-server": "cross-env NODE_ENV=production webpack --config ./ssr/webpack/webpack.server.js",
-    "build-client": "cross-env NODE_ENV=production webpack --config ./ssr/webpack/webpack.client.js",
+    "build-client": "rm -rf ./ssr/dist/client && cross-env NODE_ENV=production webpack --config ./ssr/webpack/webpack.client.js",
     "ssr": "nodemon ./ssr"
   },
   "dependencies": {

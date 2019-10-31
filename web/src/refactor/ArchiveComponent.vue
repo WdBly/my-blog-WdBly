@@ -3,15 +3,15 @@
         <!-- 一共多少文章 -->
         <p class="total">共{{total}}篇</p>
 
-        <div class="year" v-for="(item, index) in archiveList" :key="index">
+        <div class="year" :class="'selectYear' + index" v-for="(item, index) in archiveList" :key="index">
             <!-- year -->
             <div class="year-title">
                 <span>{{item.title}}</span>
                 <div class="dot" />
             </div>
             <!-- month -->
-            <div class="month" v-for="month in item.data" :key="month.title">
-                <router-link :title="month.title" class="month-title" :to="'/main/displayArticle/' + month.id" target="_blank">
+            <div class="month" v-for="(month, i) in item.data" :key="month.title">
+                <router-link :class="'articleLink' + i" :title="month.title" class="month-title" :to="'/main/displayArticle/' + month.id" target="_blank">
                     <em>{{month.month}}</em> &nbsp;{{month.title}}
                 </router-link>
                 <div class="dot" />

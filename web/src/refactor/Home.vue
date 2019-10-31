@@ -1,9 +1,9 @@
 <template>
     <div class="homeContent">
         <!-- 文章列表 -->
-        <article class="single-article" v-for="article in articleList" :key="article.id">
+        <article class="single-article" v-for="(article, index) in articleList" :key="article.id">
             <!-- 文章标题 -->
-            <router-link :title="article.title" class="article-title" :to="'/main/displayArticle/' + article.id" target="_blank">{{article.title}}</router-link>
+            <router-link :title="article.title" :class="'articleLink' + index" class="article-title" :to="'/main/displayArticle/' + article.id" target="_blank">{{article.title}}</router-link>
             <!-- 发表时间 | 分类 | 阅读次数 -->
             <div class="article-info">
                 <span class="info-item">发表于{{article.created_at.substr(0, 10)}}</span>
