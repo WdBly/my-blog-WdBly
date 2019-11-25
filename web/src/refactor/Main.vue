@@ -72,39 +72,17 @@
                     </div>
                 </div>
                 <!-- 广告 -->
-                <div style="width: 240px; height: 300px">
+                <div>
                     <!-- side-bar -->
                     <ins class="adsbygoogle"
-                        style="display:block"
+                        style="display:inline-block;width:240px;height:200px"
                         data-ad-client="ca-pub-6933753629630360"
-                        data-ad-slot="1605857454"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"
-                    >
-                    </ins>
-                </div>
-                <div style="width: 240px; height: 300px">
-                    <!-- square -->
-                    <ins class="adsbygoogle"
-                        style="display:block"
-                        data-ad-client="ca-pub-6933753629630360"
-                        data-ad-slot="2446691056"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"
-                    >
-                    </ins>
+                        data-ad-slot="1605857454"></ins>
                 </div>
             </div>
             <!-- 右侧其他路由 -->
             <div class="content-box">
                 <router-view />
-                <ins class="adsbygoogle"
-                    style="display:block"
-                    data-ad-client="ca-pub-6933753629630360"
-                    data-ad-slot="3525431445"
-                    data-ad-format="horizontal"
-                    data-full-width-responsive="true">
-                </ins>
             </div>
         </div>
         <!-- 底栏 -->
