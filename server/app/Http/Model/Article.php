@@ -102,16 +102,17 @@ class Article extends Model
         $id = Auth::id();
         $parameter = $data['search'];
         $model = new Article();
-        if(!$id) {
-            // 未登录
-            $model = $model->where('whetherPublic', 1);
-        } else {
-            // 登陆
-            $model = $model->where(function ($query) use($id) {
-                $query->where('u_id', $id)
-                ->orWhere('whetherPublic', 1);
-            });
-        }
+        $model = $model->where('whetherPublic', 1);
+        // if(!$id) {
+        //     // 未登录
+        //     $model = $model->where('whetherPublic', 1);
+        // } else {
+        //     // 登陆
+        //     $model = $model->where(function ($query) use($id) {
+        //         $query->where('u_id', $id)
+        //         ->orWhere('whetherPublic', 1);
+        //     });
+        // }
 
         // 重构后新增逻辑
         // 1 文章列表中包含了 class name
