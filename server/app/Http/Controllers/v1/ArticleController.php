@@ -172,7 +172,7 @@ class ArticleController extends BasicController
 
     public function addArticleComment(Request $request)
     {
-        $data = $this->validate($request,['comment'=>'required|string', 'articleId'=>'require|integer']);
+        $data = $this->validate($request,['comment'=>'required|string', 'articleId'=>'required|integer']);
         $comment = new ArticleComment();
         $res = $comment->addArticleComment($data);
         if (!empty($res))
@@ -186,7 +186,7 @@ class ArticleController extends BasicController
 
     public function getArticleComment(Request $request)
     {
-        $data = $this->validate($request,['id'=>'require|integer']);
+        $data = $this->validate($request,['id'=>'required|integer']);
         $comment = new ArticleComment();
         $res = $comment->getArticleComment($data);
         if (!empty($res))

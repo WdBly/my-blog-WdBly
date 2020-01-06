@@ -60,11 +60,11 @@
         },
         methods:{
             submitComment() {
-                if(!thia.articleComment) {
+                if(!this.articleComment) {
                     alert("请输入评论");
                     return;
                 }
-                api.addArticleComment({articleId: parseInt(this.id), comment: thia.articleComment}).then(rs => {
+                api.addArticleComment({articleId: parseInt(this.id), comment: this.articleComment}).then(rs => {
                     if(rs.data.code === 200) {
                         this.getArticleComment();
                     }
@@ -91,7 +91,7 @@
                 })
             },
             getArticleComment() {
-                api.getArticleComment(this.id).then(rs => {
+                api.getArticleComment(parseInt(this.id)).then(rs => {
                     if(rs.data.code === 200) {
                         this.commentList = rs.data.data;
                     }
