@@ -134,7 +134,7 @@ class Article extends Model
             ->leftJoin('articleclassification', 'articles.ca_id', '=', 'articleclassification.id')
             ->select("articleclassification.name as class_name", "articles.title","articles.description","articles.img","articles.id","articles.original","articles.tags","articles.u_id","articles.updated_at","articles.whetherPublic","articles.ca_id","articles.created_at","articles.read_num",'users.username');
         $total = $all->count();
-        $list = $all->skip(($data['pageNum'] - 1) * $data['pageSize'])->take($total)->orderBy('articles.created_at', 'desc')->get();
+        $list = $all->skip(($data['pageNum'] - 1) * $data['pageSize'])->take($data['pageSize'])->orderBy('articles.created_at', 'desc')->get();
         return $list->isNotEmpty()?['total'=>$total,'list'=>$list]:[];
     }
 }
