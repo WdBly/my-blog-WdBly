@@ -31,7 +31,7 @@
             <div class="left-box">
                 <!-- 博客title 关键字 前端学习，html5 react node vue angular webpack git学习 -->
                 <div class="blog-log">
-                    <h3 style="line-height: 40px">WdBly Blog</h3>
+                    <h3 style="line-height: 40px">周维的个人Blog</h3>
                     <span>懂事、有趣、保持理智</span>
                 </div>
                 <!-- 网站导航 -->
@@ -42,9 +42,6 @@
                     <router-link title="标签" to="/main/tags" class="item">标签</router-link>
                     <router-link title="资源" to="/main/sourceList" class="item">资源</router-link>
                 </nav>
-
-                <!-- 阅读排行榜top5 -->
-                <TopList />
 
                 <!-- 站点概览 style="position: sticky; top: 0px" -->
                 <div class="overview">
@@ -82,6 +79,9 @@
                 </div>
 
                 <FeedBack />
+                
+                <!-- 阅读排行榜top5 -->
+                <TopList />
 
                 <!-- 广告 -->
                 <!-- <div style="margin-top: 20px">
@@ -184,7 +184,7 @@
                 display: flex;
                 flex-direction: column;
                 background: #fff;
-                margin-top: 24px;
+                margin-top: 20px;
                 padding: 12px;
                 color: #767676;
 
@@ -196,7 +196,8 @@
                     padding-left: 8px;
                     line-height: 22px;
                     height: 20px;
-                    margin-bottom: 12px;
+                    margin-bottom: 16px;
+                    margin-top: 4px;
                     align-self: flex-start
                 }
 

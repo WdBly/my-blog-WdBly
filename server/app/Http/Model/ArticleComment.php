@@ -18,7 +18,7 @@ class ArticleComment extends Model
     }
     public function getArticleComment($data)
     {
-        $data = $this->where([['article_id','=',$data['id']]])->select("*")->get()->toArray();;
+        $data = $this->where([['article_id','=',$data['id']]])->select("*")->orderBy('created_at', 'desc')->get()->toArray();;
         return $data;
     }
 }

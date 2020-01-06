@@ -22,7 +22,8 @@ export const createSsrRouter = () => {
                 redirect: '/main/home/1',
                 children: [{
                     path: 'home/:page',
-                    component: Home
+                    component: Home,
+                    props: true
                 },{
                     path: 'displayArticle/:id',
                     component: DisplayArticle,

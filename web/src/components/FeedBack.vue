@@ -18,9 +18,6 @@
     import api from "../api";
     export default {
         name: "feedback",
-        serverCacheKey: props => {
-            return props.currStyle.isBlack ? "black" : "light";
-        },
         data() {
             return {
                 feedback: "",
@@ -37,23 +34,17 @@
 
                 // 校验邮箱
                 if(!this.email) {
-                    this.$store.dispatch("showMessage", {type: "", value: "请填写你的名字或邮箱"});
+                    alert("请填写你的姓名或邮箱");
                     return;
                 }
 
                 if(!this.feedback){
-                    this.$store.dispatch("showMessage", {type: "", value: "请填写反馈内容哦"});
+                    alert("请填写反馈内容哦");
                     return;
                 }
 
-                this.status = true;
                 api.addFeedback({email: this.email, feedback: this.feedback}).then(rs => {
-                    rs = rs.data;
-                    this.status = true;
-                    if(rs.code === 200) {
-                        this.email = "";
-                        this.feedback = "";
-                    }
+                    alert(rs.data.message)
                 })
             }
         }
@@ -104,7 +95,8 @@
         padding: 10px;
         margin-bottom: 6px;
         outline: none;
-        resize: none
+        resize: none;
+        font-size: 14px;
     }
     .feedback p {
         font-size: 16px;
@@ -118,6 +110,7 @@
         outline: none;
         border: 1px solid #eee;
         margin-bottom: 10px;
+        font-size: 14px;
 
         &:focus {
             border-color: #0078ff;

@@ -23,8 +23,13 @@
 
             <!-- 评论列表 -->
             <div class="comment-list">
-                <div v-for="comment in commentList" :key="comment.id">
-                    {{comment.comment}}
+                <h2>全部评论<span style="font-size: 14px; color: #767676; margin-left: 4px">{{commentList.length}}</span></h2>
+                <div class="comment-item" v-for="(comment, index) in commentList" :key="comment.id">
+                    <p>游客评论于: {{comment.created_at}} <span>{{commentList.length - index}}楼</span></p>
+                    <div>{{comment.comment}}</div>
+                </div>
+                <div class="no-comment" v-if="!commentList.length">
+                    暂时没有评论...
                 </div>
             </div>
         </div>
@@ -54,7 +59,9 @@
         watch: {
             //监听相同路由下参数变化的时候，从而实现异步刷新
             '$route'() {
+                this.commentList = [];
                 this.getArticleData();
+                this.getArticleComment();
                 window.scrollTo(0, 0);
             }
         },
@@ -102,6 +109,7 @@
             if(!window.__INITIAL_STATE__){
                 this.getArticleData();
             }
+            this.commentList = [];
             this.getArticleComment();
         },
         updated(){
@@ -168,6 +176,10 @@
             box-sizing: border-box;
             resize: none;
             background: #fafafa;
+
+            &:focus {
+                border-color: #0090F0;
+            }
         }
 
         .submit-comment-btn {
@@ -183,6 +195,47 @@
 
             &:hover {
                 opacity: .8;
+            }
+        }
+
+        .comment-list {
+            margin-top: 24px;
+
+            h2 {
+                font-size: 16px;
+                font-weight: bold;
+                color: #363636;
+                border-left: 4px solid #0090f0;
+                padding-left: 8px;
+                line-height: 22px;
+                height: 20px;
+                margin-bottom: 12px;
+                align-self: flex-start
+            }
+
+            .comment-item {
+                padding: 8px 0;
+                margin: 10px 14px;
+                font-size: 16px;
+                color: #363636;
+                line-height: 1.5;
+                word-break: break-word;
+                border-bottom: 1px solid #eee;
+
+                p {
+                    font-size: 14px;
+                    color: #767676;
+                    padding-bottom: 12px;
+
+                    span {
+                        margin-left: 12px;
+                    }
+                }
+            }
+
+            .no-comment {
+                text-align: center;
+                padding: 24px 0;
             }
         }
     }
