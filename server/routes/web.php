@@ -41,7 +41,8 @@ Route::group(['namespace'=>'v1'],function (){
         Route::post('/delArticleTags',"ArticleController@delArticleTags");
         Route::post('/getArticleContent',"ArticleController@getArticleContent");
         Route::post('/feedback',"ArticleController@addFeedback");
-        Route::post('/articleFeedback',"ArticleController@addArticleFeedback");
+        Route::post('/addArticleComment',"ArticleController@addArticleComment");
+        Route::post('/getArticleComment',"ArticleController@getArticleComment");
     });
 
     Route::group(['prefix'=>'api'],function (){

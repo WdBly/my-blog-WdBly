@@ -184,6 +184,20 @@ class ArticleController extends BasicController
         }
     }
 
+    public function getArticleComment(Request $request)
+    {
+        $data = $this->validate($request,['id'=>'require|integer']);
+        $comment = new ArticleComment();
+        $res = $comment->getArticleComment($data);
+        if (!empty($res))
+        {
+            return renderJson('获取评论成功', $res, 200);
+        } else
+        {
+            return renderJson('获取评论失败', null, 400);
+        }
+    }
+
     public function delArticleTags(Request $request)
     {
         $data = $this->validate($request,['name'=>'required|string']);

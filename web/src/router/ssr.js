@@ -19,9 +19,9 @@ export const createSsrRouter = () => {
             {
                 path: '/main',
                 component: Main,
-                redirect: '/main/home',
+                redirect: '/main/home/1',
                 children: [{
-                    path: 'home',
+                    path: 'home/:page',
                     component: Home
                 },{
                     path: 'displayArticle/:id',

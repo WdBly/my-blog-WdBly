@@ -33,10 +33,11 @@ export const createRouter = () => {
             {
                 path: '/main',
                 component: Main,
-                redirect: '/main/home',
+                redirect: '/main/home/1',
                 children: [{
-                    path: 'home',
-                    component: Home
+                    path: 'home/:page',
+                    component: Home,
+                    props: true
                 },{
                     path: 'aboutMe',
                     component: AboutMe

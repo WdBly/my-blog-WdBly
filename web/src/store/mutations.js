@@ -4,10 +4,11 @@ import getters from "./getters"
 import state from "./modules"
 
 const mutations = {
-    [types.SET_ARTICLE_LIST] (state, { list, total, articleClassList }) {
+    [types.SET_ARTICLE_LIST] (state, { list, total, articleClassList, allPage }) {
         state.articleList = list;
         state.total = total;
         state.articleClassList = articleClassList;
+        allPage && (state.allPage = allPage);
     },
     [types.SET_ARTICLE_CONTENT] (state, { articleContent, tags }) {
         state.articleContent = articleContent;

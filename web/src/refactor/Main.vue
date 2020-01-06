@@ -114,19 +114,8 @@
             return {
                 showNav: false,
                 routerText:"首页",
-                showHeader:false,
-                topList: [],
-                pageSize: 20,
-                pageNum: 1,
-                topSearchContent: ""
+                showHeader:false
             }
-        },
-        asyncData ({ store, route }) {
-            return store.dispatch("getHomeData", {
-                pageNum: 1,
-                pageSize: 20,
-                search: ""
-            })
         },
         components: {
             TopList, FeedBack
@@ -135,27 +124,8 @@
             ...mapGetters(["articleList"])
         },
         methods: {
-            getHomeData(){
-                this.$store.dispatch("getHomeData",{
-                    pageNum: this.pageNum,
-                    pageSize: this.pageSize,
-                    search: this.topSearchContent
-                }).then(res => {
-                    if(res[0].data.code === 200 && res[1].data.code === 200) {
-                        this.$store.dispatch("setHomeData", {
-                            list: res[0].data.data.list,
-                            total: res[0].data.data.total,
-                            articleClassList: res[1].data.data,
-                        })
-                    }
-                })
-            }
         },
         mounted() {
-            if(!this.articleList.length) {
-                this.getHomeData()
-            }
-
             // 动态添加google广告
             var ads = document.querySelectorAll('.adsbygoogle');
             Object.keys(ads).forEach(() => {

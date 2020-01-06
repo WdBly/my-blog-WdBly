@@ -6,7 +6,8 @@ const state = {
     articleContent: "",
     tags: [],
     cookie: {},
-    archiveList: {}
+    archiveList: {},
+    allPage: []
 }
 
 

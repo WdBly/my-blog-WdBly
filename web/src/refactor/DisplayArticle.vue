@@ -11,19 +11,37 @@
         </div>
         <!-- 下一篇文章地址 -->
         <div class="next-artice" v-if="articleContent.next">
-            <router-link :title="articleContent.next.title" class="next-artice-link" :to="'/main/displayArticle/' + articleContent.next.id">{{articleContent.next.title}}</router-link>
+            <router-link :title="articleContent.next.title" class="next-artice-link" :to="'/main/displayArticle/' + articleContent.next.id">下一篇：{{articleContent.next.title}}</router-link>
+        </div>
+        <!-- 评论 -->
+        <div class="article-comment">
+            <!-- 评论框 -->
+            <div style="padding-bottom: 24px;border-bottom: 1px solid #eee">
+                <textarea maxlength="1200" v-model="articleComment" placeholder="留下你的评论..."></textarea>
+                <div @click="submitComment" class="submit-comment-btn">提交</div>
+            </div>
+
+            <!-- 评论列表 -->
+            <div class="comment-list">
+                <div v-for="comment in commentList" :key="comment.id">
+                    {{comment.comment}}
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import { mapActions, mapGetters } from 'vuex'
+    import api from "../api"
     export default {
         props: ['id'],
         name: "display-article",
         data(){
             return{
-                vue_env: process.env.VUE_ENV
+                vue_env: process.env.VUE_ENV,
+                commentList: [],
+                articleComment: ""
             }
         },
         asyncData ({ store, route }, url, cookies) {
@@ -41,6 +59,17 @@
             }
         },
         methods:{
+            submitComment() {
+                if(!thia.articleComment) {
+                    alert("请输入评论");
+                    return;
+                }
+                api.addArticleComment({articleId: parseInt(this.id), comment: thia.articleComment}).then(rs => {
+                    if(rs.data.code === 200) {
+                        this.getArticleComment();
+                    }
+                });
+            },
             jumpTopFn(){
                 if(process.env.VUE_ENV !== "server"){
                     let timer = setInterval(()=>{
@@ -60,12 +89,20 @@
                         this.$message.error(res.data.message)
                     }
                 })
+            },
+            getArticleComment() {
+                api.getArticleComment(this.id).then(rs => {
+                    if(rs.data.code === 200) {
+                        this.commentList = rs.data.data;
+                    }
+                })
             }
         },
-        beforeMount () {
+        mounted () {
             if(!window.__INITIAL_STATE__){
                 this.getArticleData();
             }
+            this.getArticleComment();
         },
         updated(){
             // if(process.env.VUE_ENV !== "server"){
@@ -111,6 +148,42 @@
             display: block;
             padding: 20px 0;
             color: #0090F0;
+        }
+    }
+
+    .article-comment {
+        margin-top: 32px;
+        padding: 24px;
+        background: #fff;
+
+        textarea {
+            width: 100%;
+            outline: none;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            height: 100px;
+            padding: 10px;
+            color: #363636;
+            line-height: 20px;
+            box-sizing: border-box;
+            resize: none;
+            background: #fafafa;
+        }
+
+        .submit-comment-btn {
+            width: 74px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            background: #0090f0;
+            border-radius: 2px;
+            cursor: pointer;
+            color: #fff;
+            margin-top: 8px;
+
+            &:hover {
+                opacity: .8;
+            }
         }
     }
 </style>

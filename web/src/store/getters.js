@@ -20,5 +20,8 @@ export default {
     },
     archiveList: (state) => {
         return state.archiveList
+    },
+    allPage: (state) => {
+        return state.allPage
     }
 }

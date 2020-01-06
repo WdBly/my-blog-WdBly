@@ -10,7 +10,8 @@ export default {
                 commit(types.SET_ARTICLE_LIST, {
                     list: res[0].data.data.list,
                     total: res[0].data.data.total,
-                    articleClassList: res[1].data.data
+                    articleClassList: res[1].data.data,
+                    allPage: [...Array.from({length: Math.ceil(res[0].data.data.total / pageSize)}).keys()]
                 })
             }
 

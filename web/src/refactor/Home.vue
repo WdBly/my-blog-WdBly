@@ -16,6 +16,20 @@
                 阅读全文>>
             </router-link>
         </article>
+
+        <!-- 分页 -->
+        <div class="all-page">
+            <!-- <span class="page-text">第</span> -->
+            <span class="page-item"
+                @click="switchPageNum(item + 1)"
+                v-for="item in allPage" :key="item" :style="{
+                'color': page == item + 1 ? '#0090f0' : '#363636',
+                'border-bottom': page == item + 1 ? '1px solid #0090f0' : 'none'
+            }">
+                {{item + 1}}
+            </span>
+            <!-- <span class="page-text">页</span> -->
+        </div>
     </div>
 </template>
 
@@ -24,6 +38,7 @@
     import { mapActions, mapGetters } from 'vuex'
 
     export default {
+        props: ["page"],
         name: "home",
         data(){
             return {
@@ -31,15 +46,40 @@
                 curr_value: '',
                 topSearchContent: '',
                 pageNum: 1,
-                pageSize: 10000,
+                pageSize: 15,
                 loadding: false,
                 dynamicSpace: 260
             }
         },
+        asyncData ({ store, route }) {
+            return store.dispatch("getHomeData", {
+                pageNum: 1,
+                pageSize: 15,
+                search: ""
+            })
+        },
         computed:{
-            ...mapGetters(["articleList", "total", "articleClassList"])
+            ...mapGetters(["articleList", "total", "articleClassList", "allPage"])
+        },
+        mounted() {
+            if(!this.articleList.length) {
+                this.getHomeData()
+            }
         },
         methods:{
+            getHomeData(){
+                this.$store.dispatch("getHomeData",{
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
+                    search: this.topSearchContent
+                })
+            },
+            switchPageNum(page) {
+                this.pageNum = page;
+                window.scroll(0, 0);
+                this.$router.push({path: `/main/home/${page}`});
+                this.getHomeData();
+            },
             imageFilter(src) {
                 src += "?imageView2/1/w/200/h/140/q/65/webp";
                 return src;
@@ -76,7 +116,6 @@
     .homeContent{
         padding: 0 40px;
         background: #fff;
-
 
         .single-article {
             padding: 40px 0;
@@ -138,6 +177,29 @@
                 &:hover {
                     background: #a1a7be;
                     color: #fff;
+                }
+            }
+        }
+
+        .all-page {
+            padding: 32px 0;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+
+            .page-item {
+                font-weight: bold;
+                display: block;
+                height: 32px;
+                width: 26px;
+                text-align: center;
+                line-height: 32px;
+                margin: 0 12px;
+                cursor: pointer;
+                box-sizing: border-box;
+
+                &:hover {
+                    opacity: .8;
                 }
             }
         }

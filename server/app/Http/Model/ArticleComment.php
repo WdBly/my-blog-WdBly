@@ -16,4 +16,9 @@ class ArticleComment extends Model
         $re = $this->save();
         return $re?true:false;
     }
+    public function getArticleComment($data)
+    {
+        $data = $this->where([['article_id','=',$data['id']]])->select("*")->get()->toArray();;
+        return $data;
+    }
 }

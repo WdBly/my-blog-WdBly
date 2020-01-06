@@ -41,7 +41,15 @@ const allApi = {
     },
 
     addFeedback({email, feedback}) {
-        return http.post("/api/feedback", {email, feedback});
+        return http.post("/article/feedback", {email, feedback});
+    },
+
+    addArticleComment(params) {
+        return http.post("/article/addArticleComment", params);
+    },
+
+    getArticleComment(id) {
+        return http.post("/article/getArticleComment", {id});
     }
 }
 
