@@ -40,6 +40,8 @@ Route::group(['namespace'=>'v1'],function (){
         Route::post('/addArticleTags',"ArticleController@addArticleTags");
         Route::post('/delArticleTags',"ArticleController@delArticleTags");
         Route::post('/getArticleContent',"ArticleController@getArticleContent");
+        Route::post('/feedback',"ArticleController@addFeedback");
+        Route::post('/articleFeedback',"ArticleController@addArticleFeedback");
     });
 
     Route::group(['prefix'=>'api'],function (){

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\v1;
 use App\Http\Model\Article;
 use App\Http\Model\ArticleClassification;
 use App\Http\Model\ArticleTags;
+use App\Http\Model\Feedback;
+use App\Http\Model\ArticleComment;
 use App\Http\Requests\ArticleImgCheck;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -151,6 +153,34 @@ class ArticleController extends BasicController
         } else
         {
             return renderJson('添加文章标签失败', null, 400);
+        }
+    }
+
+    public function addFeedback(Request $request)
+    {
+        $data = $this->validate($request,['email'=>'required|string', 'feedback'=>'required|string']);
+        $feedback = new Feedback();
+        $res = $feedback->addFeedback($data);
+        if (!empty($res))
+        {
+            return renderJson('留言成功', $res, 200);
+        } else
+        {
+            return renderJson('留言失败', null, 400);
+        }
+    }
+
+    public function addArticleComment(Request $request)
+    {
+        $data = $this->validate($request,['comment'=>'required|string', 'articleId'=>'require|integer']);
+        $comment = new ArticleComment();
+        $res = $comment->addArticleComment($data);
+        if (!empty($res))
+        {
+            return renderJson('评论成功', $res, 200);
+        } else
+        {
+            return renderJson('评论失败', null, 400);
         }
     }
 

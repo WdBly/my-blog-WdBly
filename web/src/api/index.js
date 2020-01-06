@@ -4,7 +4,7 @@ import http from "./axios"
 
 const allApi = {
 
-    getArticleList(params,cookies){
+    getArticleList(params, cookies){
         return http.post("/article/getArticleList", params, null, cookies);
     },
 
@@ -38,8 +38,11 @@ const allApi = {
 
     translation(key) {
         return http.post("/api/validateKey", {key});
-    }
+    },
 
+    addFeedback({email, feedback}) {
+        return http.post("/api/feedback", {email, feedback});
+    }
 }
 
 

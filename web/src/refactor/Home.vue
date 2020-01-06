@@ -36,17 +36,8 @@
                 dynamicSpace: 260
             }
         },
-        asyncData ({ store, route }, emp, cookies) {
-            cookies && store.dispatch("setCookie",cookies);
-            return store.dispatch("getHomeData",{
-                pageNum: 1,
-                pageSize: 10000,
-                search: "",
-                cookies
-            })
-        },
         computed:{
-            ...mapGetters(["articleList","total","articleClassList"])
+            ...mapGetters(["articleList", "total", "articleClassList"])
         },
         methods:{
             imageFilter(src) {
@@ -76,24 +67,6 @@
                         this.$message.error(res.data.message)
                     }
                 })
-            },
-            getHomeData(){
-                this.$store.dispatch("getHomeData",{
-                    pageNum: this.pageNum,
-                    pageSize: this.pageSize,
-                    search: this.topSearchContent
-                }).then(res => {
-                    this.loadding = false;
-                    if(res[0].data.code !== 200 || res[1].data.code !== 200){
-                        this.$message.error(res.data.message)
-                    }
-                })
-            }
-        },
-        beforeMount(){
-            if(!this.articleList.length){
-                this.loadding = true;
-                this.getHomeData()
             }
         }
     }

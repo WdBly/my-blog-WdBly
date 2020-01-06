@@ -5,12 +5,12 @@ import api from "./../api"
 export default {
     getHomeData({ commit }, params){
         var {pageNum,pageSize,search} = params;
-        return Promise.all([api.getHomeArticleList({pageNum,pageSize,search}, params.cookies),api.getArticleClassList(params.cookies)]).then(res => {
-            if(res[0].data.code === 200 && res[1].data.code === 200){
+        return Promise.all([api.getHomeArticleList({pageNum,pageSize,search}), api.getArticleClassList()]).then(res => {
+            if(res[0].data.code === 200 && res[1].data.code === 200) {
                 commit(types.SET_ARTICLE_LIST, {
                     list: res[0].data.data.list,
                     total: res[0].data.data.total,
-                    articleClassList: res[1].data.data,
+                    articleClassList: res[1].data.data
                 })
             }
 
@@ -111,5 +111,8 @@ export default {
     },
     setCookie({ commit }, cookie){
         commit(types.SET_COOKIE, cookie)
+    },
+    setHomeData({ commit }, data){
+        commit(types.SET_ARTICLE_LIST, data)
     }
 }

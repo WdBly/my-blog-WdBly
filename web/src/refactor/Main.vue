@@ -42,9 +42,14 @@
                     <router-link title="标签" to="/main/tags" class="item">标签</router-link>
                     <router-link title="资源" to="/main/sourceList" class="item">资源</router-link>
                 </nav>
+
+                <!-- 阅读排行榜top5 -->
+                <TopList />
+
                 <!-- 站点概览 style="position: sticky; top: 0px" -->
                 <div class="overview">
-                    <img src="http://cdn.wddsss.com/image/article/5cbf514c3dc1bf12b864789f01bcd271.png?imageView2/1/w/0/h/0/q/50/webp" />
+                    <h2>站点概览</h2>
+                    <!-- <img src="http://cdn.wddsss.com/image/article/5cbf514c3dc1bf12b864789f01bcd271.png?imageView2/1/w/0/h/0/q/50/webp" /> -->
                     <p class="name">周维 | Jim</p>
                     <!-- 懂事、有趣、保持理智 -->
                     <!-- 有些路只能一个人走 -->
@@ -57,9 +62,13 @@
                             <span style="margin-left: 4px;">GitHub</span>
                         </a>
                     </div>
+
                     <!-- 友情链接 -->
                     <div class="links">
                         <p style="color: #363636; font-size: 18px">友情链接</p>
+                        <a href="https://mo.fish" target="_blank">
+                            鱼塘热榜
+                        </a>
                         <a href="https://www.penlsun.cn" target="_blank">
                             西桥听雨
                         </a>
@@ -71,14 +80,16 @@
                         </a>
                     </div>
                 </div>
+
+                <FeedBack />
+
                 <!-- 广告 -->
-                <div style="margin-top: 20px">
-                    <!-- side-bar -->
+                <!-- <div style="margin-top: 20px">
                     <ins class="adsbygoogle"
                         style="display:inline-block;width:240px;height:200px"
                         data-ad-client="ca-pub-6933753629630360"
                         data-ad-slot="1605857454"></ins>
-                </div>
+                </div> -->
             </div>
             <!-- 右侧其他路由 -->
             <div class="content-box">
@@ -93,7 +104,9 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import { mapGetters } from 'vuex';
+    import TopList from "../components/TopList";
+    import FeedBack from "../components/FeedBack";
 
     export default {
         name: "mainContent",
@@ -101,13 +114,48 @@
             return {
                 showNav: false,
                 routerText:"首页",
-                showHeader:false
+                showHeader:false,
+                topList: [],
+                pageSize: 20,
+                pageNum: 1,
+                topSearchContent: ""
             }
         },
+        asyncData ({ store, route }) {
+            return store.dispatch("getHomeData", {
+                pageNum: 1,
+                pageSize: 20,
+                search: ""
+            })
+        },
+        components: {
+            TopList, FeedBack
+        },
         computed:{
-            ...mapGetters(["cookie"])
+            ...mapGetters(["articleList"])
+        },
+        methods: {
+            getHomeData(){
+                this.$store.dispatch("getHomeData",{
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
+                    search: this.topSearchContent
+                }).then(res => {
+                    if(res[0].data.code === 200 && res[1].data.code === 200) {
+                        this.$store.dispatch("setHomeData", {
+                            list: res[0].data.data.list,
+                            total: res[0].data.data.total,
+                            articleClassList: res[1].data.data,
+                        })
+                    }
+                })
+            }
         },
         mounted() {
+            if(!this.articleList.length) {
+                this.getHomeData()
+            }
+
             // 动态添加google广告
             var ads = document.querySelectorAll('.adsbygoogle');
             Object.keys(ads).forEach(() => {
@@ -152,7 +200,8 @@
             margin: 0 auto;
 
             .left-box {
-                min-width: 240px;
+                max-width: 240px;
+                width: 240px;
                 margin-right: 24px;
             }
 
@@ -164,11 +213,22 @@
             .overview {
                 display: flex;
                 flex-direction: column;
-                align-items: center;
                 background: #fff;
                 margin-top: 24px;
-                padding: 24px;
+                padding: 12px;
                 color: #767676;
+
+                h2 {
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #363636;
+                    border-left: 4px solid #0090f0;
+                    padding-left: 8px;
+                    line-height: 22px;
+                    height: 20px;
+                    margin-bottom: 12px;
+                    align-self: flex-start
+                }
 
                 img {
                     width: 120px;
@@ -227,11 +287,13 @@
         }
 
         .footer {
+            background: #fff;
             height: 60px;
             line-height: 60px;
             text-align: center;
             border-top: 1px solid #fff;
             color: #767676;
+            margin-top: 24px;
         }
 
         .blog-log {
@@ -250,7 +312,7 @@
             flex-direction: column;
             color: #fff;
             background: #fff;
-            padding: 24px;
+            padding: 12px;
 
             .item {
                 color: #767676;
