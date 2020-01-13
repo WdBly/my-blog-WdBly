@@ -127,10 +127,10 @@
         },
         mounted() {
             // 动态添加google广告
-            var ads = document.querySelectorAll('.adsbygoogle');
-            Object.keys(ads).forEach(() => {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            })
+            // var ads = document.querySelectorAll('.adsbygoogle');
+            // Object.keys(ads).forEach(() => {
+            //     (adsbygoogle = window.adsbygoogle || []).push({});
+            // })
             // const browser = await puppeteer.launch({ignoreDefaultArgs: ["--enable-automation"]});
         }
     }
