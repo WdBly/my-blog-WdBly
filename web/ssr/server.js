@@ -28,10 +28,10 @@ const data = {
   script: `
     <script src="/client/vendor.bundle.js"></script>
     <script src="${clientBundleFileUrl}"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="/github-markdown.min.css">
+    <link rel="stylesheet" href="/katex.min.css">
+    <link rel="stylesheet" href="/github.min.css">
+    <script src="/highlight.min.js"></script>
   `,
   state: ``
 }
