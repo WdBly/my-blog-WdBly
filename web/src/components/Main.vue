@@ -73,7 +73,7 @@
                 routerText:"首页",
                 showHeader:false,
                 cookie: {
-                    username: sessionStorage.getItem("username")
+                    username: localStorage.getItem("username")
                 }
             }
         },
@@ -100,7 +100,7 @@
                             this.$store.dispatch("setCookie",{});
                             this.$router.push("/login");
                             if(process.env.VUE_ENV !== "server"){
-                                sessionStorage.clear();
+                                localStorage.clear();
                             }
                          }else{
                             this.$message.error(res.data.message)

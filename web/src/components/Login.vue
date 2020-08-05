@@ -80,11 +80,11 @@
                             this.loginButtonDisabled = false;
                             if(res.data.code===200){
                                 this.$router.push("/home");
-                                sessionStorage.setItem('token', res.data.data.token);
-                                sessionStorage.setItem('user_id', res.data.data.user_id);
-                                sessionStorage.setItem('username',res.data.data.username);
+                                localStorage.setItem('token', res.data.data.token);
+                                localStorage.setItem('user_id', res.data.data.user_id);
+                                localStorage.setItem('username',res.data.data.username);
                                 this.$store.dispatch("setCookie",{username: res.data.data.username});
-                                sessionStorage.setItem('mobile',res.data.data.mobile);
+                                localStorage.setItem('mobile',res.data.data.mobile);
                                 this.$message.success(res.data.message);
                             }else{
                                 this.$message.error(res.data.message);

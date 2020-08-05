@@ -4,7 +4,7 @@ import axios from "axios";
 axios.interceptors.response.use(function (res) {
     if(res.data.code !== 200){
         try{
-            sessionStorage.clear();
+            localStorage.clear();
         }catch(err) {
         }
     }
