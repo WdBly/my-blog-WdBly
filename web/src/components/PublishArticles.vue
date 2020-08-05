@@ -256,7 +256,7 @@
                 });
             },
             getArticleContent(){
-                this.$http.post("/article/getArticleContent",{
+                this.$http.post("/article/getBackendArticleContent",{
                     id:this.id
                 }).then((res)=>{
                     if(res.data.code===200){

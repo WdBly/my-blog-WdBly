@@ -40,6 +40,7 @@ Route::group(['namespace'=>'v1'],function (){
         Route::post('/addArticleTags',"ArticleController@addArticleTags");
         Route::post('/delArticleTags',"ArticleController@delArticleTags");
         Route::post('/getArticleContent',"ArticleController@getArticleContent");
+        Route::post('/getBackendArticleContent',"ArticleController@getBackendArticleContent");
         Route::post('/feedback',"ArticleController@addFeedback");
         Route::post('/addArticleComment',"ArticleController@addArticleComment");
         Route::post('/getArticleComment',"ArticleController@getArticleComment");

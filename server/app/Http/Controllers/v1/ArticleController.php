@@ -69,6 +69,20 @@ class ArticleController extends BasicController
         }
     }
 
+    public function getBackendArticleContent(Request $request)
+    {
+        $data = $this->validate($request,['id'=>'required|integer']);
+        $user = new Article();
+        $res = $user->getBackendArticleContent($data);
+        if ($res)
+        {
+            return renderJson('文章获取成功', $res, 200);
+        } else
+        {
+            return renderJson('文章获取失败', null, 400);
+        }
+    }
+
     public function getArticleList(Request $request)
     {
         $data = $this->validate($request,['pageSize'=>'required|integer','pageNum'=>'required|integer','search'=>'present']);
